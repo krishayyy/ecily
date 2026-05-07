@@ -35,17 +35,18 @@ export const SplashCinematic: React.FC<SplashCinematicProps> = ({ onComplete }) 
   const [step, setStep] = useState(0);
 
   useEffect(() => {
+    console.log("SplashCinematic mounted");
     const timers = [
-      setTimeout(() => setStep(1), 500),
-      setTimeout(() => setStep(2), 2000),
-      setTimeout(() => setStep(3), 3500),
-      setTimeout(() => onComplete(), 5000),
+      setTimeout(() => { console.log("Step 1"); setStep(1); }, 500),
+      setTimeout(() => { console.log("Step 2"); setStep(2); }, 2000),
+      setTimeout(() => { console.log("Step 3"); setStep(3); }, 3500),
+      setTimeout(() => { console.log("Splash complete"); onComplete(); }, 5000),
     ];
     return () => timers.forEach(clearTimeout);
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-void flex flex-col items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-[#050508] flex flex-col items-center justify-center overflow-hidden">
       {/* Particle Field */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 40 }).map((_, i) => (
@@ -72,8 +73,8 @@ export const SplashCinematic: React.FC<SplashCinematicProps> = ({ onComplete }) 
           }}
           className="relative w-32 h-32 mb-8"
         >
-          <div className="absolute inset-0 rounded-full border-4 border-gold bg-gradient-to-br from-gold-glow via-gold to-gold-deep shadow-[0_0_40px_rgba(245,200,66,0.6)] flex items-center justify-center">
-            <span className="text-4xl font-black text-void">$</span>
+          <div className="absolute inset-0 rounded-full border-4 border-gold bg-gradient-to-br from-[#FFE066] via-[#F5C842] to-[#D4A017] shadow-[0_0_40px_rgba(245,200,66,0.6)] flex items-center justify-center">
+            <span className="text-4xl font-black text-[#050508]">$</span>
           </div>
 
           {/* Orbital Ring */}
