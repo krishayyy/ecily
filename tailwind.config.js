@@ -12,12 +12,12 @@ export default {
           deep: "#D4A017",
           glow: "#FFE066",
         },
-        void: "#050508",
+        void: "#030303",
         dark: {
           base: "#0A0A0F",
-          surface: "#12121A",
-          card: "#1A1A26",
-          border: "#2A2A3A",
+          surface: "#0D0D12",
+          card: "#14141A",
+          border: "#1F1F26",
         },
         wallStreet: {
           green: "#00FF88",
@@ -40,25 +40,20 @@ export default {
         xpBlue: "#6366F1",
       },
       fontFamily: {
-        rounded: ['"Inter"', 'sans-serif'], // Use Inter as a base, rounded in CSS if needed
+        rounded: ['"Inter"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       borderRadius: {
-        'sm': '8px',
-        'md': '16px',
-        'lg': '24px',
-        'xl': '32px',
+        'sm': '12px',
+        'md': '20px',
+        'lg': '32px',
+        'xl': '48px',
         'full': '999px',
       },
-      animation: {
-        'spin-slow': 'spin 8s linear infinite',
-        'float': 'float 3s ease-in-out infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        }
+      boxShadow: {
+        'premium': '0 20px 50px rgba(0, 0, 0, 0.5)',
+        'glow-gold': '0 0 30px rgba(245, 200, 66, 0.3)',
+        'glow-blue': '0 0 30px rgba(99, 102, 241, 0.3)',
       }
     },
   },

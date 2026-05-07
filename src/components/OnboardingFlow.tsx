@@ -5,9 +5,10 @@ import { WheelPicker } from './WheelPicker';
 import { type User, type USState, type MoneySituation, type FinancialGoal } from '../types';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 
-const STATES: USState[] = ['California', 'New York', 'Texas', 'Florida', 'Illinois', 'Washington', 'Massachusetts', 'Georgia']; // Simplified for now
+const STATES: USState[] = ['California', 'New York', 'Texas', 'Florida', 'Illinois', 'Washington', 'Massachusetts', 'Georgia'];
+const AGE_RANGE = Array.from({ length: 16 }, (_, i) => i + 10);
 
-export const OnboardingFlow: React.FC = () => {
+export function OnboardingFlow() {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(1);
   const setUser = useAppStore((state) => state.setUser);
@@ -68,7 +69,7 @@ export const OnboardingFlow: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-base flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-dark-base flex flex-col relative overflow-hidden text-white">
       {/* Background Mesh */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
@@ -143,7 +144,7 @@ export const OnboardingFlow: React.FC = () => {
                     <WheelPicker
                       value={formData.age || 16}
                       onChange={(age) => setFormData({ ...formData, age })}
-                      range={Array.from({ length: 16 }, (_, i) => i + 10)}
+                      range={AGE_RANGE}
                       accent="#F5C842"
                     />
                   </div>
@@ -316,4 +317,4 @@ export const OnboardingFlow: React.FC = () => {
       </div>
     </div>
   );
-};
+}

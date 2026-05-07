@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# Ecily - Learn Finance Easy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ecily is a high-tech, high-animation financial literacy platform designed specifically for teens. It transforms boring financial concepts into a gamified, cinematic experience.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Cinematic Experience:** Immersive splash screens and interactive global backgrounds.
+- **Personalized Onboarding:** Tailors the curriculum to your age, state, and financial goals using a unique 3D age selection wheel.
+- **Gamified Learning:** Earn XP and Ecily Coins by completing bite-sized lessons across various "Learning Worlds".
+- **Paper Trading:** Practice investing with a real-time (simulated) stock market terminal.
+- **AI Coach (Cily):** Get instant answers to your money questions from your dedicated AI financial mentor.
+- **Jump$tart Aligned:** Curriculum designed to meet national standards for personal finance education.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework:** React 19 + Vite
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 3
+- **Animations:** Framer Motion
+- **State Management:** Zustand
+- **Icons:** Lucide React
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. **Run Development Server:**
+   ```bash
+   npm run dev
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+3. **Build for Production:**
+   ```bash
+   npm run build
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Design System
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app uses a custom "Cyber-Premium" design system:
+- **Void Background:** #030303
+- **Primary Accent:** Neon Gold (#F5C842)
+- **Glassmorphism:** Heavy use of backdrop-blur and semi-transparent borders.
+- **High-Fidelity Typography:** Rounded, bold, and italicized headers for a modern feel.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Future Roadmap
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Integration with real financial APIs for live data.
+- Multiplayer leaderboards for classes and schools.
+- Advanced simulators for tax filing and credit building.
+- Reward store for redeeming Ecily Coins for digital collectibles.

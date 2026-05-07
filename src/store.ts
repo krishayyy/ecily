@@ -17,19 +17,19 @@ export const useAppStore = create<AppState>((set) => ({
   isLoading: false,
   isAuthenticated: false,
   setUser: (user: User) => set({ user, isAuthenticated: true }),
-  updateOnboarding: (data: Partial<User>) => set((state: AppState) => ({
+  updateOnboarding: (data: Partial<User>) => set((state) => ({
     user: state.user ? { ...state.user, ...data, isOnboardingComplete: true } : null
   })),
-  addXP: (amount: number) => set((state: AppState) => {
+  addXP: (amount: number) => set((state) => {
     if (!state.user) return state;
     const newXP = state.user.xp + amount;
     const newLevel = Math.floor(newXP / 500) + 1;
     return { user: { ...state.user, xp: newXP, level: newLevel } };
   }),
-  addCoins: (amount: number) => set((state: AppState) => ({
+  addCoins: (amount: number) => set((state) => ({
     user: state.user ? { ...state.user, ecilyCoins: state.user.ecilyCoins + amount } : null
   })),
-  completeLesson: (lessonId: string, xp: number, coins: number) => set((state: AppState) => {
+  completeLesson: (lessonId: string, xp: number, coins: number) => set((state) => {
     if (!state.user) return state;
     if (state.user.completedLessons.includes(lessonId)) return state;
     const newXP = state.user.xp + xp;

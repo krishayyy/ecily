@@ -6,14 +6,14 @@ import { LessonRunner } from './LessonRunner';
 import { type World, type Lesson } from '../types';
 import { Lock, Play, CheckCircle2 } from 'lucide-react';
 
-export const Worlds: React.FC = () => {
+export function Worlds() {
   const user = useAppStore((state) => state.user);
   const [selectedLesson, setSelectedLesson] = useState<{ world: World, lesson: Lesson } | null>(null);
 
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-dark-base pb-32">
+    <div className="min-h-screen bg-dark-base pb-32 text-white">
       <div className="px-6 pt-12 pb-8">
         <h1 className="text-3xl font-black tracking-tight">Learning Worlds</h1>
         <p className="text-white/40 font-medium">Bite-sized financial mastery.</p>
@@ -87,4 +87,4 @@ export const Worlds: React.FC = () => {
       </AnimatePresence>
     </div>
   );
-};
+}
