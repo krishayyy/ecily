@@ -75,7 +75,7 @@ function App() {
 
                 {/* Cyber-Premium Navigation Bar */}
                 <div className="fixed bottom-8 inset-x-6 z-50 pointer-events-none">
-                  <div className="mx-auto max-w-lg glass h-20 rounded-full px-4 flex items-center justify-between shadow-premium border-white/5 pointer-events-auto relative overflow-hidden">
+                  <div className="mx-auto max-w-lg premium-glass h-20 rounded-full px-4 flex items-center justify-between shadow-gold-bloom/10 border-white/5 pointer-events-auto relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-gold/5 to-transparent pointer-events-none" />
 
                     {navItems.map((item) => {

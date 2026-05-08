@@ -8,25 +8,23 @@ interface SplashCinematicProps {
 const Particle = () => {
   const x = Math.random() * 100;
   const y = Math.random() * 100;
-  const size = Math.random() * 4 + 1;
-  const duration = Math.random() * 4 + 4;
-  const delay = Math.random() * 2;
+  const size = Math.random() * 2 + 1;
+  const duration = Math.random() * 3 + 3;
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: `${x}%`, y: `${y}%`, scale: 0 }}
+      initial={{ opacity: 0, x: `${x}vw`, y: `${y}vh` }}
       animate={{
-        opacity: [0, 0.7, 0],
-        scale: [0, 1, 0],
-        y: [`${y}%`, `${y - 15}%`],
+        opacity: [0, 0.4, 0],
+        scale: [0.5, 1, 0.5],
+        y: [`${y}vh`, `${y - 10}vh`],
       }}
       transition={{
         duration,
         repeat: Infinity,
-        delay,
-        ease: "easeInOut"
+        ease: "linear"
       }}
-      className="absolute bg-gold rounded-full blur-[1px]"
+      className="absolute bg-gold rounded-full"
       style={{ width: size, height: size }}
     />
   );
@@ -34,122 +32,139 @@ const Particle = () => {
 
 export function SplashCinematic({ onComplete }: SplashCinematicProps) {
   const [phase, setPhase] = useState(0);
+  const [loadingText, setLoadingText] = useState("INITIALIZING TRAJECTORY...");
 
   useEffect(() => {
-    console.log("Splash Sequence Started");
-    const timers = [
-      setTimeout(() => setPhase(1), 400),   // Symbol reveal
-      setTimeout(() => setPhase(2), 1400),  // Text reveal
-      setTimeout(() => setPhase(3), 2600),  // Outro
-      setTimeout(() => {
-        console.log("Splash Sequence Ending");
-        onComplete();
-      }, 3200),
+    const textSequence = [
+      { t: 800, text: "CALIBRATING DISCIPLINE INDEX..." },
+      { t: 1600, text: "MAPPING NET WORTH PATHWAY..." },
+      { t: 2400, text: "ACCESSING SECRET OPERATING SYSTEM..." },
+      { t: 3200, text: "WELCOME, STRATEGIST." },
     ];
+
+    const timers = [
+      setTimeout(() => setPhase(1), 400),
+      setTimeout(() => setPhase(2), 1400),
+      setTimeout(() => setPhase(3), 3600),
+      setTimeout(() => onComplete(), 4500),
+      ...textSequence.map(item => setTimeout(() => setLoadingText(item.text), item.t))
+    ];
+
     return () => timers.forEach(clearTimeout);
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#030303] flex flex-col items-center justify-center overflow-hidden text-white">
-      {/* Background Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 50 }).map((_, i) => (
+    <div className="fixed inset-0 z-[100] bg-void flex flex-col items-center justify-center overflow-hidden text-white">
+      {/* Background Ambience */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+        {Array.from({ length: 40 }).map((_, i) => (
           <Particle key={i} />
         ))}
       </div>
 
-      {/* Extreme Radial Glow */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{
-          opacity: phase >= 1 ? [0.2, 0.5, 0.2] : 0,
-          scale: phase >= 1 ? [1, 1.3, 1] : 0.5
-        }}
-        transition={{ duration: 3, repeat: Infinity }}
-        className="absolute w-[600px] h-[600px] rounded-full bg-gold/20 blur-[120px]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0.1, 0.3, 0.1] }}
+        transition={{ duration: 4, repeat: Infinity }}
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05)_0%,transparent_70%)]"
       />
 
-      <div className="relative flex flex-col items-center">
-        {/* Cinematic Symbol */}
-        <div className="relative w-48 h-48 mb-12">
+      <div className="relative flex flex-col items-center z-10">
+        {/* The Core OS Symbol */}
+        <div className="relative w-40 h-40 mb-16">
           <AnimatePresence>
             {phase >= 1 && (
               <>
-                {/* Outer Spinning Ring */}
                 <motion.div
-                  initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
-                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.5, filter: "blur(20px)" }}
-                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute -inset-8 rounded-full border border-gold/30"
+                  initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 1.5, filter: "blur(40px)" }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 flex items-center justify-center"
                 >
+                  {/* Rotating Rings */}
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-gold shadow-glow-gold"
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute -inset-4 rounded-full border border-gold/20"
                   />
-                </motion.div>
-
-                {/* Inner Glow Ring */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3, duration: 0.8 }}
-                  className="absolute -inset-2 rounded-full border-2 border-gold/50 shadow-[inset_0_0_30px_rgba(245,200,66,0.3)]"
-                />
-
-                {/* The Core Coin */}
-                <motion.div
-                  initial={{ scale: 0, rotateY: -90 }}
-                  animate={{
-                    scale: phase === 3 ? 2 : 1,
-                    rotateY: 0,
-                    opacity: phase === 3 ? 0 : 1
-                  }}
-                  transition={{
-                    scale: { type: "spring", stiffness: 100, damping: 20 },
-                    opacity: { duration: 0.6 }
-                  }}
-                  className="w-full h-full rounded-full bg-gradient-to-br from-gold-glow via-gold to-gold-deep shadow-2xl flex items-center justify-center relative overflow-hidden"
-                >
                   <motion.div
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12"
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                    className="absolute -inset-8 rounded-full border border-gold/10"
                   />
-                  <span className="text-6xl font-black text-void drop-shadow-lg">$</span>
+
+                  {/* Central Diamond/Core */}
+                  <motion.div
+                    className="w-16 h-16 bg-gold/10 backdrop-blur-md border border-gold/50 rotate-45 flex items-center justify-center"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5, type: "spring" }}
+                  >
+                    <motion.div
+                      className="w-8 h-8 bg-gold shadow-gold-bloom"
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  </motion.div>
                 </motion.div>
               </>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Cinematic Branding */}
-        <div className="h-24 overflow-hidden flex flex-col items-center">
-          <AnimatePresence>
-            {phase >= 2 && phase < 3 && (
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -40, filter: "blur(10px)" }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-center"
+        {/* Status Feed */}
+        <div className="flex flex-col items-center space-y-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center"
+          >
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={loadingText}
+                initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -10, filter: "blur(10px)" }}
+                transition={{ duration: 0.4 }}
+                className="micro-label text-gold/60 h-4"
               >
-                <h1 className="text-7xl font-black tracking-[-0.05em] text-gradient-gold mb-2">
-                  ECILY
-                </h1>
-                <motion.p
-                  initial={{ opacity: 0, letterSpacing: "0.1em" }}
-                  animate={{ opacity: 0.8, letterSpacing: "0.4em" }}
-                  className="text-white font-bold uppercase text-[10px]"
-                >
-                  The Future of Finance
-                </motion.p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                {loadingText}
+              </motion.span>
+            </AnimatePresence>
+
+            <motion.div
+              className="w-48 h-[1px] bg-white/10 mt-4 relative overflow-hidden"
+              initial={{ width: 0 }}
+              animate={{ width: 192 }}
+              transition={{ duration: 3.5, ease: "easeInOut" }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gold"
+                initial={{ x: "-100%" }}
+                animate={{ x: "0%" }}
+                transition={{ duration: 3.5, ease: "easeInOut" }}
+              />
+            </motion.div>
+          </motion.div>
+
+          {phase >= 2 && phase < 3 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
+              className="text-center"
+            >
+              <h1 className="text-display text-5xl gold-gradient mb-2">
+                ECILY OS
+              </h1>
+            </motion.div>
+          )}
         </div>
       </div>
+
+      {/* Screen Glitch/Scanline effect */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_2px,3px_100%]" />
     </div>
   );
 }

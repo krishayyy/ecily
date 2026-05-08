@@ -8,52 +8,50 @@ export default {
     extend: {
       colors: {
         gold: {
-          DEFAULT: "#F5C842",
-          deep: "#D4A017",
-          glow: "#FFE066",
+          DEFAULT: "#D4AF37", // Warm premium gold
+          bright: "#F5D142",
+          dim: "#8C6D1F",
         },
+        electric: "#3B82F6",
         void: "#030303",
-        dark: {
-          base: "#0A0A0F",
-          surface: "#0D0D12",
-          card: "#14141A",
-          border: "#1F1F26",
+        graphite: "#121212",
+        midnight: "#050508",
+        onyx: "#0A0A0A",
+        border: {
+          subtle: "rgba(255, 255, 255, 0.05)",
+          bright: "rgba(255, 255, 255, 0.1)",
         },
-        wallStreet: {
-          green: "#00FF88",
-          gold: "#FFD700",
-        },
-        crypto: {
-          neon: "#00F5FF",
-          purple: "#8B5CF6",
-        },
-        taxBlue: "#3B82F6",
-        creditPink: "#EC4899",
-        jobOrange: "#F97316",
-        budgetTeal: "#14B8A6",
-        realEstateBrown: "#A16207",
-        mindsetViolet: "#7C3AED",
-        success: "#22C55E",
-        error: "#EF4444",
-        warning: "#F59E0B",
-        streakFire: "#FF6B35",
-        xpBlue: "#6366F1",
+        accent: {
+          gold: "#D4AF37",
+          blue: "#3B82F6",
+          purple: "#6366F1",
+          rose: "#E11D48",
+          emerald: "#10B981",
+        }
       },
       fontFamily: {
-        rounded: ['"Inter"', 'sans-serif'],
+        display: ['"Inter"', 'sans-serif'], // I'll use Inter as a base but style it heavily
         mono: ['"JetBrains Mono"', 'monospace'],
       },
+      fontSize: {
+        'micro': '0.65rem',
+        'display-lg': ['clamp(3rem, 8vw, 6rem)', { lineHeight: '0.9', letterSpacing: '-0.04em' }],
+        'display-md': ['clamp(2rem, 5vw, 4rem)', { lineHeight: '1', letterSpacing: '-0.02em' }],
+      },
+      letterSpacing: {
+        'tightest': '-0.05em',
+        'widest-xl': '0.3em',
+      },
       borderRadius: {
-        'sm': '12px',
-        'md': '20px',
-        'lg': '32px',
-        'xl': '48px',
-        'full': '999px',
+        'super': '2.5rem',
       },
       boxShadow: {
-        'premium': '0 20px 50px rgba(0, 0, 0, 0.5)',
-        'glow-gold': '0 0 30px rgba(245, 200, 66, 0.3)',
-        'glow-blue': '0 0 30px rgba(99, 102, 241, 0.3)',
+        'soft-glow': '0 0 40px rgba(0, 0, 0, 0.8)',
+        'gold-bloom': '0 0 30px rgba(212, 175, 55, 0.2)',
+        'blue-bloom': '0 0 30px rgba(59, 130, 246, 0.2)',
+      },
+      backdropBlur: {
+        'premium': '40px',
       }
     },
   },

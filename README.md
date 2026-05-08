@@ -1,53 +1,53 @@
-# Ecily - Learn Finance Easy
+# ECILY-OS // HIGH-FIDELITY FINANCIAL LITERACY
 
-Ecily is a high-tech, high-animation financial literacy platform designed specifically for teens. It transforms boring financial concepts into a gamified, cinematic experience.
+Ecily is an elite-level, high-animation financial synchronization platform designed for the next generation of strategists. It transforms abstract financial concepts into a cinematic, gamified "Operating System" for capital management.
 
-## Features
+## // PROTOCOLS
 
-- **Cinematic Experience:** Immersive splash screens and interactive global backgrounds.
-- **Personalized Onboarding:** Tailors the curriculum to your age, state, and financial goals using a unique 3D age selection wheel.
-- **Gamified Learning:** Earn XP and Ecily Coins by completing bite-sized lessons across various "Learning Worlds".
-- **Paper Trading:** Practice investing with a real-time (simulated) stock market terminal.
-- **AI Coach (Cily):** Get instant answers to your money questions from your dedicated AI financial mentor.
-- **Jump$tart Aligned:** Curriculum designed to meet national standards for personal finance education.
+- **INITIALIZATION (Onboarding):** A multi-phase synchronization sequence that establishes your age index, jurisdiction (state), and strategic objectives using a custom 3D neural-link wheel.
+- **COMMAND CENTER (Dashboard):** An asymmetrical tactical HUD with mouse-reactive parallax tilt-cards, layered progress rings, and real-time trajectory analytics.
+- **CURRICULUM ARCHITECTURE (Worlds):** 8 Learning Worlds (Sector 01-08) covering Capital Theory, Equity Ownership, Revenue Extraction (Taxes), and Credit Velocity.
+- **TERMINAL (Trading):** A high-fidelity paper trading interface with tactical stock feeds, list/grid layout toggles, and simulated liquidity management.
+- **AI ENTITY (Coach):** Neural-link chat interface with "Cily," an AI financial synchronization entity providing strategic advisory across all sectors.
 
-## Tech Stack
+## // TECH STACK
 
-- **Framework:** React 19 + Vite
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS 3
-- **Animations:** Framer Motion
-- **State Management:** Zustand
-- **Icons:** Lucide React
+- **CORE:** React 19 + Vite
+- **ENGINE:** TypeScript
+- **STYLING:** Tailwind CSS 4 (Cyber-Premium System)
+- **MOTION:** Framer Motion (High-Fidelity Transitions)
+- **STATE:** Zustand (Quantum Sync)
+- **SYSTEM ICONS:** Lucide React
 
-## Getting Started
+## // SYSTEM INITIALIZATION
 
-1. **Install Dependencies:**
+1. **DEPLOY RESOURCES:**
    ```bash
    npm install
    ```
 
-2. **Run Development Server:**
+2. **EXECUTE DEV PROTOCOL:**
    ```bash
    npm run dev
    ```
 
-3. **Build for Production:**
+3. **GENERATE PRODUCTION ASSET:**
    ```bash
    npm run build
    ```
 
-## Design System
+## // DESIGN SYSTEM (ECILY-OS)
 
-The app uses a custom "Cyber-Premium" design system:
-- **Void Background:** #030303
-- **Primary Accent:** Neon Gold (#F5C842)
-- **Glassmorphism:** Heavy use of backdrop-blur and semi-transparent borders.
-- **High-Fidelity Typography:** Rounded, bold, and italicized headers for a modern feel.
+The system operates on the **Cyber-Premium** visual standard:
+- **VOID BASE:** #030303 (The Absolute Black)
+- **GOLD FLOW:** #D4AF37 (Warm Metallic Primary)
+- **ELECTRIC BLUE:** #3B82F6 (Market Interface)
+- **EMERALD SYNC:** #10B981 (Success Index)
+- **GLASSMORPHISM:** Deep backdrop-blur with ultra-thin white/[0.05] borders.
+- **TYPOGRAPHY:** Italicized black-weight headers for high-speed readability.
 
-## Future Roadmap
-
-- Integration with real financial APIs for live data.
-- Multiplayer leaderboards for classes and schools.
-- Advanced simulators for tax filing and credit building.
-- Reward store for redeeming Ecily Coins for digital collectibles.
+## // LOG: VERSION 2.0.0
+- Redesigned from "Premium App" to "Elite Futuristic OS".
+- Implemented high-motion scroll physics and 3D wheel components.
+- Added tactical HUD elements to all major sectors.
+- Optimized performance for consistent 60fps animations.
