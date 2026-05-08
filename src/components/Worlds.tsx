@@ -39,12 +39,13 @@ export function Worlds() {
               className="space-y-8"
             >
               <div className="flex items-center space-x-6">
-                <div
-                  className="w-16 h-16 rounded-super premium-glass flex items-center justify-center text-3xl shadow-gold-bloom/10 relative overflow-hidden"
-                  style={{ border: `1px solid ${world.color}44` }}
-                >
-                  <div className="absolute inset-0 opacity-10" style={{ backgroundColor: world.color }} />
-                  <span className="relative z-10 drop-shadow-sm">{world.icon}</span>
+                <div className="w-16 h-16 rounded-super premium-glass flex items-center justify-center text-3xl shadow-gold-bloom/10 relative overflow-hidden border border-border">
+                  <div className="absolute inset-0 opacity-5 bg-gold" />
+                  {typeof world.icon === 'string' ? (
+                    <span className="relative z-10 drop-shadow-sm">{world.icon}</span>
+                  ) : (
+                    <world.icon size={32} className="relative z-10 drop-shadow-sm text-gold" />
+                  )}
                 </div>
                 <div>
                   <div className="flex items-center space-x-2 mb-1">

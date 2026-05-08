@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from '../store';
 import { type World, type Lesson } from '../types';
-import { X, ChevronRight, Trophy, Star, Sparkles, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { X, ChevronRight, Trophy, Star, Sparkles, AlertCircle, CheckCircle2, ShoppingCart, Home, Car, Utensils } from 'lucide-react';
 
 interface LessonRunnerProps {
   world: World;
@@ -11,7 +11,7 @@ interface LessonRunnerProps {
 }
 
 export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClose }) => {
-  const [phase, setPhase] = useState<'learning' | 'quiz' | 'completed'>('learning');
+  const [phase, setPhase] = useState<'learning' | 'activity' | 'quiz' | 'completed'>('learning');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -27,8 +27,16 @@ export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClo
 
   const next = () => {
     if (phase === 'learning') {
-      if (lesson.quiz.length > 0) setPhase('quiz');
-      else finish();
+      if (lesson.id === 'bc_02' || lesson.id === 'ws_01' || lesson.id === 'bc_01') {
+          setPhase('activity');
+      } else if (lesson.quiz.length > 0) {
+          setPhase('quiz');
+      } else {
+          finish();
+      }
+    } else if (phase === 'activity') {
+        if (lesson.quiz.length > 0) setPhase('quiz');
+        else finish();
     } else if (phase === 'quiz') {
       if (currentQuestion < lesson.quiz.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
@@ -55,31 +63,32 @@ export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClo
     >
       {/* Background FX */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
-         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(212,175,55,0.15),transparent_70%)]" />
+         <div className="absolute inset-0 bg-[radial-gradient(circle at 50% -20%, rgba(197,160,89,0.1), transparent 70%)]" />
          <motion.div
             animate={{ opacity: [0.05, 0.1, 0.05] }}
             transition={{ duration: 4, repeat: Infinity }}
-            className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100%_3px]"
+            className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100%_4px]"
          />
       </div>
 
       {/* Immersive HUD */}
       <div className="px-8 pt-20 pb-8 flex justify-between items-center relative z-10">
         <div className="flex items-center space-x-6">
-          <div
-            className="w-16 h-16 rounded-super premium-glass flex items-center justify-center text-3xl shadow-gold-bloom/10 relative overflow-hidden"
-            style={{ border: `1px solid ${world.color}44` }}
-          >
-            <div className="absolute inset-0 opacity-10" style={{ backgroundColor: world.color }} />
-            <span className="relative z-10">{world.icon}</span>
+          <div className="w-16 h-16 rounded-super premium-glass flex items-center justify-center text-3xl shadow-gold-bloom/10 relative overflow-hidden border border-border">
+            <div className="absolute inset-0 opacity-5 bg-gold" />
+            {typeof world.icon === 'string' ? (
+              <span className="relative z-10">{world.icon}</span>
+            ) : (
+              <world.icon size={32} className="relative z-10 text-gold" />
+            )}
           </div>
           <div className="space-y-1">
             <div className="flex items-center space-x-3">
-              <span className="micro-label !text-gold/50">{world.name}</span>
+              <span className="micro-label text-gold/60">{world.name}</span>
               <span className="w-1 h-1 rounded-full bg-white/10" />
               <span className="micro-label">Sector 0{lesson.id.split('_')[1]}</span>
             </div>
-            <h2 className="text-2xl font-black text-display italic tracking-tight">{lesson.title}</h2>
+            <h2 className="text-2xl font-black text-display italic tracking-tight uppercase">{lesson.title}</h2>
           </div>
         </div>
 
@@ -103,35 +112,49 @@ export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClo
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="h-full flex flex-col justify-center max-w-2xl mx-auto"
             >
-              <div className="premium-glass p-12 rounded-[3rem] border-white/5 relative overflow-hidden shadow-gold-bloom/5">
-                <div className="absolute top-0 right-0 w-80 h-80 blur-[150px] opacity-10 pointer-events-none" style={{ backgroundColor: world.color }} />
-                <Sparkles className="text-gold mb-8 opacity-40" size={40} />
-                <p className="text-3xl md:text-4xl font-black italic uppercase leading-[1.1] tracking-tighter gold-gradient">
+              <div className="premium-glass p-12 rounded-super border-white/5 relative overflow-hidden shadow-gold-bloom/5">
+                <div className="absolute top-0 right-0 w-80 h-80 blur-[150px] opacity-10 pointer-events-none bg-gold" />
+                <Sparkles className="mb-8 opacity-40 text-gold" size={40} />
+                <p className="text-3xl md:text-4xl font-black italic uppercase leading-[1.1] tracking-tighter">
                   {lesson.content}
                 </p>
               </div>
 
-              <div className="mt-12 grid grid-cols-2 gap-6">
+              <div className="mt-12 grid grid-cols-2 gap-4">
                  <div className="premium-glass p-8 rounded-super border-white/5 flex items-center space-x-5">
-                    <div className="w-14 h-14 rounded-2xl bg-gold/10 flex items-center justify-center text-gold border border-gold/20 shadow-gold-bloom/20">
-                      <Trophy size={28} />
+                    <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center text-gold border border-gold/20">
+                      <Trophy size={24} />
                     </div>
                     <div>
-                      <p className="micro-label !text-[10px] mb-1">Target Yield</p>
-                      <p className="text-xl font-black italic">+{lesson.xpReward} XP</p>
+                      <p className="micro-label !text-[10px] mb-1">Yield</p>
+                      <p className="text-lg font-black italic">+{lesson.xpReward} XP</p>
                     </div>
                  </div>
                  <div className="premium-glass p-8 rounded-super border-white/5 flex items-center space-x-5">
-                    <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20 shadow-blue-bloom/20">
-                      <Star size={28} fill="currentColor" />
+                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/40 border border-white/10">
+                      <Star size={24} fill="currentColor" />
                     </div>
                     <div>
-                      <p className="micro-label !text-[10px] mb-1">Commission</p>
-                      <p className="text-xl font-black italic">+{lesson.coinReward} EC</p>
+                      <p className="micro-label !text-[10px] mb-1">Credits</p>
+                      <p className="text-lg font-black italic">+{lesson.coinReward} EC</p>
                     </div>
                  </div>
               </div>
             </motion.div>
+          )}
+
+          {phase === 'activity' && (
+              <motion.div
+                key="activity"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+                className="h-full"
+              >
+                  {lesson.id === 'bc_02' && <WantsVsNeedsActivity onComplete={next} />}
+                  {lesson.id === 'ws_01' && <StockOwnershipActivity onComplete={next} />}
+                  {lesson.id === 'bc_01' && <CompoundInterestActivity onComplete={next} />}
+              </motion.div>
           )}
 
           {phase === 'quiz' && (
@@ -144,7 +167,7 @@ export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClo
               className="h-full flex flex-col justify-center space-y-12 max-w-3xl mx-auto"
             >
               <div className="space-y-4">
-                <span className="micro-label text-gold/60">Evaluation Protocol // Question 0{currentQuestion + 1}</span>
+                <span className="micro-label opacity-60">Evaluation Protocol // Question 0{currentQuestion + 1}</span>
                 <h3 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter leading-tight">
                     {lesson.quiz[currentQuestion].question}
                 </h3>
@@ -245,16 +268,16 @@ export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClo
                 <p className="micro-label !text-sm !tracking-[0.4em]">Strategic Objectives Secured</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-8 w-full max-w-lg">
-                <div className="premium-glass p-10 rounded-super border-gold/10 shadow-gold-bloom/5">
+              <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
+                <div className="premium-glass p-8 rounded-super border-gold/10 shadow-gold-bloom/5">
                   <p className="micro-label mb-3">Power Inflow</p>
                   <p className="text-5xl font-black text-gold italic">+{lesson.xpReward}</p>
-                  <span className="micro-label !text-[8px] opacity-20">UNITS</span>
+                  <span className="micro-label !text-[8px] opacity-20 uppercase tracking-widest">Units secured</span>
                 </div>
-                <div className="premium-glass p-10 rounded-super border-blue-500/10 shadow-blue-bloom/5">
+                <div className="premium-glass p-8 rounded-super border-white/5">
                   <p className="micro-label mb-3">Capital Gain</p>
-                  <p className="text-5xl font-black text-blue-400 italic">+{lesson.coinReward}</p>
-                   <span className="micro-label !text-[8px] opacity-20">CREDITS</span>
+                  <p className="text-5xl font-black text-white/80 italic">+{lesson.coinReward}</p>
+                   <span className="micro-label !text-[8px] opacity-20 uppercase tracking-widest">Credits earned</span>
                 </div>
               </div>
             </motion.div>
@@ -262,7 +285,7 @@ export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClo
         </AnimatePresence>
       </div>
 
-      {/* Cyber-Premium Action Bar */}
+      {/* Action Bar */}
       <div className="p-12 relative z-10">
         {phase === 'completed' ? (
           <motion.button
@@ -275,17 +298,17 @@ export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClo
           </motion.button>
         ) : (
           <motion.button
-            disabled={phase === 'quiz' && selectedAnswer === null}
+            disabled={(phase === 'quiz' && selectedAnswer === null)}
             whileHover={!(phase === 'quiz' && selectedAnswer === null) ? { scale: 1.02, y: -5 } : {}}
             whileTap={{ scale: 0.98 }}
             onClick={next}
             className={`w-full h-24 rounded-super font-black uppercase italic tracking-widest text-2xl flex items-center justify-center space-x-4 transition-all duration-500 ${
               (phase === 'quiz' && selectedAnswer === null)
               ? 'bg-white/5 text-white/10 border border-white/5 opacity-50'
-              : 'bg-gold text-void shadow-gold-bloom'
+              : 'bg-white text-void shadow-2xl'
             }`}
           >
-            <span>{phase === 'learning' ? 'Initiate Evaluation' : 'Confirm Entry'}</span>
+            <span>{phase === 'learning' ? 'Initiate Activity' : phase === 'activity' ? 'Analyze Results' : 'Confirm Entry'}</span>
             <ChevronRight size={28} strokeWidth={4} />
           </motion.button>
         )}
@@ -297,7 +320,7 @@ export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClo
           className="h-full bg-gold shadow-gold-bloom"
           initial={{ width: "0%" }}
           animate={{
-            width: phase === 'learning' ? '33.33%' : phase === 'quiz' ? '66.66%' : '100%'
+            width: phase === 'learning' ? '25%' : phase === 'activity' ? '50%' : phase === 'quiz' ? '75%' : '100%'
           }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         />
@@ -305,3 +328,182 @@ export const LessonRunner: React.FC<LessonRunnerProps> = ({ world, lesson, onClo
     </motion.div>
   );
 };
+
+// --- Sub-Components: Interactive Activities ---
+
+function WantsVsNeedsActivity({ onComplete }: { onComplete: () => void }) {
+    const items = [
+        { id: '1', name: 'Concert Tickets', type: 'want', icon: Sparkles },
+        { id: '2', name: 'Emergency Groceries', type: 'need', icon: Utensils },
+        { id: '3', name: 'Monthly Rent', type: 'need', icon: Home },
+        { id: '4', name: 'Designer Bag', type: 'want', icon: ShoppingCart },
+        { id: '5', name: 'Transportation', type: 'need', icon: Car },
+    ];
+
+    const [index, setIndex] = useState(0);
+    const [score, setScore] = useState(0);
+    const current = items[index];
+
+    const handleChoice = (type: 'want' | 'need') => {
+        if (type === current.type) {
+            setScore(score + 1);
+            if (window.navigator.vibrate) window.navigator.vibrate(10);
+        } else {
+            if (window.navigator.vibrate) window.navigator.vibrate([20, 50, 20]);
+        }
+
+        if (index < items.length - 1) setIndex(index + 1);
+        else onComplete();
+    };
+
+    return (
+        <div className="h-full flex flex-col items-center justify-center space-y-12">
+            <div className="text-center space-y-4">
+                <span className="micro-label text-emerald-500">Classification Training</span>
+                <h3 className="text-3xl font-black italic uppercase">Sort the resource</h3>
+            </div>
+
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={current.id}
+                    initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    exit={{ scale: 1.1, opacity: 0, x: 100 }}
+                    className="w-72 h-96 premium-glass rounded-super border-white/10 flex flex-col items-center justify-center p-8 text-center space-y-8 shadow-2xl"
+                >
+                    <div className="w-24 h-24 rounded-[2rem] bg-white/5 flex items-center justify-center text-white/40">
+                        <current.icon size={48} strokeWidth={1} />
+                    </div>
+                    <p className="text-2xl font-black italic uppercase tracking-tighter">{current.name}</p>
+                </motion.div>
+            </AnimatePresence>
+
+            <div className="flex space-x-6 w-full max-w-md">
+                <button
+                    onClick={() => handleChoice('need')}
+                    className="flex-1 h-20 rounded-[2rem] bg-emerald-500 text-void font-black italic uppercase text-lg shadow-emerald-500/20 shadow-xl active:scale-95 transition-transform"
+                >
+                    Core Need
+                </button>
+                <button
+                    onClick={() => handleChoice('want')}
+                    className="flex-1 h-20 rounded-[2rem] premium-glass border-white/10 text-white font-black italic uppercase text-lg hover:bg-white/5 active:scale-95 transition-all"
+                >
+                    Want
+                </button>
+            </div>
+
+            <div className="flex space-x-2">
+                {items.map((_, i) => (
+                    <div key={i} className={`w-12 h-1 rounded-full transition-colors ${i === index ? 'bg-white' : i < index ? 'bg-white/40' : 'bg-white/10'}`} />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+function StockOwnershipActivity({ onComplete }: { onComplete: () => void }) {
+    return (
+        <div className="h-full flex flex-col items-center justify-center p-8 space-y-12">
+            <div className="text-center space-y-4">
+                <span className="micro-label text-gold">Equity Simulator</span>
+                <h3 className="text-3xl font-black italic uppercase">Own a piece of the world</h3>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
+                {[
+                    { label: 'Market Cap', val: '$2.8T', color: 'text-gold' },
+                    { label: 'Sector', val: 'TECH', color: 'text-white/60' },
+                    { label: 'Risk', val: 'MED', color: 'text-white/40' },
+                    { label: 'Status', val: 'ACTIVE', color: 'text-gold/60' },
+                ].map(stat => (
+                    <div key={stat.label} className="premium-glass p-6 rounded-2xl border-white/5 space-y-1">
+                        <p className="micro-label !text-[8px] opacity-20 uppercase tracking-widest">{stat.label}</p>
+                        <p className={`text-xl font-black italic uppercase ${stat.color}`}>{stat.val}</p>
+                    </div>
+                ))}
+            </div>
+
+            <motion.div
+                whileHover={{ scale: 1.01 }}
+                className="w-full max-w-lg p-10 premium-glass rounded-super border-white/10 relative overflow-hidden"
+            >
+                <div className="relative z-10 flex items-center justify-between">
+                    <div className="space-y-2">
+                        <p className="text-4xl font-black italic uppercase tracking-tighter">APPLE INC.</p>
+                        <p className="micro-label text-gold/60 uppercase tracking-[0.2em]">Position: 0.0012%</p>
+                    </div>
+                    <div className="text-right">
+                        <p className="font-mono text-2xl font-bold">$182.40</p>
+                        <p className="text-gold font-bold">+1.2%</p>
+                    </div>
+                </div>
+                <div className="absolute inset-0 bg-gold/5" />
+            </motion.div>
+
+            <button onClick={onComplete} className="w-full max-w-md h-20 rounded-2xl bg-gold text-void font-black italic uppercase text-sm tracking-widest shadow-gold-glow">
+                Complete Analysis
+            </button>
+        </div>
+    )
+}
+
+function CompoundInterestActivity({ onComplete }: { onComplete: () => void }) {
+    const [rate, setRate] = useState(7);
+    const [years, setYears] = useState(10);
+    const principal = 1000;
+    const finalValue = Math.floor(principal * Math.pow(1 + rate / 100, years));
+
+    return (
+        <div className="h-full flex flex-col items-center justify-center p-8 space-y-12">
+            <div className="text-center space-y-4">
+                <span className="micro-label text-gold">Exponential Growth Engine</span>
+                <h3 className="text-3xl font-black italic uppercase">Project Your Wealth</h3>
+            </div>
+
+            <div className="w-full max-w-lg premium-glass p-12 rounded-[3rem] border-gold/20 text-center space-y-8 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.05),transparent_70%)]" />
+                <div className="relative z-10">
+                    <p className="micro-label opacity-40 mb-2">Projected Maturity</p>
+                    <motion.p
+                        key={finalValue}
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="text-7xl font-black italic gold-gradient tracking-tight"
+                    >
+                        ${finalValue.toLocaleString()}
+                    </motion.p>
+                </div>
+            </div>
+
+            <div className="w-full max-w-lg space-y-8">
+                <div className="space-y-4">
+                    <div className="flex justify-between">
+                        <span className="micro-label">Annual Yield (%)</span>
+                        <span className="font-mono text-gold font-bold">{rate}%</span>
+                    </div>
+                    <input
+                        type="range" min="1" max="20" value={rate}
+                        onChange={(e) => setRate(parseInt(e.target.value))}
+                        className="w-full h-1 bg-white/10 rounded-full appearance-none accent-gold cursor-pointer"
+                    />
+                </div>
+                <div className="space-y-4">
+                    <div className="flex justify-between">
+                        <span className="micro-label">Duration (Years)</span>
+                        <span className="font-mono text-gold font-bold">{years}Y</span>
+                    </div>
+                    <input
+                        type="range" min="1" max="40" value={years}
+                        onChange={(e) => setYears(parseInt(e.target.value))}
+                        className="w-full h-1 bg-white/10 rounded-full appearance-none accent-gold cursor-pointer"
+                    />
+                </div>
+            </div>
+
+            <button onClick={onComplete} className="w-full max-w-md h-20 rounded-[2rem] bg-gold text-void font-black italic uppercase text-lg shadow-gold-bloom shadow-xl">
+                Lock in Trajectory
+            </button>
+        </div>
+    )
+}

@@ -1,12 +1,12 @@
 import { type World } from './types';
+import { PiggyBank, TrendingUp, Landmark, CreditCard } from 'lucide-react';
 
 export const CURRICULUM: World[] = [
   {
     id: 'budget_city',
     name: 'Budget City',
     subtitle: 'Master your money flow',
-    icon: '💰',
-    color: '#14B8A6',
+    icon: PiggyBank,
     lessons: [
       {
         id: 'bc_01',
@@ -48,8 +48,7 @@ export const CURRICULUM: World[] = [
     id: 'wall_street',
     name: 'Wall Street',
     subtitle: 'Build real wealth',
-    icon: '📈',
-    color: '#00FF88',
+    icon: TrendingUp,
     lessons: [
       {
         id: 'ws_01',
@@ -74,8 +73,7 @@ export const CURRICULUM: World[] = [
     id: 'tax_town',
     name: 'Tax Town',
     subtitle: 'Navigating State Jurisdictions',
-    icon: '🏛️',
-    color: '#3B82F6',
+    icon: Landmark,
     lessons: [
       {
         id: 'tt_01',
@@ -100,8 +98,7 @@ export const CURRICULUM: World[] = [
     id: 'credit_city',
     name: 'Credit City',
     subtitle: 'The Velocity of Reputation',
-    icon: '💳',
-    color: '#EC4899',
+    icon: CreditCard,
     lessons: [
       {
         id: 'cc_01',

@@ -32,36 +32,36 @@ export const Trading: React.FC = () => {
   return (
     <div className="min-h-screen bg-void pb-40 font-display text-white">
       {/* Dynamic Header HUD */}
-      <div className="px-6 pt-20 pb-8 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_-20%,rgba(59,130,246,0.1),transparent_50%)]" />
+      <div className="px-6 pt-20 pb-8 relative overflow-hidden border-b border-border">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_-20%,rgba(197,160,89,0.05),transparent_50%)]" />
 
         <div className="relative z-10 flex flex-col md:flex-row justify-between md:items-end gap-8">
           <div className="space-y-2">
             <div className="flex items-center space-x-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_#3B82F6]" />
-              <span className="micro-label">Market Access // Phase 01</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-gold shadow-gold-glow" />
+              <span className="micro-label text-gold/60">Market Access // Phase 01</span>
             </div>
-            <h1 className="text-display-md text-display italic">Trading <span className="blue-gradient">Terminal</span></h1>
-            <p className="text-white/30 text-xs font-lux uppercase tracking-[0.2em]">Real-time simulation protocol initialized.</p>
+            <h1 className="text-display-md text-display italic uppercase tracking-tighter">Trading <span className="gold-gradient">Terminal</span></h1>
+            <p className="text-white/20 text-[10px] font-mono uppercase tracking-[0.3em]">Real-time simulation protocol active.</p>
           </div>
 
           <div className="flex gap-4">
-             <div className="premium-glass p-5 rounded-[2rem] border-white/5 flex items-center space-x-5 min-w-[200px]">
-                <div className="w-12 h-12 rounded-2xl bg-gold/10 flex items-center justify-center text-gold border border-gold/20 shadow-gold-bloom/10">
-                   <DollarSign size={20} />
+             <div className="premium-glass p-5 rounded-super border-white/5 flex items-center space-x-5 min-w-[180px]">
+                <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center text-gold border border-gold/20">
+                   <DollarSign size={18} />
                 </div>
                 <div>
-                   <p className="micro-label !text-[8px] mb-0.5">Available Liquidity</p>
-                   <p className="text-xl font-mono font-bold text-white">${user.portfolio.balance.toLocaleString()}</p>
+                   <p className="micro-label !text-[8px] mb-0.5">Liquidity</p>
+                   <p className="text-lg font-mono font-bold text-white">${user.portfolio.balance.toLocaleString()}</p>
                 </div>
              </div>
-             <div className="premium-glass p-5 rounded-[2rem] border-white/5 flex items-center space-x-5 min-w-[200px]">
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20 shadow-blue-bloom/10">
-                   <Activity size={20} />
+             <div className="premium-glass p-5 rounded-super border-white/5 flex items-center space-x-5 min-w-[180px]">
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/40 border border-white/10">
+                   <Activity size={18} />
                 </div>
                 <div>
-                   <p className="micro-label !text-[8px] mb-0.5">Market Pulse</p>
-                   <p className="text-xl font-black italic text-white uppercase tracking-tighter">Normal</p>
+                   <p className="micro-label !text-[8px] mb-0.5">Pulse</p>
+                   <p className="text-lg font-black italic text-white uppercase tracking-tighter">Stable</p>
                 </div>
              </div>
           </div>
@@ -72,59 +72,59 @@ export const Trading: React.FC = () => {
         {/* Interaction Bar */}
         <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-1 group">
-                <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-400 transition-colors" size={20} />
+                <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-gold transition-colors" size={18} />
                 <input
                     type="text"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="SCAN SYMBOLS OR ENTITIES..."
-                    className="w-full h-16 bg-white/[0.03] border border-white/10 rounded-super pl-14 pr-6 font-black tracking-widest text-xs text-white placeholder:text-white/10 focus:border-blue-500/40 focus:bg-white/[0.05] focus:outline-none transition-all duration-500"
+                    className="w-full h-14 bg-white/[0.02] border border-white/5 rounded-2xl pl-14 pr-6 font-mono text-[10px] tracking-widest text-white placeholder:text-white/10 focus:border-gold/30 focus:bg-white/[0.04] focus:outline-none transition-all duration-500"
                 />
             </div>
 
-            <div className="flex p-1.5 premium-glass rounded-super border-white/5">
+            <div className="flex p-1 premium-glass rounded-2xl border-white/5">
                 <button
                     onClick={() => setView('discover')}
-                    className={`px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${
-                    view === 'discover' ? 'bg-white/10 text-white shadow-xl scale-105' : 'text-white/30 hover:text-white/50'
+                    className={`px-8 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${
+                    view === 'discover' ? 'bg-white/5 text-white shadow-lg' : 'text-white/20 hover:text-white/40'
                     }`}
                 >
                     Market
                 </button>
                 <button
                     onClick={() => setView('portfolio')}
-                    className={`px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${
-                    view === 'portfolio' ? 'bg-white/10 text-white shadow-xl scale-105' : 'text-white/30 hover:text-white/50'
+                    className={`px-8 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${
+                    view === 'portfolio' ? 'bg-white/5 text-white shadow-lg' : 'text-white/20 hover:text-white/40'
                     }`}
                 >
                     Positions
                 </button>
             </div>
 
-            <div className="flex p-1.5 premium-glass rounded-super border-white/5">
+            <div className="flex p-1 premium-glass rounded-2xl border-white/5">
                 <button
                     onClick={() => setLayout('list')}
-                    className={`p-3 rounded-2xl transition-all ${layout === 'list' ? 'bg-white/10 text-blue-400' : 'text-white/20 hover:text-white/40'}`}
+                    className={`p-2.5 rounded-xl transition-all ${layout === 'list' ? 'bg-white/5 text-gold' : 'text-white/20 hover:text-white/40'}`}
                 >
-                    <List size={20} />
+                    <List size={18} />
                 </button>
                 <button
                     onClick={() => setLayout('grid')}
-                    className={`p-3 rounded-2xl transition-all ${layout === 'grid' ? 'bg-white/10 text-blue-400' : 'text-white/20 hover:text-white/40'}`}
+                    className={`p-2.5 rounded-xl transition-all ${layout === 'grid' ? 'bg-white/5 text-gold' : 'text-white/20 hover:text-white/40'}`}
                 >
-                    <LayoutGrid size={20} />
+                    <LayoutGrid size={18} />
                 </button>
             </div>
         </div>
 
         {view === 'discover' && (
           <div className="space-y-6">
-            <div className="flex items-center justify-between px-2">
+            <div className="flex items-center justify-between px-4">
               <div className="flex items-center space-x-3">
-                <span className="micro-label text-blue-400">Tactical Feed</span>
-                <div className="h-px w-24 bg-gradient-to-r from-blue-400/30 to-transparent" />
+                <span className="micro-label text-gold/60">Tactical Feed</span>
+                <div className="h-px w-24 bg-gradient-to-r from-gold/20 to-transparent" />
               </div>
-              <Filter size={16} className="text-white/20 hover:text-white/50 cursor-pointer transition-colors" />
+              <Filter size={14} className="text-white/20 hover:text-white/50 cursor-pointer transition-colors" />
             </div>
 
             <div className={layout === 'list' ? 'space-y-3' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'}>
@@ -175,26 +175,26 @@ export const Trading: React.FC = () => {
         )}
 
         {view === 'portfolio' && (
-          <div className="flex flex-col items-center justify-center py-32 text-center space-y-8 premium-glass rounded-super border-dashed border-white/10 max-w-2xl mx-auto">
+          <div className="flex flex-col items-center justify-center py-32 text-center space-y-8 premium-glass rounded-super border-dashed border-white/5 max-w-xl mx-auto">
              <div className="relative">
                 <motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.05, 0.1, 0.05] }}
                     transition={{ duration: 3, repeat: Infinity }}
-                    className="absolute inset-0 bg-blue-500 rounded-full blur-2xl"
+                    className="absolute inset-0 bg-gold rounded-full blur-2xl"
                 />
-                <div className="w-20 h-20 rounded-[2rem] bg-white/[0.03] flex items-center justify-center text-white/10 border border-white/5 relative z-10">
-                    <ArrowUpRight size={40} strokeWidth={1} />
+                <div className="w-20 h-20 rounded-3xl bg-white/[0.01] flex items-center justify-center text-white/5 border border-white/5 relative z-10">
+                    <ArrowUpRight size={32} strokeWidth={1} />
                 </div>
              </div>
              <div className="space-y-4">
-                <h3 className="text-display text-2xl italic uppercase tracking-tighter">No Active <span className="blue-gradient">Positions</span></h3>
-                <p className="text-white/30 text-xs font-lux uppercase tracking-[0.2em] max-w-xs mx-auto leading-relaxed">Execute your first acquisition protocol in the market feed to begin tracking.</p>
+                <h3 className="text-display text-2xl italic uppercase tracking-tighter">Empty <span className="gold-gradient">Portfolio</span></h3>
+                <p className="text-white/20 text-[10px] font-mono uppercase tracking-[0.2em] max-w-xs mx-auto leading-relaxed">Execute your first acquisition protocol in the market feed.</p>
              </div>
              <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setView('discover')}
-                className="premium-glass px-10 py-4 rounded-2xl border-blue-500/20 text-blue-400 font-black text-xs uppercase tracking-widest shadow-blue-bloom/10"
+                className="premium-glass px-10 py-4 rounded-xl border-gold/10 text-gold/60 font-black text-[10px] uppercase tracking-widest"
              >
                 Return to Feed
              </motion.button>

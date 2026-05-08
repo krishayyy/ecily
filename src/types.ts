@@ -74,7 +74,6 @@ export interface World {
   id: string;
   name: string;
   subtitle: string;
-  icon: string;
-  color: string;
+  icon: string | React.ElementType;
   lessons: Lesson[];
 }

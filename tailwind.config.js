@@ -8,47 +8,39 @@ export default {
     extend: {
       colors: {
         gold: {
-          DEFAULT: "#D4AF37", // Warm premium gold
-          bright: "#F5D142",
+          DEFAULT: "#C5A059", // More muted, elegant gold
+          bright: "#D4AF37",
           dim: "#8C6D1F",
         },
-        electric: "#3B82F6",
+        electric: "#4A90E2", // Softer blue
         void: "#030303",
-        graphite: "#121212",
-        midnight: "#050508",
-        onyx: "#0A0A0A",
+        midnight: "#08080A", // Slightly raised from pure black for depth
+        surface: "rgba(255, 255, 255, 0.03)",
+        "surface-bright": "rgba(255, 255, 255, 0.07)",
         border: {
-          subtle: "rgba(255, 255, 255, 0.05)",
-          bright: "rgba(255, 255, 255, 0.1)",
-        },
-        accent: {
-          gold: "#D4AF37",
-          blue: "#3B82F6",
-          purple: "#6366F1",
-          rose: "#E11D48",
-          emerald: "#10B981",
+          DEFAULT: "rgba(255, 255, 255, 0.08)",
+          subtle: "rgba(255, 255, 255, 0.04)",
         }
       },
       fontFamily: {
-        display: ['"Inter"', 'sans-serif'], // I'll use Inter as a base but style it heavily
+        display: ['"Inter"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       fontSize: {
-        'micro': '0.65rem',
-        'display-lg': ['clamp(3rem, 8vw, 6rem)', { lineHeight: '0.9', letterSpacing: '-0.04em' }],
-        'display-md': ['clamp(2rem, 5vw, 4rem)', { lineHeight: '1', letterSpacing: '-0.02em' }],
+        'micro': '0.6rem',
+        'display-lg': ['clamp(2.5rem, 6vw, 5rem)', { lineHeight: '1', letterSpacing: '-0.02em' }],
+        'display-md': ['clamp(1.5rem, 4vw, 3rem)', { lineHeight: '1.1', letterSpacing: '-0.01em' }],
+      },
+      borderRadius: {
+        'super': '1.5rem', // Less rounded for a more modern feel
       },
       letterSpacing: {
         'tightest': '-0.05em',
         'widest-xl': '0.3em',
       },
-      borderRadius: {
-        'super': '2.5rem',
-      },
       boxShadow: {
-        'soft-glow': '0 0 40px rgba(0, 0, 0, 0.8)',
-        'gold-bloom': '0 0 30px rgba(212, 175, 55, 0.2)',
-        'blue-bloom': '0 0 30px rgba(59, 130, 246, 0.2)',
+        'premium': '0 20px 40px rgba(0, 0, 0, 0.4)',
+        'gold-glow': '0 0 20px rgba(197, 160, 89, 0.1)',
       },
       backdropBlur: {
         'premium': '40px',

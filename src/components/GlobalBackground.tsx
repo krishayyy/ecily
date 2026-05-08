@@ -2,6 +2,8 @@ import React, { useEffect, useMemo } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 export const GlobalBackground: React.FC = () => {
+  const accentColor = "#C5A059";
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -10,7 +12,6 @@ export const GlobalBackground: React.FC = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // Normalize mouse coords to -0.5 to 0.5
       mouseX.set((e.clientX / window.innerWidth) - 0.5);
       mouseY.set((e.clientY / window.innerHeight) - 0.5);
     };
@@ -39,15 +40,15 @@ export const GlobalBackground: React.FC = () => {
   })), []);
 
   return (
-    <div className="fixed inset-0 -z-10 bg-void overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 -z-10 bg-void overflow-hidden pointer-events-none transition-colors duration-1000">
       {/* Dynamic Ambient Glows */}
       <motion.div
-        style={{ x: glowX, y: glowY, translateX: '-50%', translateY: '-50%' }}
-        className="absolute top-1/3 left-1/3 w-[100vw] h-[100vw] rounded-full bg-gold/[0.03] blur-[180px]"
+        style={{ x: glowX, y: glowY, translateX: '-50%', translateY: '-50%', backgroundColor: accentColor }}
+        className="absolute top-1/3 left-1/3 w-[100vw] h-[100vw] rounded-full opacity-[0.03] blur-[180px] transition-colors duration-1000"
       />
       <motion.div
-        style={{ x: glowY, y: glowX, translateX: '-50%', translateY: '-50%' }}
-        className="absolute bottom-1/3 right-1/4 w-[80vw] h-[80vw] rounded-full bg-electric/[0.02] blur-[150px]"
+        style={{ x: glowY, y: glowX, translateX: '-50%', translateY: '-50%', backgroundColor: accentColor }}
+        className="absolute bottom-1/3 right-1/4 w-[80vw] h-[80vw] rounded-full opacity-[0.02] blur-[150px] transition-colors duration-1000"
       />
 
       {/* Futuristic Metallic Rings */}

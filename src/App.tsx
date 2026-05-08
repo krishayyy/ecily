@@ -24,7 +24,6 @@ function App() {
   const isAuthenticated = useAppStore((state) => state.isAuthenticated)
 
   const handleSplashComplete = useCallback(() => {
-    console.log("Splash signal received in App");
     setShowSplash(false)
   }, [])
 
@@ -75,8 +74,8 @@ function App() {
 
                 {/* Cyber-Premium Navigation Bar */}
                 <div className="fixed bottom-8 inset-x-6 z-50 pointer-events-none">
-                  <div className="mx-auto max-w-lg premium-glass h-20 rounded-full px-4 flex items-center justify-between shadow-gold-bloom/10 border-white/5 pointer-events-auto relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-gold/5 to-transparent pointer-events-none" />
+                  <div className="mx-auto max-w-md premium-glass h-16 rounded-2xl px-2 flex items-center justify-between shadow-premium border-white/5 pointer-events-auto relative overflow-hidden">
+                    <div className="absolute inset-0 bg-white/[0.01] pointer-events-none" />
 
                     {navItems.map((item) => {
                       const isActive = activeTab === item.id;
@@ -85,25 +84,26 @@ function App() {
                           key={item.id}
                           onClick={() => {
                             setActiveTab(item.id);
-                            if (window.navigator.vibrate) window.navigator.vibrate(10);
+                            if (window.navigator.vibrate) window.navigator.vibrate(5);
                           }}
                           className={`relative flex flex-col items-center justify-center flex-1 h-full transition-all duration-500 group ${
-                            isActive ? 'text-gold' : 'text-white/20 hover:text-white/40'
+                            isActive ? 'text-gold' : 'text-white/10 hover:text-white/30'
                           }`}
                         >
                           {isActive && (
                             <motion.div
-                              layoutId="nav-glow"
-                              className="absolute -top-1 w-12 h-1 bg-gold rounded-full shadow-glow-gold"
+                              layoutId="nav-indicator"
+                              className="absolute inset-0 bg-gold/5 rounded-xl border border-gold/10"
+                              transition={{ type: "spring", stiffness: 300, damping: 30 }}
                             />
                           )}
                           <item.icon
-                            size={isActive ? 24 : 22}
-                            strokeWidth={isActive ? 2.5 : 2}
-                            className={`transition-transform duration-500 ${isActive ? 'scale-110 -translate-y-1' : 'group-hover:scale-110'}`}
+                            size={18}
+                            strokeWidth={isActive ? 2.5 : 1.5}
+                            className={`transition-all duration-500 relative z-10 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}
                           />
-                          <span className={`text-[10px] font-black uppercase tracking-widest mt-1 transition-all duration-300 ${
-                            isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 h-0'
+                          <span className={`text-[8px] font-black uppercase tracking-widest mt-1 transition-all duration-300 relative z-10 ${
+                            isActive ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'
                           }`}>
                             {item.label}
                           </span>

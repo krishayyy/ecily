@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Trash2, Sparkles, User, Brain, Command } from 'lucide-react';
+import { Send, Trash2, Sparkles, Heart, Zap, Target, Bot } from 'lucide-react';
 import { useAppStore } from '../store';
 
 interface Message {
@@ -13,7 +13,7 @@ export const Coach: React.FC = () => {
   const user = useAppStore(state => state.user);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { id: '1', role: 'assistant', content: `Neural link established. Greetings, ${user?.name.split(' ')[0]}. I am Cily, your AI financial synchronization entity. Strategic inquiry ready.` }
+    { id: '1', role: 'assistant', content: `Hey ${user?.name.split(' ')[0]}! I've been looking at your progress - you're doing great. I'm Cily, your personal partner in this money journey. What's on your mind today? No question is too big or small.` }
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -31,10 +31,10 @@ export const Coach: React.FC = () => {
     // Mock AI response
     setTimeout(() => {
       const responses = [
-        "Processing data... Analysis suggests that for your current liquidity, prioritizing an emergency reserve is the optimal protocol.",
-        "Market trajectory data indicates that sustained equity holding consistently outperforms timing-based entry points.",
-        "Your reputation index (Credit Score) is a critical lever. Maintaining low utilization increases system trust.",
-        "Flow optimization achieved. Budgeting is the protocol for ensuring capital reaches high-impact objectives."
+        "That's a really smart thing to be thinking about. Honestly, most people don't start asking that until much later - you're already ahead of the game. For your situation, I'd suggest starting with a small emergency reserve first. How does that sound?",
+        "I love that you're curious about the markets! It can feel like a lot at first, but remember: you don't have to get it all right today. Just starting is the biggest win. Steady, long-term growth is usually where the magic happens.",
+        "Your credit score might just look like a number, but think of it as your financial reputation. You're building trust with the system, and that trust is going to open so many doors for you later. You've got this!",
+        "Budgeting isn't about saying 'no' to things you love. It's actually about saying 'yes' to the things that matter most to you. It's your plan, and you're the one in control. Want to try building a quick one together?"
       ];
       const assistantMsg: Message = {
         id: (Date.now() + 1).toString(),
@@ -57,27 +57,26 @@ export const Coach: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen bg-void font-display text-white">
-      {/* OS Header HUD */}
-      <div className="px-8 pt-20 pb-8 flex items-center justify-between premium-glass border-b border-white/5 sticky top-0 z-20 backdrop-blur-2xl">
+      {/* Human-Centric Header */}
+      <div className="px-8 pt-20 pb-8 flex items-center justify-between bg-void/80 backdrop-blur-2xl sticky top-0 z-20">
         <div className="flex items-center space-x-6">
           <div className="relative">
             <motion.div
                 animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute inset-0 bg-gold rounded-2xl blur-xl"
+                transition={{ duration: 4, repeat: Infinity }}
+                className="absolute inset-0 bg-gold rounded-3xl blur-xl"
             />
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gold to-gold-dim flex items-center justify-center shadow-gold-bloom border border-white/20 relative z-10">
-              <Brain size={28} className="text-void" />
+            <div className="w-16 h-16 rounded-[2rem] bg-gradient-to-br from-gold to-[#F5D142] flex items-center justify-center shadow-gold-bloom border border-white/20 relative z-10">
+              <Bot size={32} className="text-void" />
             </div>
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-void shadow-[0_0_8px_#10B981] z-20" />
+            <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gold border-4 border-void z-20 shadow-lg" />
           </div>
-          <div className="space-y-1">
-            <div className="flex items-center space-x-3">
-              <span className="micro-label text-gold/60">AI ENTITY // CILY-OS</span>
-              <span className="w-1 h-1 rounded-full bg-emerald-500" />
-              <span className="micro-label">ACTIVE</span>
+          <div className="space-y-0.5">
+            <h1 className="text-2xl font-bold tracking-tight">Cily</h1>
+            <div className="flex items-center space-x-2">
+                <span className="text-[10px] font-black uppercase tracking-widest text-gold/60">Always here for you</span>
+                <Heart size={10} className="text-gold/40 fill-current" />
             </div>
-            <h1 className="text-2xl font-black italic uppercase tracking-tighter">Money <span className="gold-gradient">Coach</span></h1>
           </div>
         </div>
         <button
@@ -92,32 +91,29 @@ export const Coach: React.FC = () => {
       </div>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-8 py-10 space-y-8 scroll-smooth no-scrollbar mask-fade-edges">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-8 py-6 space-y-8 scroll-smooth no-scrollbar mask-fade-edges">
         <AnimatePresence mode="popLayout">
             {messages.map((msg) => (
             <motion.div
                 layout
-                initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
                 key={msg.id}
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
                 <div className={`flex items-end space-x-4 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                    <div className={`w-8 h-8 rounded-lg shrink-0 flex items-center justify-center border ${
-                        msg.role === 'user' ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' : 'bg-gold/10 border-gold/20 text-gold'
-                    }`}>
-                        {msg.role === 'user' ? <User size={14} /> : <Command size={14} />}
-                    </div>
+                    {msg.role === 'assistant' && (
+                        <div className="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center shrink-0 border border-gold/20">
+                            <Sparkles size={14} className="text-gold" />
+                        </div>
+                    )}
 
-                    <div className={`p-6 rounded-[2rem] relative overflow-hidden transition-all duration-700 ${
+                    <div className={`p-6 rounded-[2.2rem] relative overflow-hidden transition-all duration-700 ${
                         msg.role === 'user'
-                        ? 'bg-blue-600/10 text-white border border-blue-500/30 rounded-tr-none'
-                        : 'premium-glass text-white/90 border-white/10 rounded-tl-none'
+                        ? 'bg-white text-black rounded-tr-none shadow-2xl'
+                        : 'bg-white/5 border border-white/10 text-white/90 rounded-tl-none'
                     }`}>
-                        {msg.role === 'assistant' && (
-                            <div className="absolute top-0 left-0 w-24 h-24 bg-gold/5 blur-2xl pointer-events-none" />
-                        )}
-                        <p className="text-lg font-lux uppercase leading-relaxed tracking-tight">{msg.content}</p>
+                        <p className="text-lg font-medium leading-relaxed tracking-tight">{msg.content}</p>
                     </div>
                 </div>
             </motion.div>
@@ -130,13 +126,13 @@ export const Coach: React.FC = () => {
             animate={{ opacity: 1 }}
             className="flex justify-start pl-12"
           >
-            <div className="premium-glass p-5 rounded-full flex space-x-2 border-white/5">
+            <div className="bg-white/5 p-5 rounded-full flex space-x-2 border border-white/5">
               {[0, 1, 2].map(i => (
                 <motion.div
                   key={i}
-                  animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.7, 0.3] }}
-                  transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }}
-                  className="w-1.5 h-1.5 rounded-full bg-gold"
+                  animate={{ scale: [1, 1.4, 1], opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: i * 0.15 }}
+                  className="w-2 h-2 rounded-full bg-gold"
                 />
               ))}
             </div>
@@ -145,22 +141,22 @@ export const Coach: React.FC = () => {
       </div>
 
       {/* Input Stage */}
-      <div className="px-8 pb-40 pt-6 bg-void relative overflow-hidden">
-        {/* Rapid Prompts */}
+      <div className="px-8 pb-40 pt-6 bg-void relative z-30">
+        {/* Suggestion Chips */}
         <div className="flex space-x-3 mb-6 overflow-x-auto no-scrollbar py-2">
           {[
-            { label: "Analyze Budget", icon: Brain },
-            { label: "Invest Strategy", icon: Sparkles },
-            { label: "Credit Protocol", icon: ShieldCheck }
+            { label: "What's a budget?", icon: Zap },
+            { label: "Explain Investing", icon: Target },
+            { label: "Credit Score Help", icon: Heart }
           ].map(prompt => (
             <motion.button
               key={prompt.label}
-              whileHover={{ scale: 1.05, x: 2 }}
+              whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setInput(prompt.label)}
-              className="flex items-center space-x-2 whitespace-nowrap px-6 py-3 premium-glass hover:bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gold transition-all"
+              className="flex items-center space-x-2 whitespace-nowrap px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-white transition-all shadow-xl"
             >
-              <prompt.icon size={12} />
+              <prompt.icon size={14} className="text-gold" />
               <span>{prompt.label}</span>
             </motion.button>
           ))}
@@ -172,24 +168,21 @@ export const Coach: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-            placeholder="SYNCHRONIZE INQUIRY..."
-            className="w-full h-18 bg-white/[0.03] border border-white/10 rounded-super pl-6 pr-16 font-black tracking-widest text-xs text-white placeholder:text-white/10 focus:border-gold/40 focus:bg-white/[0.05] focus:outline-none transition-all duration-500"
+            placeholder="Type your message..."
+            className="w-full h-18 bg-white/5 border border-white/10 rounded-[2rem] pl-6 pr-16 font-bold text-lg text-white placeholder:text-white/20 focus:border-white/30 focus:bg-white/[0.08] focus:outline-none transition-all duration-500 shadow-2xl"
           />
           <button
             onClick={sendMessage}
             disabled={!input.trim() || isTyping}
+            aria-label="Send"
             className={`absolute right-3 top-1/2 -translate-y-1/2 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
-              !input.trim() ? 'bg-white/5 text-white/10' : 'bg-gold text-void shadow-gold-bloom shadow-2xl scale-110 active:scale-95'
+              !input.trim() ? 'bg-white/5 text-white/10' : 'bg-white text-black shadow-2xl scale-110 active:scale-90'
             }`}
           >
-            <Send size={18} strokeWidth={3} />
+            <Send size={20} strokeWidth={2.5} />
           </button>
         </div>
       </div>
     </div>
   );
 };
-
-function ShieldCheck({ size }: { size: number }) {
-    return <Sparkles size={size} />;
-}

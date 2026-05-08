@@ -24,9 +24,9 @@ export const Profile: React.FC = () => {
 
   const stats = [
     { label: 'Access Level', value: `0${user.level}`, icon: Zap, color: 'text-gold', sub: 'QUANTUM RANK' },
-    { label: 'Synchronization', value: user.xp.toLocaleString(), icon: Target, color: 'text-blue-400', sub: 'XP ACCUMULATED' },
-    { label: 'Credits', value: user.ecilyCoins.toLocaleString(), icon: Coins, color: 'text-emerald-400', sub: 'SYSTEM CURRENCY' },
-    { label: 'Objectives', value: user.completedLessons.length, icon: Trophy, color: 'text-rose-400', sub: 'MISSIONS SECURED' },
+    { label: 'Synchronization', value: user.xp.toLocaleString(), icon: Target, color: 'text-white/60', sub: 'XP ACCUMULATED' },
+    { label: 'Credits', value: user.ecilyCoins.toLocaleString(), icon: Coins, color: 'text-gold/80', sub: 'SYSTEM CURRENCY' },
+    { label: 'Objectives', value: user.completedLessons.length, icon: Trophy, color: 'text-white/40', sub: 'MISSIONS SECURED' },
   ]
 
   const containerVariants = {

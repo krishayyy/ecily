@@ -1,31 +1,59 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from '../store';
+import { type User, type FinancialGoal, type USState, type MoneySituation, type ExplanationStyle } from '../types';
+import {
+  ChevronRight,
+  CheckCircle2,
+  PiggyBank,
+  TrendingUp,
+  Scale,
+  CreditCard,
+  GraduationCap,
+  Home,
+  Car,
+  Skull,
+  MapPin,
+  Briefcase,
+  Zap
+} from 'lucide-react';
 import { WheelPicker } from './WheelPicker';
-import { type User, type USState, type MoneySituation, type FinancialGoal } from '../types';
-import { ChevronRight, ChevronLeft, Shield, Landmark, Zap, BarChart3, GraduationCap, Car, Home, Receipt } from 'lucide-react';
+
+const GOAL_CONFIG: { id: FinancialGoal; label: string; icon: React.ElementType }[] = [
+  { id: 'Build savings', label: 'Build Savings', icon: PiggyBank },
+  { id: 'Start investing', label: 'Start Investing', icon: TrendingUp },
+  { id: 'Master budgeting', label: 'Master Budgeting', icon: Scale },
+  { id: 'Build credit', label: 'Build Credit', icon: CreditCard },
+  { id: 'Pay for college', label: 'Pay for College', icon: GraduationCap },
+  { id: 'Own a home', label: 'Own a Home', icon: Home },
+  { id: 'Buy a car', label: 'Buy a Car', icon: Car },
+  { id: 'Kill debt', label: 'Kill Debt', icon: Skull },
+];
 
 const STATES: USState[] = [
-  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
-  'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-  'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-  'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
-  'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
-  'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia',
+  'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',
+  'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
+  'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
+  'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+  'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio',
+  'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
+  'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
   'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 ];
 
-const AGE_RANGE = Array.from({ length: 16 }, (_, i) => i + 10);
+const SITUATIONS: { id: MoneySituation; label: string; sub: string }[] = [
+  { id: 'noIncomeYet', label: 'No Income', sub: 'I am just starting out.' },
+  { id: 'allowanceGifts', label: 'Allowance', sub: 'I get money from family/gifts.' },
+  { id: 'partTimeJob', label: 'Part-time', sub: 'I work a few hours a week.' },
+  { id: 'fullTimeJob', label: 'Full-time', sub: 'I have a steady paycheck.' },
+];
 
-const GOAL_CONFIG: { id: FinancialGoal; icon: any; label: string }[] = [
-  { id: 'Build savings', icon: Landmark, label: 'Capital Reserve' },
-  { id: 'Start investing', icon: BarChart3, label: 'Market Growth' },
-  { id: 'Master budgeting', icon: Zap, label: 'Flow Control' },
-  { id: 'Build credit', icon: Shield, label: 'Credit Velocity' },
-  { id: 'Pay for college', icon: GraduationCap, label: 'Intellectual ROI' },
-  { id: 'Own a home', icon: Home, label: 'Asset Acquisition' },
-  { id: 'Buy a car', icon: Car, label: 'Mobility Tech' },
-  { id: 'Kill debt', icon: Receipt, label: 'Liability Erasure' },
+const STYLES: { id: ExplanationStyle; label: string; sub: string }[] = [
+  { id: 'Simple', label: 'Simple', sub: 'Keep it short and jargon-free.' },
+  { id: 'Normal', label: 'Balanced', sub: 'Clear explanations with context.' },
+  { id: 'Deep', label: 'Deep Dive', sub: 'Show me the technical details.' },
 ];
 
 export function OnboardingFlow() {
@@ -34,7 +62,7 @@ export function OnboardingFlow() {
   const setUser = useAppStore((state) => state.setUser);
 
   const [formData, setFormData] = useState<Partial<User>>({
-    name: 'STRATEGIST',
+    name: '',
     age: 16,
     state: 'California',
     moneySituation: 'noIncomeYet',
@@ -61,307 +89,287 @@ export function OnboardingFlow() {
   const finish = () => {
     const finalUser = {
       uid: 'user_' + Math.random().toString(36).substr(2, 9),
-      email: 'strategist@ecily.os',
+      email: 'alex@example.com',
       ...formData,
       isOnboardingComplete: true,
     } as User;
     setUser(finalUser);
   };
 
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? '5vw' : '-5vw',
-      opacity: 0,
-      filter: "blur(20px)",
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? '5vw' : '-5vw',
-      opacity: 0,
-      filter: "blur(20px)",
-    }),
-  };
-
   return (
-    <div className="min-h-screen bg-void flex flex-col relative overflow-hidden text-white font-display">
-      {/* Background elements */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute top-0 right-0 w-[800px] h-[800px] bg-gold/10 rounded-full blur-[150px]"
-        />
-      </div>
+    <div className={`min-h-screen bg-void text-white transition-colors duration-1000 overflow-hidden relative flex flex-col`}>
+      <div className="fixed inset-0 bg-midnight -z-10" />
 
-      {/* Progress Line */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-white/5 z-50">
-        <motion.div
-          className="h-full bg-gold shadow-gold-bloom"
-          initial={{ width: "0%" }}
-          animate={{ width: `${(step / 5) * 100}%` }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        />
-      </div>
+      <motion.div
+        animate={{
+            opacity: [0.1, 0.2, 0.1],
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="fixed inset-0 pointer-events-none -z-5"
+        style={{
+            background: `radial-gradient(circle at 50% 40%, rgba(197, 160, 89, 0.05) 0%, transparent 60%)`
+        }}
+      />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 relative">
+      <div className="flex-1 flex flex-col relative z-10 px-6">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={step}
             custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              duration: 0.8,
-              ease: [0.16, 1, 0.3, 1]
-            }}
-            className="w-full max-w-xl"
+            initial={{ opacity: 0, x: direction > 0 ? 50 : -50, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, x: direction > 0 ? -50 : 50, filter: 'blur(10px)' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="flex-1 flex flex-col justify-center max-w-lg mx-auto w-full py-12"
           >
             {step === 1 && (
-              <div className="space-y-12">
-                <div className="space-y-4 text-center">
-                  <span className="micro-label text-gold/50 tracking-widest-xl">IDENTITY VERIFICATION</span>
-                  <h2 className="text-display-md text-display italic">
-                    Establish Your <br />
-                    <span className="gold-gradient">Age Index</span>
-                  </h2>
-                </div>
-
-                <div className="flex justify-center">
-                  <div className="relative p-1 rounded-[3rem] bg-gradient-to-b from-white/10 to-transparent">
-                    <div className="premium-glass p-12 rounded-super">
-                      <WheelPicker
-                        value={formData.age || 16}
-                        onChange={(age) => setFormData({ ...formData, age })}
-                        range={AGE_RANGE}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-8">
-                  <OnboardingButton onClick={advance} label="ESTABLISH AGE" />
-                </div>
-              </div>
-            )}
-
-            {step === 2 && (
-              <div className="space-y-12">
-                <div className="space-y-4 text-center">
-                  <span className="micro-label text-gold/50">JURISDICTION MAPPING</span>
-                  <h2 className="text-display-md text-display italic">Select Your <br /><span className="gold-gradient">Operational Zone</span></h2>
-                </div>
-
-                <div className="grid grid-cols-1 gap-3 max-h-[350px] overflow-y-auto no-scrollbar px-2 mask-fade-edges">
-                  {STATES.map((st) => (
-                    <button
-                      key={st}
-                      onClick={() => {
-                        setFormData({ ...formData, state: st });
-                        if (window.navigator.vibrate) window.navigator.vibrate(5);
-                      }}
-                      className={`p-5 premium-card text-left flex justify-between items-center group overflow-hidden relative ${
-                        formData.state === st
-                        ? 'bg-gold/10 border-gold/30 shadow-gold-bloom'
-                        : 'hover:bg-white/5 border-white/5'
-                      }`}
-                    >
-                      {formData.state === st && (
-                        <motion.div layoutId="state-active" className="absolute inset-0 bg-gold/5 pointer-events-none" />
-                      )}
-                      <span className={`font-black uppercase tracking-widest text-xs transition-colors duration-500 ${formData.state === st ? 'text-gold' : 'text-white/40 group-hover:text-white/70'}`}>
-                        {st}
-                      </span>
-                      <div className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${formData.state === st ? 'bg-gold scale-125 shadow-gold-bloom' : 'bg-white/10'}`} />
-                    </button>
-                  ))}
-                </div>
-
-                <div className="flex items-center justify-between gap-4">
-                  <IconButton onClick={retreat} icon={ChevronLeft} />
-                  <OnboardingButton onClick={advance} label="CONFIRM JURISDICTION" />
-                </div>
-              </div>
-            )}
-
-            {step === 3 && (
-              <div className="space-y-12">
-                <div className="space-y-4 text-center">
-                  <span className="micro-label text-gold/50">CAPITAL INFLOW</span>
-                  <h2 className="text-display-md text-display italic">Define Your <br /><span className="gold-gradient">Current Flow</span></h2>
-                </div>
+              <div className="space-y-12 text-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="w-20 h-20 bg-surface rounded-3xl mx-auto flex items-center justify-center border border-border/50 shadow-premium"
+                >
+                  <div className="w-8 h-8 bg-gold rounded-lg rotate-45 shadow-gold-glow" />
+                </motion.div>
 
                 <div className="space-y-4">
-                  {[
-                    { id: 'noIncomeYet', title: 'Zero Inflow', sub: 'INITIALIZING PHASE' },
-                    { id: 'allowanceGifts', title: 'Support Network', sub: 'EXTERNAL CAPITAL' },
-                    { id: 'partTimeJob', title: 'Active Hustle', sub: 'INTERMITTENT REVENUE' },
-                    { id: 'fullTimeJob', title: 'Full Access', sub: 'SUSTAINED YIELD' }
-                  ].map((sit) => (
-                    <button
-                      key={sit.id}
-                      onClick={() => setFormData({ ...formData, moneySituation: sit.id as MoneySituation })}
-                      className={`w-full p-6 premium-card text-left flex items-center space-x-6 relative group ${
-                        formData.moneySituation === sit.id
-                        ? 'bg-gold/10 border-gold/30 shadow-gold-bloom'
-                        : 'hover:bg-white/5 border-white/5'
-                      }`}
-                    >
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-700 ${
-                        formData.moneySituation === sit.id ? 'bg-gold text-black shadow-gold-bloom' : 'bg-white/5 text-white/20'
-                      }`}>
-                        <div className="w-1.5 h-1.5 rounded-full bg-current" />
-                      </div>
-                      <div>
-                        <p className={`font-black uppercase tracking-widest text-sm ${formData.moneySituation === sit.id ? 'text-white' : 'text-white/40'}`}>{sit.title}</p>
-                        <p className="micro-label !text-[10px] mt-1 opacity-50">{sit.sub}</p>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-
-                <div className="flex items-center justify-between gap-4">
-                  <IconButton onClick={retreat} icon={ChevronLeft} />
-                  <OnboardingButton onClick={advance} label="PROCESS DATA" />
-                </div>
-              </div>
-            )}
-
-            {step === 4 && (
-              <div className="space-y-10">
-                <div className="space-y-4 text-center">
-                  <span className="micro-label text-gold/50">STRATEGIC OBJECTIVES</span>
-                  <h2 className="text-display-md text-display italic">Target <br /><span className="gold-gradient">Milestones</span></h2>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  {GOAL_CONFIG.map((goal) => {
-                    const isSelected = formData.goals?.includes(goal.id);
-                    const Icon = goal.icon;
-                    return (
-                      <button
-                        key={goal.id}
-                        onClick={() => {
-                          const newGoals = isSelected
-                            ? formData.goals?.filter(g => g !== goal.id)
-                            : [...(formData.goals || []), goal.id];
-                          setFormData({ ...formData, goals: newGoals });
-                          if (window.navigator.vibrate) window.navigator.vibrate(3);
-                        }}
-                        className={`p-5 premium-card text-left flex flex-col justify-between h-36 relative group transition-all duration-500 ${
-                          isSelected
-                          ? 'bg-gold/15 border-gold/50 shadow-gold-bloom scale-[1.02] z-10'
-                          : 'hover:bg-white/5 border-white/5 opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0'
-                        }`}
-                      >
-                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-500 ${isSelected ? 'bg-gold text-black rotate-[360deg]' : 'bg-white/5 text-white/40'}`}>
-                          <Icon size={18} strokeWidth={isSelected ? 3 : 2} />
-                        </div>
-                        <div className="space-y-1">
-                            <span className={`font-black uppercase tracking-tighter text-[10px] leading-tight block transition-colors ${isSelected ? 'text-white' : 'text-white/30'}`}>{goal.label}</span>
-                            <span className={`font-display italic text-[9px] block opacity-40 ${isSelected ? 'text-gold' : 'text-white'}`}>{goal.id}</span>
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-
-                <div className="flex items-center justify-between gap-4">
-                  <IconButton onClick={retreat} icon={ChevronLeft} />
-                  <OnboardingButton onClick={advance} label="FINALIZE STRATEGY" />
-                </div>
-              </div>
-            )}
-
-            {step === 5 && (
-              <div className="space-y-16 py-12 text-center">
-                <div className="relative inline-block">
-                   <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="absolute -inset-16 rounded-full border border-dashed border-gold/10"
-                   />
-                   <motion.div
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                    className="absolute -inset-10 rounded-full border border-gold/5"
-                   />
-                   <div className="w-32 h-32 rounded-full premium-glass flex items-center justify-center relative z-10 border border-gold/30 shadow-gold-bloom">
-                     <Shield className="text-gold" size={48} strokeWidth={1} />
-                   </div>
-                </div>
-
-                <div className="space-y-6">
-                  <span className="micro-label text-gold tracking-widest-xl">SYSTEM READY</span>
-                  <h2 className="text-display-md text-display italic gold-gradient">Authorize Access</h2>
-                  <p className="text-white/40 text-xs font-lux max-w-xs mx-auto leading-relaxed uppercase tracking-widest">
-                    Trajectory mapped. <br />
-                    Discipline index synchronized. <br />
-                    The future belongs to you.
-                  </p>
+                  <h1 className="text-5xl font-black tracking-tighter uppercase italic gold-gradient leading-tight">Secret <br />Protocol</h1>
+                  <p className="text-white/40 font-mono text-xs tracking-widest">INITIALIZING WEALTH ACQUISITION</p>
                 </div>
 
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={finish}
-                  className="w-full py-6 bg-gold text-black font-black uppercase tracking-[0.25em] text-xs rounded-2xl shadow-gold-bloom relative overflow-hidden"
+                  onClick={advance}
+                  className="w-full h-16 bg-gold text-void rounded-2xl flex items-center justify-center space-x-4 font-black uppercase italic text-sm tracking-widest shadow-gold-glow transition-all"
                 >
-                  <motion.div
-                    animate={{ x: ["-100%", "200%"] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12"
-                  />
-                  INITIALIZE SYSTEM
+                  <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5 h-5 brightness-0" alt="Google" />
+                  <span>Authorize with Google</span>
                 </motion.button>
+              </div>
+            )}
+
+            {step === 2 && (
+              <div className="space-y-10">
+                <h2 className="text-4xl font-bold tracking-tight">What should we <br />call you?</h2>
+
+                <div className="relative">
+                  <input
+                    autoFocus
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => {
+                        setFormData({ ...formData, name: e.target.value });
+                    }}
+                    placeholder="Enter your name"
+                    className={`w-full bg-transparent border-none text-4xl font-bold focus:outline-none placeholder:opacity-20 text-white`}
+                  />
+                  {formData.name && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="absolute -bottom-8 left-0 text-sm font-medium opacity-50"
+                    >
+                        Nice to meet you, {formData.name}.
+                    </motion.div>
+                  )}
+                </div>
+
+                <div className="pt-12">
+                   <CTAButton onClick={advance} disabled={!formData.name} label="Continue" />
+                </div>
+              </div>
+            )}
+
+            {step === 3 && (
+              <div className="space-y-12 flex flex-col items-center">
+                <div className="space-y-2 text-center w-full">
+                  <h2 className="text-4xl font-bold tracking-tight">How old are you?</h2>
+                  <p className="opacity-40 font-medium">We tailor the journey to your stage.</p>
+                </div>
+
+                <div className="py-8">
+                  <WheelPicker
+                    value={formData.age || 16}
+                    onChange={(age) => setFormData({ ...formData, age })}
+                    range={Array.from({ length: 16 }, (_, i) => i + 10)}
+                  />
+                </div>
+
+                {formData.age! < 13 ? (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="p-6 rounded-3xl bg-red-500/10 border border-red-500/20 text-red-500 text-center w-full"
+                    >
+                        <p className="font-bold">You need to be at least 13 to continue.</p>
+                    </motion.div>
+                ) : (
+                    <CTAButton onClick={advance} label="That's me" />
+                )}
+
+                <button onClick={retreat} className="w-full text-center opacity-30 text-sm font-bold uppercase tracking-widest mt-4">Back</button>
+              </div>
+            )}
+
+            {step === 4 && (
+              <div className="space-y-10">
+                <h2 className="text-4xl font-bold tracking-tight">Which state <br />are you in?</h2>
+                <div className="grid grid-cols-1 gap-3 max-h-[400px] overflow-y-auto no-scrollbar py-2 mask-fade-edges px-1">
+                  {STATES.map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => {
+                        setFormData({ ...formData, state: s });
+                        advance();
+                      }}
+                      className={`p-6 rounded-2xl text-left flex items-center justify-between border transition-all ${
+                        formData.state === s
+                        ? 'bg-gold text-void border-gold shadow-gold-glow'
+                        : 'bg-surface border-border hover:border-gold/30'
+                      }`}
+                    >
+                      <span className="font-bold uppercase italic tracking-tight">{s}</span>
+                      <MapPin size={18} className={formData.state === s ? 'text-void' : 'text-gold/30'} />
+                    </button>
+                  ))}
+                </div>
+                <button onClick={retreat} className="w-full text-center opacity-30 text-sm font-bold uppercase tracking-widest mt-4">Back</button>
+              </div>
+            )}
+
+            {step === 5 && (
+              <div className="space-y-10">
+                <h2 className="text-4xl font-bold tracking-tight uppercase italic gold-gradient">Current Status</h2>
+                <div className="space-y-4">
+                  {SITUATIONS.map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => {
+                        setFormData({ ...formData, moneySituation: s.id });
+                        advance();
+                      }}
+                      className={`p-6 rounded-2xl text-left w-full border transition-all ${
+                        formData.moneySituation === s.id
+                        ? 'bg-gold text-void border-gold shadow-gold-glow'
+                        : 'bg-surface border-border hover:border-gold/30'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-black uppercase italic text-lg">{s.label}</span>
+                        <Briefcase size={20} className={formData.moneySituation === s.id ? 'text-void' : 'text-gold/30'} />
+                      </div>
+                      <p className={`text-xs font-medium ${formData.moneySituation === s.id ? 'text-void/60' : 'text-white/40'}`}>{s.sub}</p>
+                    </button>
+                  ))}
+                </div>
+                <button onClick={retreat} className="w-full text-center opacity-30 text-sm font-bold uppercase tracking-widest mt-4">Back</button>
+              </div>
+            )}
+
+            {step === 6 && (
+              <div className="space-y-8">
+                <div className="space-y-2 text-center">
+                  <h2 className="text-4xl font-bold tracking-tight uppercase italic gold-gradient">Objectives</h2>
+                  <p className="opacity-40 font-mono text-[10px] tracking-widest">SELECT MISSIONS TO PRIORITIZE</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 h-[400px] overflow-y-auto no-scrollbar py-4 px-2 mask-fade-edges">
+                  {GOAL_CONFIG.map((goal) => {
+                    const isSelected = formData.goals?.includes(goal.id);
+                    return (
+                      <motion.button
+                        key={goal.id}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => {
+                          const newGoals = isSelected
+                            ? formData.goals?.filter(g => g !== goal.id)
+                            : [...(formData.goals || []), goal.id];
+                          setFormData({ ...formData, goals: newGoals });
+                        }}
+                        className={`p-6 rounded-super text-left flex flex-col justify-between h-40 transition-all duration-500 relative group ${
+                          isSelected
+                          ? 'bg-gold text-void shadow-gold-glow scale-[1.02] z-10'
+                          : 'bg-surface hover:bg-surface-bright border border-border'
+                        }`}
+                      >
+                        <goal.icon size={24} strokeWidth={isSelected ? 3 : 1.5} className={isSelected ? 'text-void' : 'text-gold'} />
+                        <div className="space-y-1">
+                            <span className="font-black italic uppercase text-xs leading-tight block tracking-tight">{goal.label}</span>
+                        </div>
+                        {isSelected && (
+                            <motion.div
+                                layoutId="check"
+                                className="absolute top-4 right-4"
+                            >
+                                <CheckCircle2 className="text-void" size={18} strokeWidth={3} />
+                            </motion.div>
+                        )}
+                      </motion.button>
+                    )
+                  })}
+                </div>
+
+                <CTAButton onClick={advance} disabled={formData.goals?.length === 0} label="Continue" />
+                <button onClick={retreat} className="w-full text-center opacity-30 text-[10px] font-black uppercase tracking-[0.2em] mt-4">Previous Step</button>
+              </div>
+            )}
+
+            {step === 7 && (
+              <div className="space-y-10">
+                <div className="text-center space-y-2">
+                    <h2 className="text-4xl font-bold tracking-tight uppercase italic gold-gradient">Intelligence Style</h2>
+                    <p className="opacity-40 font-mono text-[10px] tracking-widest">HOW SHOULD CILY COMMUNICATE?</p>
+                </div>
+                <div className="space-y-4">
+                  {STYLES.map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => {
+                        setFormData({ ...formData, explanationStyle: s.id });
+                      }}
+                      className={`p-6 rounded-2xl text-left w-full border transition-all ${
+                        formData.explanationStyle === s.id
+                        ? 'bg-gold text-void border-gold shadow-gold-glow'
+                        : 'bg-surface border-border hover:border-gold/30'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-black uppercase italic text-lg">{s.label}</span>
+                        <Zap size={20} className={formData.explanationStyle === s.id ? 'text-void' : 'text-gold/30'} />
+                      </div>
+                      <p className={`text-xs font-medium ${formData.explanationStyle === s.id ? 'text-void/60' : 'text-white/40'}`}>{s.sub}</p>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="pt-8">
+                    <CTAButton onClick={finish} label="Synchronize OS" />
+                </div>
+                <button onClick={retreat} className="w-full text-center opacity-30 text-sm font-bold uppercase tracking-widest mt-4">Back</button>
               </div>
             )}
           </motion.div>
         </AnimatePresence>
       </div>
-
-      {/* OS Meta info */}
-      <div className="fixed bottom-10 left-10 opacity-20 hidden lg:block">
-        <div className="flex flex-col space-y-1">
-          <span className="micro-label !text-[8px]">TERMINAL: ECILY-SECURE-ACCESS</span>
-          <span className="micro-label !text-[8px]">ENCRYPTION: AES-512-OS</span>
-          <span className="micro-label !text-[8px]">Uptime: 99.9992%</span>
-        </div>
-      </div>
     </div>
   );
 }
 
-function OnboardingButton({ onClick, label }: { onClick: () => void, label: string }) {
+function CTAButton({ onClick, disabled, label }: { onClick: () => void; disabled?: boolean; label: string }) {
   return (
     <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={!disabled ? { scale: 1.02, backgroundColor: "rgba(197, 160, 89, 1)" } : {}}
+      whileTap={!disabled ? { scale: 0.98 } : {}}
       onClick={onClick}
-      className="flex-1 py-6 premium-glass border border-white/10 rounded-2xl flex items-center justify-center space-x-3 group relative overflow-hidden"
+      disabled={disabled}
+      className={`w-full h-18 rounded-2xl flex items-center justify-center space-x-3 font-black uppercase italic text-sm tracking-widest transition-all ${
+        disabled ? 'bg-white/5 text-white/10' : 'bg-gold text-void shadow-gold-glow'
+      }`}
     >
-      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-      <span className="font-black uppercase tracking-widest text-[10px] text-white/80 group-hover:text-gold transition-colors">{label}</span>
-      <ChevronRight size={14} className="text-gold group-hover:translate-x-1 transition-transform" />
+      <span>{label}</span>
+      <ChevronRight size={18} strokeWidth={3} />
     </motion.button>
-  )
-}
-
-function IconButton({ onClick, icon: Icon }: { onClick: () => void, icon: any }) {
-  return (
-    <button
-      onClick={onClick}
-      className="w-20 h-[70px] premium-glass border border-white/10 rounded-2xl flex items-center justify-center text-white/30 hover:text-white/70 transition-colors"
-    >
-      <Icon size={20} />
-    </button>
-  )
+  );
 }

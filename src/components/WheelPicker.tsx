@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 interface WheelPickerProps {
   value: number;
@@ -38,13 +37,8 @@ export const WheelPicker: React.FC<WheelPickerProps> = ({ value, onChange, range
       <div
         className="absolute inset-x-0 h-[90px] top-1/2 -translate-y-1/2 pointer-events-none z-20 flex items-center justify-center"
       >
-        <div className="w-full h-full glass rounded-3xl border border-white/10 shadow-[0_0_50px_rgba(212,175,55,0.15)] overflow-hidden">
+        <div className="w-full h-full rounded-2xl border-y border-white/5 bg-white/[0.01] overflow-hidden">
             <div className="absolute inset-0 bg-gold/5" />
-            <motion.div
-                animate={{ opacity: [0.1, 0.3, 0.1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100%_4px]"
-            />
         </div>
       </div>
 
@@ -65,13 +59,13 @@ export const WheelPicker: React.FC<WheelPickerProps> = ({ value, onChange, range
               key={num}
               className="h-[90px] flex items-center justify-center snap-center transform-style-3d"
               style={{
-                transform: `rotateX(${ (index - currentIndex) * -25 }deg) translateZ(${ distance * -40 }px)`,
-                opacity: Math.max(0, 1 - (distance * 0.35)),
-                transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+                transform: `rotateX(${ (index - currentIndex) * -20 }deg) translateZ(${ distance * -60 }px)`,
+                opacity: Math.max(0, 1 - (distance * 0.4)),
+                transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
               }}
             >
-              <span className={`text-6xl font-black italic tracking-tighter transition-all duration-700 ${
-                isSelected ? 'text-gold drop-shadow-[0_0_20px_rgba(212,175,55,0.5)] scale-110' : 'text-white/10 grayscale'
+              <span className={`text-7xl font-black italic tracking-tighter transition-all duration-700 ${
+                isSelected ? 'text-gold drop-shadow-[0_0_30px_rgba(197,160,89,0.2)] scale-110' : 'text-white/5'
               }`}
               >
                 {num}
