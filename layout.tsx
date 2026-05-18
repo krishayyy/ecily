@@ -1,16 +1,18 @@
 import type { Metadata } from "next"
-import localFont from "next/font/local"
+import { Inter, DM_Mono } from "next/font/google"
 import "./globals.css"
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+const inter = Inter({
+  subsets: ["latin"],
   variable: "--font-geist-sans",
-  weight: "100 900",
+  display: "swap",
 })
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+
+const dmMono = DM_Mono({
+  subsets: ["latin"],
   variable: "--font-geist-mono",
-  weight: "100 900",
+  weight: ["300", "400", "500"],
+  display: "swap",
 })
 
 export const metadata: Metadata = {
@@ -27,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#080808] overflow-x-hidden`}
+        className={`${inter.variable} ${dmMono.variable} antialiased bg-[#080808] overflow-x-hidden`}
       >
         {children}
       </body>
