@@ -34,7 +34,7 @@ export const leadership: LeadershipGroup[] = [
   {
     title: "Marketing",
     members: [
-      { name: "Ryan Yarlagadd", role: "Director of Marketing" },
+      { name: "Ryan Yarlagadda", role: "Director of Marketing" },
     ],
   },
 ]
