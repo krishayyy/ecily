@@ -134,3 +134,12 @@ export const sponsorTiers = [
 
 /** Contact address used across CTAs. */
 export const CONTACT_EMAIL = "joinecily@gmail.com"
+
+/**
+ * Social links. Leave a value as "" to hide that icon.
+ * Add the LinkedIn page URL when you have it.
+ */
+export const SOCIAL = {
+  instagram: "https://www.instagram.com/join.ecily",
+  linkedin: "", // e.g. "https://www.linkedin.com/company/ecily"
+}

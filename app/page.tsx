@@ -1,6 +1,7 @@
 import Nav from "@/components/Nav"
 import Hero from "@/components/Hero"
 import WorldsScroll from "@/components/WorldsScroll"
+import Mission from "@/components/Mission"
 import Features from "@/components/Features"
 import Chapters from "@/components/Chapters"
 import Tournament from "@/components/Tournament"
@@ -14,6 +15,7 @@ export default function Home() {
       <Nav />
       <Hero />
       <WorldsScroll />
+      <Mission />
       <div id="app">
         <Features />
       </div>
