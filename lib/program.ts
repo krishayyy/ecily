@@ -141,5 +141,5 @@ export const CONTACT_EMAIL = "joinecily@gmail.com"
  */
 export const SOCIAL = {
   instagram: "https://www.instagram.com/join.ecily",
-  linkedin: "", // e.g. "https://www.linkedin.com/company/ecily"
+  linkedin: "https://www.linkedin.com/company/ecilyco",
 }
