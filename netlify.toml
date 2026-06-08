@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Runs Next.js on Netlify: serves the app and turns the API routes
+# (/api/waitlist, /api/chapter) into serverless functions.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
