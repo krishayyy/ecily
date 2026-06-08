@@ -34,22 +34,6 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Nav */}
-      <motion.nav
-        className="absolute top-0 left-0 right-0 flex items-center justify-between px-8 py-6"
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <span className="text-white font-semibold tracking-tight text-lg">ecily</span>
-        <a
-          href="#waitlist"
-          className="text-sm text-white/60 hover:text-white transition-colors duration-200"
-        >
-          Get early access
-        </a>
-      </motion.nav>
-
       {/* Hero text */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl">
         <motion.p
@@ -79,25 +63,39 @@ export default function Hero() {
         </h1>
 
         <motion.p
-          className="text-base text-white/50 max-w-md leading-relaxed mb-10"
+          className="text-base text-white/50 max-w-lg leading-relaxed mb-10"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: 0.5, ease: "easeOut" }}
         >
-          8 worlds. Real lessons. Zero boring. Ecily teaches teens how money actually works — through a game you actually want to play.
+          A game that teaches teens how money actually works — across 8 worlds. Play it
+          yourself, or start a chapter at your school and lead a team into our national
+          tournament.
         </motion.p>
 
-        <motion.a
-          href="#waitlist"
-          className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors duration-200"
+        <motion.div
+          className="flex flex-col sm:flex-row items-center gap-3"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1, duration: 0.5, ease: "easeOut" }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
         >
-          Join the waitlist
-        </motion.a>
+          <motion.a
+            href="#start"
+            className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-[#C9A96E] text-black text-sm font-semibold hover:bg-[#E0C28A] transition-colors duration-200 w-full sm:w-auto"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            Start a chapter
+          </motion.a>
+          <motion.a
+            href="#waitlist"
+            className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-white/20 text-white text-sm font-semibold hover:bg-white/5 transition-colors duration-200 w-full sm:w-auto"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            Get the app
+          </motion.a>
+        </motion.div>
       </div>
 
       {/* Scroll prompt */}
