@@ -25,10 +25,15 @@ export const leadership: LeadershipGroup[] = [
     ],
   },
   {
-    title: "Directors of Outreach",
+    title: "Outreach",
     members: [
       { name: "Akshat Singh", role: "Director of Outreach" },
-      { name: "Atharv Ravanikar", role: "Director of Outreach" },
+    ],
+  },
+  {
+    title: "Technical",
+    members: [
+      { name: "Atharv Ravanikar", role: "Technical Director" },
     ],
   },
   {

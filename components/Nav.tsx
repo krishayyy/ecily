@@ -9,7 +9,7 @@ const links = [
   { label: "Chapters", href: "/#chapters" },
   { label: "Tournament", href: "/#tournament" },
   { label: "Sponsors", href: "/#sponsors" },
-  { label: "People", href: "/people" },
+  { label: "Team", href: "/team" },
 ]
 
 export default function Nav() {

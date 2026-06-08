@@ -10,7 +10,7 @@ export default function Footer() {
           <Link href="/#chapters" className="hover:text-white/60 transition-colors duration-200">Chapters</Link>
           <Link href="/#tournament" className="hover:text-white/60 transition-colors duration-200">Tournament</Link>
           <Link href="/#sponsors" className="hover:text-white/60 transition-colors duration-200">Sponsors</Link>
-          <Link href="/people" className="hover:text-white/60 transition-colors duration-200">People</Link>
+          <Link href="/team" className="hover:text-white/60 transition-colors duration-200">Team</Link>
           <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-white/60 transition-colors duration-200">Contact</a>
         </div>
         <span className="text-xs text-white/25 font-mono">© 2026 Ecily</span>

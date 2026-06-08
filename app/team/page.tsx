@@ -23,7 +23,7 @@ function initials(name: string) {
     .toUpperCase()
 }
 
-export default function PeoplePage() {
+export default function TeamPage() {
   return (
     <>
       <Nav />
@@ -33,7 +33,7 @@ export default function PeoplePage() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,169,110,0.10),transparent_55%)]" />
           <div className="relative max-w-5xl mx-auto text-center">
             <motion.p {...fadeUp} className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#C9A96E]/70 mb-4">
-              The people
+              The team
             </motion.p>
             <motion.h1 {...fadeUp} className="text-[clamp(2.4rem,6vw,4.5rem)] font-bold text-white leading-[1.04] tracking-tight">
               Who&apos;s building Ecily.
@@ -79,6 +79,40 @@ export default function PeoplePage() {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Join the team */}
+        <section className="px-6 pb-24">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              {...fadeUp}
+              className="rounded-3xl border border-white/10 bg-white/[0.03] p-10 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6"
+            >
+              <div>
+                <h3 className="text-2xl font-bold text-white tracking-tight mb-2">
+                  Want to help build Ecily?
+                </h3>
+                <p className="text-sm text-white/45 max-w-md leading-relaxed">
+                  We&apos;re a small team growing fast. If you want to lead outreach,
+                  build product, run a state, or start a chapter — we want to hear from you.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                <a
+                  href={`mailto:${CONTACT_EMAIL}?subject=I%20want%20to%20join%20the%20Ecily%20team`}
+                  className="inline-flex justify-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-6 py-3 hover:bg-[#E0C28A] transition-colors duration-200"
+                >
+                  Join the team
+                </a>
+                <Link
+                  href="/#start"
+                  className="inline-flex justify-center rounded-full border border-white/15 text-white text-sm font-semibold px-6 py-3 hover:bg-white/5 transition-colors duration-200"
+                >
+                  Start a chapter
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </section>
 
