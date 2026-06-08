@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { appendToSheet } from "@/lib/sheet"
 
 export async function POST(req: NextRequest) {
   try {
@@ -8,8 +9,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Please include your name, a valid email, and your school." }, { status: 400 })
     }
 
-    // Log for now — swap in Resend / Google Sheets / Supabase here to actually store it.
-    console.log(`[chapter] New application: ${name} · ${email} · ${school} · ${state || "—"}`)
+    const result = await appendToSheet({ type: "chapter", name, email, school, state })
+
+    // Persistence is configured but failed — tell the user to retry so we don't lose it.
+    if (!result.ok && !result.skipped) {
+      return NextResponse.json({ error: "Couldn't submit right now. Try again." }, { status: 500 })
+    }
+
+    console.log(
+      `[chapter] ${name} · ${email} · ${school} · ${state || "—"}${result.skipped ? " (not stored — SHEET_WEBHOOK_URL unset)" : " (saved to sheet)"}`
+    )
 
     return NextResponse.json({ ok: true }, { status: 200 })
   } catch {
