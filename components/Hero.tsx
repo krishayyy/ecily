@@ -69,8 +69,7 @@ export default function Hero() {
           transition={{ delay: 1.0, duration: 0.5, ease: "easeOut" }}
         >
           A game that teaches teens how money actually works — across 8 worlds. Play it
-          yourself, or start a chapter at your school and lead a team into our national
-          tournament.
+          yourself, or start a chapter at your school and teach it forward.
         </motion.p>
 
         <motion.div

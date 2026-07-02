@@ -14,13 +14,12 @@ const fadeUp = {
   transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] as const },
 }
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase()
+function LinkedInIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+    </svg>
+  )
 }
 
 export default function TeamPage() {
@@ -53,29 +52,44 @@ export default function TeamPage() {
             </motion.h2>
             <motion.div {...fadeUp} className="h-px bg-white/[0.08] mb-12" />
 
-            <div className="space-y-14">
-              {leadership.map((group) => (
-                <motion.div key={group.title} {...fadeUp}>
-                  <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-white/30 mb-5">
-                    {group.title}
-                  </p>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {group.members.map((m) => (
-                      <div
-                        key={m.name}
-                        className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 flex items-center gap-4"
-                      >
-                        <div className="w-12 h-12 shrink-0 rounded-full bg-[#C9A96E]/15 border border-[#C9A96E]/30 flex items-center justify-center">
-                          <span className="text-[#C9A96E] font-semibold text-sm">{initials(m.name)}</span>
-                        </div>
-                        <div>
-                          <p className="text-white font-semibold leading-tight">{m.name}</p>
-                          <p className="text-[13px] text-white/40 mt-0.5">{m.role}</p>
-                          {m.bio && <p className="text-xs text-white/35 mt-1.5 leading-relaxed">{m.bio}</p>}
-                        </div>
-                      </div>
-                    ))}
+            <div className="divide-y divide-white/[0.07]">
+              {leadership.map((m) => (
+                <motion.div
+                  key={m.name}
+                  {...fadeUp}
+                  className="py-7 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3"
+                >
+                  <div className="min-w-0 max-w-xl">
+                    <div className="flex flex-wrap items-baseline gap-x-3">
+                      <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                        {m.name}
+                      </h3>
+                      <span className="text-[12px] text-[#C9A96E]/80">{m.role}</span>
+                    </div>
+                    {m.bio && (
+                      <p className="text-sm text-white/50 mt-1.5 leading-relaxed">{m.bio}</p>
+                    )}
                   </div>
+                  {(m.school || m.linkedin) && (
+                    <div className="flex items-center gap-5 shrink-0">
+                      {m.school && (
+                        <span className="text-[10px] tracking-[0.15em] uppercase font-mono text-white/35">
+                          {m.school}
+                        </span>
+                      )}
+                      {m.linkedin && (
+                        <a
+                          href={m.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${m.name} on LinkedIn`}
+                          className="text-white/35 hover:text-[#C9A96E] transition-colors duration-200"
+                        >
+                          <LinkedInIcon />
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </div>

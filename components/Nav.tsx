@@ -7,8 +7,6 @@ import { motion, AnimatePresence } from "framer-motion"
 const links = [
   { label: "App", href: "/#app" },
   { label: "Chapters", href: "/#chapters" },
-  { label: "Tournament", href: "/#tournament" },
-  { label: "Sponsors", href: "/#sponsors" },
   { label: "Team", href: "/team" },
 ]
 

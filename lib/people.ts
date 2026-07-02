@@ -6,41 +6,45 @@
 export interface Leader {
   name: string
   role: string
-  /** Optional one-liner shown under the name. */
+  /** ONE concrete, verifiable line: what this person has actually built or done. No adjectives. */
   bio?: string
+  /** School + class year, e.g. "Rocklin High School · Class of 2028". */
+  school?: string
+  /** Full LinkedIn profile URL. */
+  linkedin?: string
 }
 
-/** Leadership tiers, in display order. */
-export interface LeadershipGroup {
-  title: string
-  members: Leader[]
-}
-
-export const leadership: LeadershipGroup[] = [
+// One flat founding team, in display order. Rows hide any field that's
+// missing, so fill in bio/school/linkedin per person as you get them.
+export const leadership: Leader[] = [
   {
-    title: "Executive Directors",
-    members: [
-      { name: "Krishay Suresh", role: "Executive Director" },
-      { name: "Kush Theethira", role: "Executive Director" },
-    ],
+    name: "Krishay Suresh",
+    role: "Executive Director",
+    // bio: "…",
+    // school: "… High School · Class of 2028",
+    // linkedin: "https://www.linkedin.com/in/…",
   },
   {
-    title: "Outreach",
-    members: [
-      { name: "Akshat Singh", role: "Director of Outreach" },
-    ],
+    name: "Kush Theethira",
+    role: "Executive Director",
+    // bio: "…",
   },
   {
-    title: "Technical",
-    members: [
-      { name: "Atharv Ravanikar", role: "Technical Director" },
-    ],
+    name: "Akshat Singh",
+    role: "Director of Outreach",
+    linkedin: "https://www.linkedin.com/in/akshtsngh",
+    // bio: "…",
   },
   {
-    title: "Marketing",
-    members: [
-      { name: "Ryan Yarlagadda", role: "Director of Marketing" },
-    ],
+    name: "Atharv Ravanikar",
+    role: "Technical Director",
+    // bio: "…",
+  },
+  {
+    name: "Ryan Yarlagadda",
+    role: "Director of Marketing",
+    linkedin: "https://www.linkedin.com/in/ryan-yarlagadda-08aa053b4",
+    // bio: "…",
   },
 ]
 

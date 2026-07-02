@@ -28,36 +28,8 @@ export default function Chapters() {
           </h2>
           <p className="mt-5 text-base sm:text-lg text-white/50 max-w-xl mx-auto leading-relaxed">
             Found your school&apos;s chapter of Ecily. You teach your classmates the
-            curriculum we provide, build a team to compete in our national tournament,
-            and represent your school as a State Delegate.
+            curriculum we provide and represent your school as a State Delegate.
           </p>
-        </motion.div>
-
-        {/* Two halves of a chapter */}
-        <motion.div {...fadeUp} className="grid sm:grid-cols-2 gap-4 mt-14">
-          {[
-            {
-              tag: "Half one",
-              title: "Teach",
-              body: "Lead your chapter through Ecily's curriculum and run sessions for everyone at your school — not just competitors.",
-            },
-            {
-              tag: "Half two",
-              title: "Compete",
-              body: "Select and train a team from your chapter to represent you in the Ecily tournament.",
-            },
-          ].map((c) => (
-            <div
-              key={c.title}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-7"
-            >
-              <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-white/30">
-                {c.tag}
-              </span>
-              <h3 className="text-2xl font-bold text-white mt-2 mb-2">{c.title}</h3>
-              <p className="text-sm text-white/50 leading-relaxed">{c.body}</p>
-            </div>
-          ))}
         </motion.div>
 
         {/* Pillars */}

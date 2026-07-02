@@ -46,3 +46,53 @@ body {
 .animate-float {
   animation: float linear infinite;
 }
+
+/* Credibility marquee — seamless loop via duplicated track translated -50% */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-left var(--marquee-duration, 64s) linear infinite;
+  will-change: transform;
+}
+.marquee-track.reverse {
+  animation-name: marquee-right;
+}
+
+/* Pause on hover so a reader can actually catch a chip */
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Fade both edges to transparent — the single biggest "premium vs cheap" tell */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    transform: none;
+  }
+}

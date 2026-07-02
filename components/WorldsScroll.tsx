@@ -4,6 +4,7 @@ import { useRef, useState } from "react"
 import {
   motion,
   useScroll,
+  useSpring,
   useTransform,
   useMotionValueEvent,
   type MotionValue,
@@ -237,12 +238,17 @@ function WorldPanel({
   const fade = 0.4 / total
 
   // First panel is visible at the very top; last stays visible at the bottom.
+  // Fade windows must NEVER cross a slot boundary: the outgoing panel reaches
+  // opacity 0 exactly at `end` and the incoming one only starts rising at its
+  // own `start`. Overlapping windows double-expose two worlds' text mid-scroll,
+  // which discrete mouse wheels (big smoothed glides) sit inside long enough
+  // to read as broken. A brief dip to dark between worlds is intentional.
   const inputs =
     index === 0
       ? [start, start, end - fade, end]
       : index === total - 1
         ? [start, start + fade, end, end]
-        : [start - fade, start + fade, end - fade, end + fade]
+        : [start, start + fade, end - fade, end]
   const outputs = index === 0 ? [1, 1, 1, 0] : index === total - 1 ? [0, 1, 1, 1] : [0, 1, 1, 0]
 
   const opacity = useTransform(progress, inputs, outputs)
@@ -308,12 +314,30 @@ export default function WorldsScroll() {
     offset: ["start start", "end end"],
   })
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
+  // Smooth the raw scroll position with a spring. Mac trackpads scroll in tiny
+  // continuous steps (already smooth), but Windows mouse wheels fire big discrete
+  // chunks — feeding those straight into useTransform makes the panels jump.
+  //
+  // Tuning notes (this is the "feel"):
+  //  - low mass (0.45) → responds fast, so it tracks the scrollbar tightly with
+  //    no laggy rubber-band trailing behind your scroll.
+  //  - damping ratio ~1.9 (overdamped) → zero overshoot/bounce, which on scroll
+  //    would feel broken; it glides to rest instead.
+  //  - stiffness 130 → enough spring to absorb the big Windows wheel steps.
+  // Net: identical buttery feel on a Mac trackpad and a Windows mouse wheel.
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 130,
+    damping: 30,
+    mass: 0.45,
+    restDelta: 0.0004,
+  })
+
+  useMotionValueEvent(progress, "change", (v) => {
     const i = Math.min(total - 1, Math.max(0, Math.floor(v * total)))
     setActive((prev) => (prev === i ? prev : i))
   })
 
-  const barScaleX = useTransform(scrollYProgress, [0, 1], [0, 1])
+  const barScaleX = useTransform(progress, [0, 1], [0, 1])
 
   return (
     <section id="worlds" ref={ref} style={{ height: `${total * 100}vh` }} className="relative bg-[#060606]">
@@ -335,7 +359,7 @@ export default function WorldsScroll() {
 
         {/* panels */}
         {worlds.map((w, i) => (
-          <WorldPanel key={w.id} world={w} index={i} total={total} progress={scrollYProgress} />
+          <WorldPanel key={w.id} world={w} index={i} total={total} progress={progress} />
         ))}
 
         {/* world index + dots */}
