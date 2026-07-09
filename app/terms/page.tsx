@@ -25,7 +25,7 @@ export default function TermsPage() {
       </LegalCard>
       <LegalCard title="4. Account Responsibility">
         You are responsible for keeping your login credentials secure. Do not share your account.
-        Report unauthorized access to support@ecily.app. We are not liable for losses resulting
+        Report unauthorized access to joinecily@gmail.com. We are not liable for losses resulting
         from unauthorized account use.
       </LegalCard>
       <LegalCard title="5. Acceptable Use">
@@ -66,7 +66,7 @@ export default function TermsPage() {
         will be resolved by binding arbitration under AAA rules, with a waiver of class-action
         rights.
       </LegalCard>
-      <LegalCard title="13. Contact">Questions? Email legal@ecily.app.</LegalCard>
+      <LegalCard title="13. Contact">Questions? Email joinecily@gmail.com.</LegalCard>
     </LegalLayout>
   )
 }

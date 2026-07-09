@@ -77,7 +77,7 @@ export default function PrivacyPage() {
       <LegalSectionHeading>Your Rights</LegalSectionHeading>
 
       <LegalCard title="Access & Export" accent="#7B8FD4">
-        Request a full copy of your personal data by emailing privacy@ecily.app. We respond
+        Request a full copy of your personal data by emailing joinecily@gmail.com. We respond
         within 30 days.
       </LegalCard>
       <LegalCard title="Correction" accent="#7B8FD4">
@@ -91,17 +91,17 @@ export default function PrivacyPage() {
       <LegalCard title="Children (COPPA)" accent="#C4A06E">
         Ecily is designed for users 13 and older. We do not knowingly collect data from children
         under 13. Parents can request deletion of any under-13 account by emailing
-        privacy@ecily.app.
+        joinecily@gmail.com.
       </LegalCard>
       <LegalCard title="California (CCPA) / EU/UK (GDPR)" accent="#5EA88A">
         You have the right to know, access, correct, and delete your data. We do not sell data.
-        EU/UK users may contact our DPO at dpo@ecily.app for erasure or portability requests.
+        EU/UK users may contact our DPO at joinecily@gmail.com for erasure or portability requests.
       </LegalCard>
       <LegalCard title="Security">
         All data is encrypted in transit (TLS 1.3) and at rest (AES-256 via Firebase). Access to
         user data is restricted to authorized Ecily engineers on a strict need-to-know basis.
       </LegalCard>
-      <LegalCard title="Contact">Privacy questions: privacy@ecily.app</LegalCard>
+      <LegalCard title="Contact">Privacy questions: joinecily@gmail.com</LegalCard>
     </LegalLayout>
   )
 }
