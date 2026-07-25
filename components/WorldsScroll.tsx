@@ -260,32 +260,32 @@ function WorldPanel({
       style={{ opacity }}
       className="absolute inset-0 flex items-center justify-center pointer-events-none"
     >
-      {/* accent glow for this world */}
+      {/* color block for this world */}
       <div
         className="absolute inset-0"
-        style={{ background: `radial-gradient(60% 60% at 50% 45%, ${world.accent}26, transparent 70%)` }}
+        style={{ background: `radial-gradient(70% 70% at 50% 45%, ${world.accent}3D, ${world.accent}14 55%, transparent 85%)` }}
       />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-[clamp(1.5rem,7vw,6rem)] grid md:grid-cols-2 items-center gap-10">
         {/* Text column */}
         <motion.div style={{ y }} className="order-2 md:order-1">
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-mono mb-5 block">
+          <span className="text-[10px] tracking-[0.3em] uppercase text-[#1C1A16]/55 font-mono mb-5 block">
             {world.label}
           </span>
-          <h2 className="text-[clamp(2.8rem,8vw,6.5rem)] font-bold leading-[0.95] tracking-tight text-white mb-5">
+          <h2 className="text-[clamp(2.8rem,8vw,6.5rem)] font-extrabold leading-[0.95] tracking-tight text-[#1C1A16] mb-5">
             {world.name}
           </h2>
-          <p className="text-lg sm:text-xl text-white/70 mb-9 max-w-md font-medium">
+          <p className="text-lg sm:text-xl text-[#1C1A16]/70 mb-9 max-w-md font-medium">
             {world.tagline}
           </p>
           <div
-            className="rounded-2xl bg-white/[0.06] backdrop-blur-sm border px-6 py-5 max-w-sm"
-            style={{ borderColor: `${world.accent}44` }}
+            className="rounded-2xl bg-white/70 backdrop-blur-sm border px-6 py-5 max-w-sm shadow-[0_8px_30px_rgba(28,26,22,0.08)]"
+            style={{ borderColor: `${world.accent}55` }}
           >
             <span className="text-[10px] tracking-[0.2em] uppercase font-mono block mb-2" style={{ color: world.accent }}>
               {world.feature}
             </span>
-            <p className="text-sm text-white/80 leading-relaxed">{world.detail}</p>
+            <p className="text-sm text-[#1C1A16]/80 leading-relaxed">{world.detail}</p>
           </div>
         </motion.div>
 
@@ -340,19 +340,19 @@ export default function WorldsScroll() {
   const barScaleX = useTransform(progress, [0, 1], [0, 1])
 
   return (
-    <section id="worlds" ref={ref} style={{ height: `${total * 100}vh` }} className="relative bg-[#060606]">
+    <section id="worlds" ref={ref} style={{ height: `${total * 100}vh` }} className="relative bg-[#FBF6EC]">
       <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
         {/* base vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,0.65)_100%)] pointer-events-none z-20" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(28,26,22,0.08)_100%)] pointer-events-none z-20" />
 
         {/* top progress bar */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/10 z-30">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-black/10 z-30">
           <motion.div className="h-full origin-left" style={{ scaleX: barScaleX, backgroundColor: worlds[active].accent }} />
         </div>
 
         {/* section eyebrow */}
         <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30">
-          <span className="text-[10px] tracking-[0.3em] uppercase font-mono text-white/30">
+          <span className="text-[10px] tracking-[0.3em] uppercase font-mono text-[#1C1A16]/40">
             8 Worlds · One Story
           </span>
         </div>
@@ -364,21 +364,21 @@ export default function WorldsScroll() {
 
         {/* world index + dots */}
         <div className="absolute right-5 sm:right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-3">
-          <span className="font-mono text-xs text-white/50">{String(active + 1).padStart(2, "0")}</span>
+          <span className="font-mono text-xs text-[#1C1A16]/55">{String(active + 1).padStart(2, "0")}</span>
           <div className="flex flex-col gap-2">
             {worlds.map((w, i) => (
               <motion.span
                 key={w.id}
                 className="block w-1.5 h-1.5 rounded-full"
                 animate={{
-                  backgroundColor: i === active ? w.accent : "rgba(255,255,255,0.22)",
+                  backgroundColor: i === active ? w.accent : "rgba(28,26,22,0.18)",
                   scale: i === active ? 1.5 : 1,
                 }}
                 transition={{ duration: 0.3 }}
               />
             ))}
           </div>
-          <span className="font-mono text-xs text-white/25">{String(total).padStart(2, "0")}</span>
+          <span className="font-mono text-xs text-[#1C1A16]/30">{String(total).padStart(2, "0")}</span>
         </div>
       </div>
     </section>

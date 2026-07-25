@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${dmMono.variable} antialiased bg-[#080808] overflow-x-hidden`}
+        className={`${inter.variable} ${dmMono.variable} antialiased bg-[#FBF6EC] overflow-x-hidden`}
       >
         {children}
       </body>

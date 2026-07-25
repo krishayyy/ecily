@@ -41,7 +41,7 @@ export default function ChapterForm() {
   }
 
   const inputClass =
-    "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#C9A96E]/50 transition-colors duration-200"
+    "w-full bg-black/[0.03] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#1C1A16] placeholder:text-[#1C1A16]/35 focus:outline-none focus:border-[#C9A96E] transition-colors duration-200"
 
   return (
     <motion.div
@@ -52,7 +52,7 @@ export default function ChapterForm() {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="mt-24 scroll-mt-24"
     >
-      <div className="rounded-3xl border border-[#C9A96E]/20 bg-gradient-to-b from-[#C9A96E]/[0.06] to-transparent p-8 sm:p-12 max-w-2xl mx-auto text-center">
+      <div className="rounded-3xl border border-[#C9A96E]/30 bg-white p-8 sm:p-12 max-w-2xl mx-auto text-center shadow-[0_12px_40px_rgba(28,26,22,0.06)]">
         <AnimatePresence mode="wait">
           {status === "success" ? (
             <motion.div
@@ -64,23 +64,23 @@ export default function ChapterForm() {
             >
               <div className="w-12 h-12 rounded-full bg-[#C9A96E]/20 border border-[#C9A96E]/40 flex items-center justify-center mx-auto mb-4">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M4 10l4.5 4.5L16 6" stroke="#C9A96E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M4 10l4.5 4.5L16 6" stroke="#B0813A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <p className="text-white font-semibold text-lg">Application received.</p>
-              <p className="text-white/45 text-sm mt-1">
+              <p className="text-[#1C1A16] font-semibold text-lg">Application received.</p>
+              <p className="text-[#1C1A16]/50 text-sm mt-1">
                 We&apos;ll reach out about founding your chapter and becoming a State Delegate.
               </p>
             </motion.div>
           ) : (
             <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#C9A96E]/70 mb-3">
+              <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#B0813A] mb-3">
                 Founding chapters
               </p>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#1C1A16] tracking-tight mb-2">
                 Start a chapter
               </h3>
-              <p className="text-sm text-white/45 mb-8 max-w-md mx-auto">
+              <p className="text-sm text-[#1C1A16]/50 mb-8 max-w-md mx-auto">
                 Apply to found your school&apos;s chapter and become a Founding State Delegate.
                 We hand you the curriculum and the platform — you bring the people.
               </p>

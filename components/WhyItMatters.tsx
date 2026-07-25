@@ -41,13 +41,13 @@ const stats: Stat[] = [
 
 export default function WhyItMatters() {
   return (
-    <section id="why" className="relative bg-[#080808] py-32 px-6">
+    <section id="why" className="relative bg-[#FBF6EC] py-32 px-6">
       <div className="mx-auto max-w-5xl">
         <motion.div {...fadeUp} className="mb-16 text-center">
-          <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-[#C9A96E]/70">
+          <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-[#B0813A]">
             Why this matters
           </p>
-          <h2 className="text-[clamp(2rem,5vw,3.4rem)] font-bold leading-[1.08] tracking-tight text-white text-balance">
+          <h2 className="text-[clamp(2rem,5vw,3.4rem)] font-extrabold leading-[1.08] tracking-tight text-[#1C1A16] text-balance">
             Most teens never get taught how money works.
           </h2>
         </motion.div>
@@ -58,19 +58,19 @@ export default function WhyItMatters() {
               key={s.value}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.1 }}
-              className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-8"
+              className="flex flex-col rounded-2xl border border-black/[0.07] bg-white p-8 shadow-[0_8px_30px_rgba(28,26,22,0.05)]"
             >
-              <span className="text-[clamp(2.8rem,7vw,4.4rem)] font-bold leading-none tracking-tight text-[#C9A96E]">
+              <span className="text-[clamp(2.8rem,7vw,4.4rem)] font-extrabold leading-none tracking-tight text-[#B0813A]">
                 {s.value}
               </span>
-              <p className="mt-5 text-[15px] leading-relaxed text-white/65">
+              <p className="mt-5 text-[15px] leading-relaxed text-[#1C1A16]/65">
                 {s.label}
               </p>
               <a
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 border-t border-white/[0.08] pt-4 font-mono text-[11px] uppercase tracking-wider text-white/30 transition-colors duration-200 hover:text-[#C9A96E]"
+                className="mt-6 border-t border-black/[0.07] pt-4 font-mono text-[11px] uppercase tracking-wider text-[#1C1A16]/35 transition-colors duration-200 hover:text-[#B0813A]"
               >
                 {s.source} ↗
               </a>
@@ -80,7 +80,7 @@ export default function WhyItMatters() {
 
         <motion.p
           {...fadeUp}
-          className="mx-auto mt-14 max-w-xl text-center text-base leading-relaxed text-white/55 sm:text-lg"
+          className="mx-auto mt-14 max-w-xl text-center text-base leading-relaxed text-[#1C1A16]/60 sm:text-lg"
         >
           Ecily exists to close that gap, and to make learning it something teens
           actually want to do.

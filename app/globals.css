@@ -11,8 +11,8 @@ html {
 }
 
 body {
-  background: #080808;
-  color: #ffffff;
+  background: #fbf6ec;
+  color: #1c1a16;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }

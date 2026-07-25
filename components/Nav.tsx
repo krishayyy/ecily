@@ -38,7 +38,7 @@ export default function Nav() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
         solid
-          ? "bg-[#080808]/85 backdrop-blur-md border-b border-white/[0.06]"
+          ? "bg-[#FBF6EC]/90 backdrop-blur-md border-b border-black/[0.07]"
           : "bg-transparent"
       }`}
     >
@@ -46,7 +46,7 @@ export default function Nav() {
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="text-white font-semibold tracking-tight text-lg"
+          className="text-[#1C1A16] font-extrabold tracking-tight text-lg"
         >
           ecily
         </Link>
@@ -57,7 +57,7 @@ export default function Nav() {
             <Link
               key={l.label}
               href={l.href}
-              className="text-sm text-white/55 hover:text-white transition-colors duration-200"
+              className="text-sm text-[#1C1A16]/60 hover:text-[#1C1A16] transition-colors duration-200"
             >
               {l.label}
             </Link>
@@ -68,14 +68,14 @@ export default function Nav() {
         <div className="flex items-center gap-2.5">
           <Link
             href="/#waitlist"
-            className="hidden sm:inline-flex text-sm text-white/70 hover:text-white transition-colors duration-200 px-3 py-2"
+            className="hidden sm:inline-flex text-sm text-[#1C1A16]/70 hover:text-[#1C1A16] transition-colors duration-200 px-3 py-2"
           >
             Get the app
           </Link>
           <Link
             href="/#start"
             onClick={() => setOpen(false)}
-            className="inline-flex items-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-4 py-2 hover:bg-[#E0C28A] transition-colors duration-200"
+            className="inline-flex items-center rounded-full bg-[#1C1A16] text-white text-sm font-semibold px-4 py-2 hover:bg-[#33302A] transition-colors duration-200"
           >
             Start a chapter
           </Link>
@@ -85,7 +85,7 @@ export default function Nav() {
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="md:hidden ml-0.5 w-9 h-9 flex items-center justify-center text-white"
+            className="md:hidden ml-0.5 w-9 h-9 flex items-center justify-center text-[#1C1A16]"
           >
             <div className="relative w-5 h-3.5">
               <span
@@ -111,7 +111,7 @@ export default function Nav() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden overflow-hidden border-t border-white/[0.06] bg-[#080808]/95 backdrop-blur-md"
+            className="md:hidden overflow-hidden border-t border-black/[0.07] bg-[#FBF6EC]/95 backdrop-blur-md"
           >
             <div className="px-6 py-4 flex flex-col">
               {links.map((l) => (
@@ -119,7 +119,7 @@ export default function Nav() {
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="py-3 text-base text-white/75 hover:text-white border-b border-white/[0.05] last:border-0 transition-colors duration-200"
+                  className="py-3 text-base text-[#1C1A16]/75 hover:text-[#1C1A16] border-b border-black/[0.06] last:border-0 transition-colors duration-200"
                 >
                   {l.label}
                 </Link>
@@ -127,7 +127,7 @@ export default function Nav() {
               <Link
                 href="/#waitlist"
                 onClick={() => setOpen(false)}
-                className="mt-4 inline-flex items-center justify-center rounded-full border border-white/15 text-white text-sm font-semibold py-3 hover:bg-white/5 transition-colors duration-200"
+                className="mt-4 inline-flex items-center justify-center rounded-full border border-black/15 text-[#1C1A16] text-sm font-semibold py-3 hover:bg-black/5 transition-colors duration-200"
               >
                 Get the app
               </Link>

@@ -4,31 +4,39 @@ import { motion } from "framer-motion"
 
 const words = ["Level", "up", "your", "money", "game."]
 
-const particles = Array.from({ length: 24 }, (_, i) => ({
-  id: i,
-  size: Math.random() * 3 + 1,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  duration: Math.random() * 6 + 8,
-  delay: Math.random() * 4,
-}))
+const blobs = [
+  { color: "#F6C89B", size: 420, x: "8%", y: "12%", duration: 22 },
+  { color: "#D7CBF7", size: 380, x: "78%", y: "8%", duration: 26 },
+  { color: "#BFE3CC", size: 340, x: "82%", y: "62%", duration: 24 },
+  { color: "#F7D9A8", size: 300, x: "6%", y: "66%", duration: 20 },
+]
 
 export default function Hero() {
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#080808]">
-      {/* Particle field */}
+    <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#FBF6EC]">
+      {/* Soft color blobs */}
       <div className="absolute inset-0 pointer-events-none">
-        {particles.map((p) => (
-          <span
-            key={p.id}
-            className="absolute rounded-full bg-white/10 animate-float"
+        {blobs.map((b, i) => (
+          <motion.span
+            key={i}
+            className="absolute rounded-full blur-3xl"
             style={{
-              width: p.size,
-              height: p.size,
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              animationDuration: `${p.duration}s`,
-              animationDelay: `${p.delay}s`,
+              width: b.size,
+              height: b.size,
+              left: b.x,
+              top: b.y,
+              background: b.color,
+              opacity: 0.55,
+            }}
+            animate={{
+              x: [0, 20, -10, 0],
+              y: [0, -16, 12, 0],
+            }}
+            transition={{
+              duration: b.duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.6,
             }}
           />
         ))}
@@ -37,7 +45,7 @@ export default function Hero() {
       {/* Hero text */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl">
         <motion.p
-          className="text-xs tracking-[0.2em] text-white/40 uppercase mb-6 font-mono"
+          className="text-xs tracking-[0.2em] text-[#1C1A16]/45 uppercase mb-6 font-mono"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
@@ -45,7 +53,7 @@ export default function Hero() {
           Financial literacy for the next generation
         </motion.p>
 
-        <h1 className="text-[clamp(3rem,8vw,6rem)] font-bold leading-[1.05] tracking-tight text-white mb-8 flex flex-wrap justify-center gap-x-[0.3em]">
+        <h1 className="text-[clamp(3rem,8vw,6rem)] font-extrabold leading-[1.05] tracking-tight text-[#1C1A16] mb-8 flex flex-wrap justify-center gap-x-[0.3em]">
           {words.map((word, i) => (
             <motion.span
               key={i}
@@ -63,7 +71,7 @@ export default function Hero() {
         </h1>
 
         <motion.p
-          className="text-base text-white/50 max-w-lg leading-relaxed mb-10"
+          className="text-base text-[#1C1A16]/60 max-w-lg leading-relaxed mb-10"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: 0.5, ease: "easeOut" }}
@@ -80,7 +88,7 @@ export default function Hero() {
         >
           <motion.a
             href="#start"
-            className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-[#C9A96E] text-black text-sm font-semibold hover:bg-[#E0C28A] transition-colors duration-200 w-full sm:w-auto"
+            className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-[#1C1A16] text-white text-sm font-semibold hover:bg-[#33302A] transition-colors duration-200 w-full sm:w-auto"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
@@ -88,7 +96,7 @@ export default function Hero() {
           </motion.a>
           <motion.a
             href="#waitlist"
-            className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-white/20 text-white text-sm font-semibold hover:bg-white/5 transition-colors duration-200 w-full sm:w-auto"
+            className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-[#1C1A16]/20 text-[#1C1A16] text-sm font-semibold hover:bg-black/5 transition-colors duration-200 w-full sm:w-auto"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
@@ -104,11 +112,11 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.6 }}
       >
-        <span className="text-[10px] tracking-[0.25em] uppercase text-white/30 font-mono">
+        <span className="text-[10px] tracking-[0.25em] uppercase text-[#1C1A16]/35 font-mono">
           Scroll to explore
         </span>
         <motion.div
-          className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent"
+          className="w-px h-8 bg-gradient-to-b from-[#1C1A16]/30 to-transparent"
           animate={{ scaleY: [0, 1, 0], originY: 0 }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.4 }}
         />
