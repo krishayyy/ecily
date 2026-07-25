@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ecily.org
 
-## Getting Started
+Marketing site for [Ecily](https://ecily.org), an iOS app that teaches personal finance to teenagers through decisions they can actually lose. The app itself lives in [krishayyy/ecilyapp](https://github.com/krishayyy/ecilyapp).
 
-First, run the development server:
+## What's here
+
+- **Landing page** — hero, mission, feature and world sections, and a credibility marquee.
+- **Waitlist and chapter signup** — `/api/waitlist` and `/api/chapter` routes, forwarded to a Google Sheet via `scripts/sheet-webhook.gs`.
+- **Legal and support pages** — `/privacy`, `/terms`, `/support`, and `/team`, which back the App Store listing's required URLs.
+
+## Stack
+
+Next.js 14 (App Router), TypeScript, Tailwind CSS, Framer Motion and GSAP for motion. Deployed on Netlify.
+
+## Running locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install && npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Copy `.env.example` to `.env.local` and fill in your own values first — the signup routes need the webhook target set.
