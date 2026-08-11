@@ -1,0 +1,447 @@
+:root{
+  --night:#0E1240; --night-2:#151B57; --night-3:#1E2670; --night-4:#2A3490;
+  --cream:#F7F1DE; --cream-2:#EFE7CE;
+  --mango:#F5A623; --mango-2:#F0C22A; --mango-3:#EE7B2B; --blush:#E0562E;
+  --leaf:#3FA46B; --leaf-2:#1E7A44; --leaf-3:#8CC152;
+  --txt:#EDEEF8; --txt-2:#A7ADD8; --txt-3:#767DB4;
+  --line:rgba(255,255,255,.12); --line-2:rgba(255,255,255,.07);
+  --disp:'Fredoka',system-ui,sans-serif;
+  --sign:'Baloo 2','Fredoka',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --mono:'Geist Mono','JetBrains Mono',ui-monospace,monospace;
+  --hand:'Gaegu',cursive;
+  --wrap:1180px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--night);color:var(--txt);font-family:var(--body);
+  line-height:1.65;overflow-x:hidden;position:relative}
+
+/* The page is one continuous piece of cloth. Two fixed layers do it: fine
+   fractal noise for the felt nap, and a 3px warp/weft grid for the weave.
+   Both are fixed rather than per-section so nothing tiles out of register
+   at a section seam. */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.55;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='4'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.5;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(0,0,0,.17) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.045) 0 1px,transparent 1px 3px)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 26px;position:relative;z-index:2}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap;border:0}
+
+h1,h2,h3,h4{font-family:var(--disp);font-weight:600;line-height:1.06;letter-spacing:-.015em}
+.kick{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mango);margin-bottom:16px}
+.hand{font-family:var(--hand);font-size:26px;line-height:1.25;color:var(--mango-2)}
+.sec-h{font-size:clamp(34px,5.4vw,60px);font-weight:700;margin-bottom:18px}
+.sec-h em{font-style:normal;color:var(--mango)}
+.lede{font-size:17px;color:var(--txt-2);max-width:640px}
+/* Nav is sticky, so a same-page jump (or a shared #tracks link) would
+   otherwise land the target heading half-hidden under the felt band. */
+section{padding:100px 0;position:relative;z-index:2;scroll-margin-top:96px}
+
+/* The nav is the photographed felt band, 9-sliced: the wavy stitched ends
+   are held at a fixed size while only the middle stretches, so the blanket
+   stitch keeps its real scale on a 1400px viewport instead of being smeared
+   out of a 1433px source. */
+nav{position:sticky;top:0;z-index:60;background:transparent;
+  border-style:solid;border-width:26px 44px 30px;border-color:transparent;
+  border-image-source:url("/mangohacks/images/felt/nav-band.webp");
+  border-image-slice:70 120 80 120 fill;
+  border-image-repeat:stretch;
+  border-image-width:26px 44px 30px;
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
+.nav-in{max-width:var(--wrap);margin:0 auto;padding:13px 26px;
+  display:flex;align-items:center;gap:26px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);
+  font-weight:600;font-size:19px;color:#fff;text-decoration:none;flex:0 0 auto}
+/* the mango cut-out is 395x625, so a fixed height squashes it */
+.brand img{width:24px;height:auto;display:block}
+.nav-links{display:flex;gap:26px;margin-left:auto;align-items:center}
+.nav-links a{font-family:var(--disp);font-weight:500;font-size:15px;color:var(--cream-2);
+  text-decoration:none;transition:color .2s;position:relative;padding-bottom:3px}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-1px;
+  border-bottom:2px dashed var(--mango);opacity:0;transition:opacity .2s}
+.nav-links a:hover{color:var(--mango)}
+.nav-links a:not(.btn):hover::after{opacity:.9}
+.nav-links a.btn{font-size:15px;padding-bottom:8px}
+.nav-links a.btn-p{color:#231703}
+.nav-links a.btn-p:hover{color:#231703}
+/* Buttons are felt patches sewn onto the page: solid colour, a running
+   stitch set in from the edge, and a thick bottom shading that reads as the
+   depth of the material. The comp drew the primary as concentric rings,
+   which scans as a coaster and competes with the mango for the same warm
+   orange — a plain patch is louder precisely because it's simpler. */
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--disp);
+  font-weight:600;font-size:15px;padding:11px 22px;border-radius:100px;
+  text-decoration:none;border:2px solid transparent;transition:transform .18s,box-shadow .18s,background .18s;
+  cursor:pointer;white-space:nowrap;position:relative}
+.btn::before{content:"";position:absolute;inset:4px;border-radius:100px;
+  border:1.5px dashed transparent;pointer-events:none}
+.btn-p::before{border-color:rgba(88,50,6,.42)}
+.btn-g::before{border-color:rgba(226,214,178,.24)}
+.btn-p{background:var(--mango);color:#231703;box-shadow:0 6px 0 #C97D12}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 0 #C97D12}
+.btn-p:active{transform:translateY(3px);box-shadow:0 2px 0 #C97D12}
+.btn-g{background:transparent;color:var(--txt);border-color:var(--line)}
+.btn-g:hover{border-color:var(--mango);color:var(--mango);transform:translateY(-2px)}
+.btn-s{padding:8px 17px;font-size:14px;box-shadow:0 4px 0 #C97D12}
+
+/* The felt buttons are photographs, 9-sliced. The source pill is 985x496
+   with caps roughly half its height, so the left/right slices are ~250 and
+   only the flat middle stretches — otherwise "Apply to hack" and "Sponsor
+   us", being different lengths, would squash the round caps into ellipses
+   by different amounts. Pressing swaps to the flatter photograph. */
+.btn-felt{background:none;border-style:solid;border-width:11px 40px 13px;
+  border-color:transparent;padding:4px 2px;color:#3A2408;
+  border-image-source:url("/mangohacks/images/felt/btn-rest.webp");
+  border-image-slice:110 250 130 250 fill;
+  border-image-repeat:stretch;
+  box-shadow:none;text-shadow:0 1px 0 rgba(255,240,200,.35);
+  filter:drop-shadow(0 3px 3px rgba(0,0,0,.4)) drop-shadow(0 9px 12px rgba(0,0,0,.28))}
+.btn-felt::before{border:0}
+.btn-felt:hover{transform:translateY(-2px);box-shadow:none}
+.btn-felt:active{transform:translateY(3px);
+  border-image-source:url("/mangohacks/images/felt/btn-press.webp");
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
+/* The secondary action uses the flatter, pressed photograph and sits lower —
+   two identically raised felt pills gave the pair no hierarchy at all. */
+.btn-quiet{border-image-source:url("/mangohacks/images/felt/btn-press.webp");
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));opacity:.88}
+.btn-quiet:hover{opacity:1}
+.burger{display:none;margin-left:auto;background:none;border:0;color:#fff;
+  font-size:24px;cursor:pointer;padding:4px 8px}
+
+/* The comp framed the hero in a chunky wooden frame. A literal frame costs
+   ~20% of the viewport on every edge and, once you scroll, has to be paid
+   for again on every section below the fold. This is the same idea at a
+   fraction of the price: the hero is a felt panel appliqued onto the page
+   and held down by a running stitch, so the "framed textile" read survives
+   without the content area paying for it. */
+/* The hero panel is tinted to the felt in the photograph (~#20223E at the
+   scene's lower edge) rather than the old --night, so the artwork's own
+   cloth and the panel around it read as one continuous piece. */
+.hero{position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:22px 0 56px;
+  margin:12px 12px 0;border-radius:24px;
+  background:linear-gradient(180deg,#232645,#1C1E38 72%);
+  box-shadow:0 20px 46px rgba(0,0,0,.44),inset 0 1px 0 rgba(255,255,255,.07)}
+.hero::after{content:"";position:absolute;inset:12px;border-radius:15px;
+  border:2px dashed rgba(226,214,178,.28);pointer-events:none;z-index:6}
+
+/* The stage stays width-driven so nothing can distort, but the third term
+   caps it by available height — at full width the scene is ~650px tall,
+   which pushed "Apply to hack" below the fold. */
+/* The sky is a surface, so it lines the whole panel; only the subjects live
+   in the height-capped stage. Confining it to the stage left it reading as
+   a pasted rectangle with the panel's plain felt around it. */
+.sky{position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:24px;
+  background:url("/mangohacks/images/felt/sky.webp") center/230% auto no-repeat;
+  opacity:.32;
+  transform:translateY(calc(var(--py,0) * -0.03px));
+  /* The embroidery came back wall-to-wall dense and fights the subjects, so
+     the middle is masked back out and the stitching survives at the edges —
+     which is the composition the original comp had. */
+  -webkit-mask-image:radial-gradient(66% 70% at 50% 44%,transparent 36%,#000 94%);
+  mask-image:radial-gradient(66% 70% at 50% 44%,transparent 36%,#000 94%)}
+
+.felt-stage{position:relative;z-index:3;margin:0 auto;aspect-ratio:1376/768;
+  width:min(1320px,calc(100% - 52px),calc(62vh * 1376 / 768));
+  container-type:inline-size}
+
+/* Sized to the tree's own 772x706 so the signboard can be positioned as a
+   percentage of the tree rather than of the stage. */
+/* Sized up hard, and the mango pulled in to meet it: at the old 46% the two
+   sat at opposite edges with a quarter of the panel of dead cloth between
+   them, reading as two unrelated objects rather than one scene. */
+.tree-wrap{position:absolute;left:1%;bottom:5%;width:64%;aspect-ratio:772/706;
+  transform:translateY(calc(var(--py,0) * -0.012px))}
+.tree{width:100%;height:auto;display:block;
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.5)) drop-shadow(0 14px 18px rgba(0,0,0,.35))}
+
+/* The bare branch runs out to the right and is furthest out at ~51% down the
+   tree, so the twine's top meets it there; the sign swings from that point
+   rather than from its own centre. */
+.sign-hang{position:absolute;left:46%;top:40%;width:50%;
+  transform-origin:50% 4%;animation:sway 5.2s ease-in-out infinite;
+  filter:drop-shadow(0 3px 4px rgba(0,0,0,.45))}
+.sign{width:100%;height:auto;display:block}
+@keyframes sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+
+/* The blank cream panel inside the carved border, measured off the cut-out:
+   it runs 14–87% across and 40–81% down the board. */
+.sign-copy{position:absolute;left:14%;right:13%;top:40%;bottom:19%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;pointer-events:none;line-height:1}
+/* Container units off .felt-stage: the board is part of the photograph, so
+   its copy has to track the photo's width, not the viewport's. */
+.sign-count{font-family:var(--disp);font-weight:700;font-size:9.6cqw;
+  color:#1E5B30;letter-spacing:-.03em;line-height:.85}
+.sign-until{font-family:var(--sign);font-weight:800;font-size:2.6cqw;
+  letter-spacing:.02em;text-transform:uppercase;color:#C2621A;margin-top:.28em}
+
+.mango-layer{position:absolute;inset:auto 6% 6% auto;width:21%;
+  transform:translateY(calc(var(--py,0) * -0.024px))}
+/* The tree has roots that plant it; the mango has two thin legs ending in
+   mid-air. A contact shadow on the cloth beneath its feet is what makes it
+   read as standing rather than floating. ::before paints behind the images
+   that follow it, so no z-index is needed. */
+.mango-layer::before{content:"";position:absolute;left:16%;right:16%;bottom:-1.5%;
+  height:6%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%,rgba(5,7,24,.6),transparent 70%)}
+/* The bob lives on the wrapper, not the body. On the body it moved the torso
+   while the forearm — a sibling, not a child — stayed put, so the arm tore
+   away from the shoulder on every cycle. */
+.mango-bob{position:relative;display:block;
+  animation:bob 3.1s ease-in-out infinite;transform-origin:50% 100%}
+.mango-body{width:100%;height:auto;display:block;
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.5)) drop-shadow(0 12px 16px rgba(0,0,0,.32))}
+/* the forearm crop begins 315/395 across and 140/625 down the body image and
+   is 80/395 wide; it pivots about its own lower-left corner — the shoulder */
+.mango-arm{position:absolute;left:79.75%;top:22.4%;width:20.25%;height:auto;
+  transform-origin:0% 100%;animation:wave 1.15s ease-in-out infinite alternate;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-.8deg)}
+  50%{transform:translateY(-7px) rotate(.8deg)}}
+/* Kept narrow: the forearm is 156px tall in the source, so every extra degree
+   throws the hand a long way and opens a gap at the shoulder seam. */
+@keyframes wave{from{transform:rotate(-3deg)}to{transform:rotate(7deg)}}
+
+/* The ground belongs to the panel, not the stage: the stage is height-capped
+   so the subjects stay above the fold, but the ground has to run the full
+   width of the felt behind the copy, the way it does in the comp. */
+.ground{position:absolute;left:-1%;bottom:-1%;width:102%;height:auto;
+  display:block;z-index:4;pointer-events:none;
+  transform:translateY(calc(var(--py,0) * 0.05px));
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 38%);
+  mask-image:linear-gradient(180deg,transparent,#000 38%)}
+
+.hero-bottom{position:relative;z-index:5;display:flex;flex-direction:column;
+  align-items:center;gap:16px;margin-top:32px;text-align:center;padding:0 26px}
+.hero-bottom .sell{font-size:17px;color:var(--txt-2);max-width:520px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+/* Every felt cut-out gets the same two-part shadow: a tight contact shadow
+   that pins it to the cloth, plus a wider ambient one. A single shadow reads
+   as a sticker; real felt lying on felt has both. */
+.felt{display:block;max-width:100%;height:auto;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.5)) drop-shadow(0 7px 11px rgba(0,0,0,.34))}
+
+/* The stitched ornament that opens each section, in place of a bare heading. */
+.sec-mark{width:clamp(190px,26vw,320px);margin:0 0 26px -6px;
+  opacity:0;transform:translateY(18px);animation:markin .8s ease forwards}
+@keyframes markin{to{opacity:.95;transform:none}}
+
+.stats{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);
+  padding:0;position:relative;overflow:hidden;
+  background:url("/mangohacks/images/felt/stats-bg.webp") center/cover no-repeat}
+.stats::after{content:"";position:absolute;inset:0;background:rgba(14,18,64,.42)}
+.stats-in{max-width:var(--wrap);margin:0 auto;padding:0 26px;position:relative;z-index:2;
+  display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:34px 16px 30px;text-align:center;border-left:1px solid var(--line-2)}
+.stat:first-child{border-left:0}
+.stat-star{width:26px;margin:0 auto 12px;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.5)) drop-shadow(0 4px 7px rgba(0,0,0,.35))}
+.stat b{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(32px,4vw,46px);
+  line-height:1;color:var(--mango);letter-spacing:-.02em}
+.stat i{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+  color:var(--txt-3);font-style:normal;margin-top:11px}
+
+/* Where the texture stops. Below the hero, content sits on flat felt patches
+   rather than directly on the weave — the page still reads as cloth, but
+   dense text and (eventually) flat vector sponsor logos get a calm, even
+   surface to sit on instead of fighting the burlap behind them. */
+.card,.track,.tier{position:relative;isolation:isolate}
+.card::before,.track::before,.tier::before{content:"";position:absolute;inset:7px;
+  border-radius:inherit;border:1.5px dashed rgba(226,214,178,.16);
+  pointer-events:none;z-index:1}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+.card{background:var(--night-2);border:1px solid var(--line);border-radius:20px;
+  padding:28px 26px;transition:transform .22s,border-color .22s;
+  box-shadow:0 8px 20px rgba(0,0,0,.26)}
+.card:hover{transform:translateY(-5px);border-color:rgba(245,166,35,.45)}
+.card .ic{width:auto;height:82px;object-fit:contain;object-position:left bottom;
+  margin-bottom:16px;transition:transform .3s ease}
+.card:hover .ic{transform:translateY(-4px) rotate(-3deg)}
+.card h3{font-size:21px;margin-bottom:9px;color:#fff}
+.card p{font-size:14.5px;color:var(--txt-2);line-height:1.65}
+
+/* The old strip flipped between two walk frames; there is no felt walk cycle,
+   so it is now the mango sitting with its laptop, breathing gently. */
+.walk{padding:0;overflow:hidden;position:relative;
+  border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);
+  background:linear-gradient(180deg,rgba(255,255,255,.03),transparent)}
+.walk-lane{position:relative;height:230px;display:flex;align-items:center;
+  justify-content:center;gap:34px;padding:0 26px}
+.walker-felt{width:clamp(120px,15vw,175px);
+  animation:bob 4.2s ease-in-out infinite;transform-origin:50% 100%}
+.walk-note{color:var(--txt-3);font-family:var(--hand);font-size:24px;
+  transform:rotate(-1.5deg);max-width:320px}
+
+.tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-top:46px}
+.track{background:var(--night-2);border:1px solid var(--line);border-radius:18px;
+  padding:26px 22px;position:relative;overflow:hidden;transition:transform .22s,border-color .22s}
+.track:hover{transform:translateY(-5px);border-color:rgba(63,164,107,.5)}
+.track .n{font-family:var(--mono);font-size:11px;color:var(--leaf);letter-spacing:.16em;margin-bottom:12px}
+.track h3{font-size:19px;color:#fff;margin-bottom:7px}
+.track p{font-size:13.5px;color:var(--txt-2)}
+/* Fixed height, auto width: the cut-outs have wildly different aspect ratios
+   (an upright trophy against a wide controller), and sizing them by width
+   left every card's text starting at a different line. */
+.track-ic{width:auto;height:68px;object-fit:contain;object-position:left bottom;
+  margin-bottom:14px;transition:transform .3s ease}
+.track:hover .track-ic{transform:translateY(-4px) rotate(3deg)}
+
+/* the rail is the embroidered thread photograph, stretched down the section */
+.sched{margin-top:46px;position:relative;padding-left:34px}
+/* an explicit height is required: `height:auto` on an <img> wins over the
+   top/bottom anchors, so the rail only spanned the first slot */
+.sched-rail{position:absolute;left:0;top:6px;width:15px;height:calc(100% - 12px);
+  object-fit:fill;opacity:.92;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.slot{display:grid;grid-template-columns:118px 1fr;gap:22px;padding:15px 0;
+  border-bottom:1px solid var(--line-2);position:relative;align-items:baseline}
+.slot:last-child{border-bottom:0}
+.slot::before{content:"";position:absolute;left:-31px;top:23px;width:11px;height:11px;
+  border-radius:50%;background:#E8DCC0;box-shadow:0 1px 2px rgba(0,0,0,.6)}
+.slot time{font-family:var(--mono);font-size:14px;color:var(--mango-2);letter-spacing:.04em}
+.slot h4{font-size:18px;color:#fff;margin-bottom:3px}
+.slot p{font-size:14px;color:var(--txt-2)}
+
+/* The venue panel arrives already framed — it was photographed with its own
+   green blanket-stitched border — so it needs no card around it, just room
+   to breathe and a shadow to lift it off the cloth. */
+.venue-in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:clamp(28px,4vw,56px);align-items:center}
+.venue-art{width:100%;height:auto;border-radius:10px;
+  transition:transform .4s ease;
+  filter:drop-shadow(0 3px 4px rgba(0,0,0,.5)) drop-shadow(0 18px 30px rgba(0,0,0,.4))}
+.venue-art:hover{transform:translateY(-6px) rotate(-.6deg)}
+.venue-copy .sec-h{margin-bottom:14px}
+.venue-facts{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:30px}
+.venue-facts dt{font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mango);margin-bottom:8px}
+.venue-facts dd{margin:0;font-size:15px;color:var(--txt-2);line-height:1.55}
+
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:50px;align-items:stretch}
+.tier{background:var(--night-2);border:1px solid var(--line);border-radius:22px;
+  padding:30px 24px 26px;display:flex;flex-direction:column;text-align:center;
+  transition:transform .24s,border-color .24s;position:relative}
+.tier:hover{transform:translateY(-7px)}
+.tier .fruit{width:94px;height:auto;margin:0 auto 18px;display:block;
+  transition:transform .3s ease}
+.tier:hover .fruit{transform:translateY(-5px)}
+/* There is no felt silver mango, so the unripe one is drained of colour —
+   which is what a silver tier should look like anyway. */
+.tier.silver .fruit{filter:grayscale(.85) brightness(1.25)
+  drop-shadow(0 1px 1px rgba(0,0,0,.5)) drop-shadow(0 7px 11px rgba(0,0,0,.34))}
+/* The glowing mango was photographed with a warm halo that sits too close to
+   its own colour to key out, so the outer ring is masked away here and the
+   bloom is done with a real shadow instead. */
+.tier.glow .fruit{
+  -webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 88%);
+  mask-image:radial-gradient(closest-side,#000 62%,transparent 88%);
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.5)) drop-shadow(0 0 20px rgba(255,190,70,.75));
+  animation:ripe 3.4s ease-in-out infinite}
+.inkind-ic{width:64px;height:auto;flex:0 0 auto}
+.tier h3{font-size:25px;color:#fff;margin-bottom:4px}
+.tier .price{font-family:var(--mono);font-size:19px;color:var(--mango-2);margin-bottom:20px}
+.tier ul{list-style:none;text-align:left;margin-top:4px;flex:1}
+.tier li{font-size:14px;color:var(--txt-2);padding:7px 0 7px 24px;position:relative;line-height:1.5}
+.tier li::before{content:"";position:absolute;left:0;top:13px;width:11px;height:11px;
+  border-radius:50%;border:2px solid var(--leaf)}
+.tier li.off{color:var(--txt-3);opacity:.55}
+.tier li.off::before{border-color:var(--txt-3);opacity:.5}
+.tier .btn{margin-top:22px;justify-content:center}
+.tier.silver{border-color:rgba(200,210,224,.4)}
+.tier.silver:hover{border-color:rgba(200,210,224,.8)}
+.tier.gold{border-color:rgba(240,194,42,.45)}
+.tier.gold:hover{border-color:rgba(240,194,42,.9)}
+.tier.glow{border-color:rgba(255,180,60,.55);
+  background:linear-gradient(170deg,rgba(245,166,35,.13),rgba(21,27,87,.9) 55%);
+  box-shadow:0 0 44px rgba(245,166,35,.18)}
+.tier.glow:hover{border-color:rgba(255,196,80,1);box-shadow:0 0 62px rgba(245,166,35,.32)}
+@keyframes ripe{0%,100%{filter:drop-shadow(0 1px 1px rgba(0,0,0,.5)) drop-shadow(0 0 13px rgba(255,190,70,.6)) }
+  50%{filter:drop-shadow(0 1px 1px rgba(0,0,0,.5)) drop-shadow(0 0 26px rgba(255,205,90,.95))}}
+.ribbon{position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--mango);color:#231703;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.15em;padding:5px 14px;border-radius:100px;white-space:nowrap}
+.inkind{margin-top:34px;background:var(--night-2);border:1px solid var(--line);
+  border-radius:20px;padding:26px 30px;display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+.inkind h4{font-size:20px;color:#fff;margin-bottom:6px}
+.inkind p{font-size:14.5px;color:var(--txt-2);max-width:640px}
+
+.faq{margin-top:44px;max-width:850px}
+details{border-bottom:1px solid var(--line-2);padding:6px 0}
+summary{cursor:pointer;list-style:none;padding:17px 40px 17px 0;position:relative;
+  font-family:var(--disp);font-weight:500;font-size:19px;color:#fff}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:6px;top:14px;font-size:26px;
+  color:var(--mango);transition:transform .25s;font-family:var(--mono)}
+details[open] summary::after{transform:rotate(45deg)}
+details p{font-size:15px;color:var(--txt-2);padding:0 30px 20px 0;max-width:720px}
+
+.bigcta{text-align:center;position:relative}
+.cheer{width:clamp(120px,15vw,175px);margin:0 auto 22px;
+  animation:bob 2.6s ease-in-out infinite;transform-origin:50% 100%}
+.bigcta h2{font-size:clamp(34px,6vw,64px);font-weight:700;margin-bottom:16px}
+.bigcta p{font-size:17px;color:var(--txt-2);max-width:540px;margin:0 auto 30px}
+.bigcta .row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+footer{border-top:1px solid var(--line-2);padding:46px 0 40px;position:relative;z-index:2}
+.foot-in{display:flex;justify-content:space-between;align-items:flex-end;gap:26px;flex-wrap:wrap}
+.foot-in a{color:var(--txt-2);text-decoration:none;font-size:14px}
+.foot-in a:hover{color:var(--mango)}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-note{font-family:var(--hand);font-size:22px;color:var(--txt-3)}
+.waver{width:86px;height:auto;overflow:visible}
+
+.walker{overflow:visible}
+.walker img.guy-a,.walker img.guy-b{position:absolute;inset:0;width:100%;height:auto}
+.walker img.guy-a{animation:walkflip .62s steps(1) infinite}
+.walker img.guy-b{animation:walkflip .62s steps(1) infinite reverse}
+@keyframes walkflip{0%,100%{opacity:1}50%,50.01%{opacity:0}}
+
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:940px){
+  .cards,.tiers{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:100%;left:0;right:0;
+    background:var(--night-2);flex-direction:column;padding:20px 26px;gap:16px;
+    border-bottom:1px solid var(--line)}
+  .burger{display:block}
+  section{padding:78px 0}
+  /* stacks a breakpoint earlier than the card grids: side by side, the copy
+     column is down to ~310px here and the address starts wrapping badly */
+  .venue-in{grid-template-columns:1fr;gap:26px}
+}
+@media (max-width:620px){
+  .stats-in{grid-template-columns:1fr 1fr}
+  .stat{border-left:0;border-top:1px solid var(--line-2)}
+  .stat:nth-child(-n+2){border-top:0}
+  .cards,.tiers{grid-template-columns:1fr}
+  .venue-facts{grid-template-columns:1fr;gap:16px}
+  .slot{grid-template-columns:1fr;gap:4px}
+  .inkind{flex-direction:column;align-items:flex-start}
+  .hero{padding:20px 0 40px;margin:8px 8px 0;border-radius:18px}
+  /* The scene is a wide landscape composition; held to its own ratio on a
+     phone the mango ends up about 40px tall. Because the hero is layers
+     rather than one flat photograph, the box can simply go square and each
+     piece be re-placed — no cropping, so the signboard overlay's
+     percentages stay true and the countdown survives. */
+  .felt-stage{width:calc(100% - 20px);aspect-ratio:1/1}
+  .tree-wrap{left:-8%;bottom:13%;width:84%}
+  .mango-layer{inset:auto 1% 11% auto;width:33%}
+  /* at the desktop clamp floor these two are 180px each and meet in the
+     middle, putting moss and a log directly behind the buttons */
+  .ground{width:37vw}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  .walker{left:42%!important}
+}
