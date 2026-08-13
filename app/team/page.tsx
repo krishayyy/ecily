@@ -32,14 +32,14 @@ export default function TeamPage() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,169,110,0.10),transparent_55%)]" />
           <div className="relative max-w-5xl mx-auto text-center">
             <motion.p {...fadeUp} className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#C9A96E]/70 mb-4">
-              The team
+              National Board
             </motion.p>
             <motion.h1 {...fadeUp} className="text-[clamp(2.4rem,6vw,4.5rem)] font-bold text-white leading-[1.04] tracking-tight">
               Who&apos;s building Ecily.
             </motion.h1>
             <motion.p {...fadeUp} className="mt-5 text-base text-white/50 max-w-xl mx-auto leading-relaxed">
-              The leadership running the organization — and the chapters carrying it
-              into schools across the country.
+              The leadership running the organization — and the officials carrying it
+              into states across the nation.
             </motion.p>
           </div>
         </section>
