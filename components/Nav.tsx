@@ -6,8 +6,8 @@ import { motion, AnimatePresence } from "framer-motion"
 
 const links = [
   { label: "App", href: "/#app" },
-  { label: "Chapters", href: "/#chapters" },
-  { label: "Team", href: "/team" },
+  { label: "Delegate Program", href: "/#delegate-program" },
+  { label: "National Board", href: "/team" },
 ]
 
 export default function Nav() {
