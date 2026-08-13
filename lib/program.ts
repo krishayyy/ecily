@@ -74,6 +74,67 @@ export const ladder = [
   },
 ]
 
+/** Application link for the National Delegate Program. */
+export const DELEGATE_APPLY_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSel4yzTucJ8lg5JgeF9dPqob30TNTxCJ2dCLu14xVW26jrVOA/viewform?usp=publish-editor"
+
+/** The 12-week National Delegate Program curriculum. */
+export const programPhases = [
+  {
+    weeks: "Weeks 01–03",
+    title: "Research design",
+    detail:
+      "Ground your study in existing data, then design your state's survey instrument and interview guide.",
+  },
+  {
+    weeks: "Weeks 04–06",
+    title: "Data collection",
+    detail:
+      "Deploy your survey through school clubs and student networks; conduct interviews with students and educators.",
+  },
+  {
+    weeks: "Weeks 07–09",
+    title: "Analysis & policy framing",
+    detail:
+      "Turn raw data into findings, and translate findings into concrete recommendations.",
+  },
+  {
+    weeks: "Weeks 10–12",
+    title: "Report & publication",
+    detail:
+      "Write your final report, peer-review another state's draft, and present at the National Youth Research Showcase.",
+  },
+]
+
+/** The four sections every delegate's published report contains. */
+export const reportSections = [
+  { tag: "01 — Summary", label: "Executive summary & state overview", detail: "Key findings and context." },
+  { tag: "02 — Findings", label: "Youth financial pain point analysis", detail: "Survey data and interview themes." },
+  { tag: "03 — Method", label: "Methodology appendix", detail: "Sampling, response count, limitations." },
+  { tag: "04 — Recs", label: "Policy & program recommendations", detail: "Grounded in your state's findings." },
+]
+
+/** What delegates get for completing the program. */
+export const delegateBenefits = [
+  { title: "An official title", detail: "State Delegate & Research Fellow, Ecily." },
+  { title: "Individual authorship", detail: "A published report with a permanent link, cited in the National Report." },
+  { title: "Real research experience", detail: "Survey design, interviewing, analysis, and policy writing." },
+  {
+    title: "Eligibility for the National Research Award",
+    detail:
+      "Presented to the top 5 delegates nationally — each recipient receives a personalized letter of recommendation.",
+  },
+]
+
+/** Published selection criteria for the Ecily National Research Award. */
+export const awardCriteria = [
+  "Methodological rigor",
+  "Sample diversity",
+  "Recommendation quality",
+  "Report clarity",
+  "Peer review contribution",
+]
+
 /** Contact address used across CTAs. */
 export const CONTACT_EMAIL = "joinecily@gmail.com"
 
