@@ -1,96 +1,148 @@
-"use client"
+// ─────────────────────────────────────────────────────────────
+// Ecily Chapters program data — EDIT to change copy on the site.
+// Kept separate from components so non-developers can update it.
+// ─────────────────────────────────────────────────────────────
 
-import { motion } from "framer-motion"
-import { pillars, ladder } from "@/lib/program"
-import ChapterForm from "@/components/ChapterForm"
+/** The four reasons to join. */
+export const pillars = [
+  {
+    key: "Learn",
+    title: "Learn",
+    detail:
+      "Members work through Ecily's curriculum — budgeting, investing, credit, taxes — built around the national standards for financial literacy.",
+  },
+  {
+    key: "Serve",
+    title: "Serve",
+    detail:
+      "Chapters teach what they learn to their school and community. Real impact, and recognized volunteer hours for the people who lead it.",
+  },
+  {
+    key: "Connect",
+    title: "Connect",
+    detail:
+      "Delegates meet other delegates across their state, share resources, and build a network that outlasts high school.",
+  },
+  {
+    key: "Lead",
+    title: "Lead",
+    detail:
+      "Found a chapter, run it, and climb the ladder — from delegate to state board to national board. Leadership you actually own.",
+  },
+]
 
-const fadeUp = {
-  initial: { opacity: 0, y: 28 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
-}
+/** The leadership ladder — Delegate → State Board → National Board. */
+export const ladder = [
+  {
+    rank: "01",
+    title: "State Delegate",
+    scope: "Leads one chapter",
+    summary:
+      "You found and lead your school's chapter and represent it at the state level.",
+    powers: [
+      "Founder & President of your chapter",
+      "A vote on program rules and awards",
+      "Represents your school at the state assembly",
+      "Eligible to be elected to your State Board",
+    ],
+  },
+  {
+    rank: "02",
+    title: "State Board",
+    scope: "Governs one state",
+    summary:
+      "Elected from active delegates. Leads and grows every chapter in the state.",
+    powers: [
+      "Approves new chapters in the state",
+      "Leads statewide teaching initiatives",
+      "Supports and coordinates delegates",
+      "Sets state-level events and awards",
+    ],
+  },
+  {
+    rank: "03",
+    title: "National Board",
+    scope: "Governs the organization",
+    summary:
+      "A small group selected from top state leaders. Sets the rules every state follows.",
+    powers: [
+      "Writes the rules all chapters follow",
+      "Runs national events and initiatives",
+      "Sets curriculum direction and national awards",
+      "Oversees the state boards",
+    ],
+  },
+]
 
-export default function Chapters() {
-  return (
-    <section id="chapters" className="relative bg-[#080808] py-32 px-6">
-      {/* warm glow */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,169,110,0.10),transparent_55%)]" />
+/** Application link for the National Delegate Program. */
+export const DELEGATE_APPLY_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSel4yzTucJ8lg5JgeF9dPqob30TNTxCJ2dCLu14xVW26jrVOA/viewform?usp=publish-editor"
 
-      <div className="relative max-w-5xl mx-auto">
-        {/* Heading */}
-        <motion.div {...fadeUp} className="text-center mb-6">
-          <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#C9A96E]/70 mb-4">
-            Ecily Chapters
-          </p>
-          <h2 className="text-[clamp(2.2rem,5.5vw,4rem)] font-bold text-white leading-[1.05] tracking-tight">
-            Become a State Delegate.
-          </h2>
-          <p className="mt-5 text-base sm:text-lg text-white/50 max-w-xl mx-auto leading-relaxed">
-            Found your school&apos;s chapter of Ecily. You teach your classmates the
-            curriculum we provide and represent your school as a State Delegate.
-          </p>
-        </motion.div>
+/** The 12-week National Delegate Program curriculum. */
+export const programPhases = [
+  {
+    weeks: "Weeks 01–03",
+    title: "Research design",
+    detail:
+      "Ground your study in existing data, then design your state's survey instrument and interview guide.",
+  },
+  {
+    weeks: "Weeks 04–06",
+    title: "Data collection",
+    detail:
+      "Deploy your survey through school clubs and student networks; conduct interviews with students and educators.",
+  },
+  {
+    weeks: "Weeks 07–09",
+    title: "Analysis & policy framing",
+    detail:
+      "Turn raw data into findings, and translate findings into concrete recommendations.",
+  },
+  {
+    weeks: "Weeks 10–12",
+    title: "Report & publication",
+    detail:
+      "Write your final report, peer-review another state's draft, and present at the National Youth Research Showcase.",
+  },
+]
 
-        {/* Pillars */}
-        <motion.div {...fadeUp} className="mt-24">
-          <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-white/30 mb-8 text-center">
-            What every member gets
-          </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {pillars.map((p) => (
-              <div
-                key={p.key}
-                className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6"
-              >
-                <span className="text-[#C9A96E] font-bold text-lg">{p.title}</span>
-                <p className="mt-2 text-sm text-white/45 leading-relaxed">{p.detail}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+/** The four sections every delegate's published report contains. */
+export const reportSections = [
+  { tag: "01 — Summary", label: "Executive summary & state overview", detail: "Key findings and context." },
+  { tag: "02 — Findings", label: "Youth financial pain point analysis", detail: "Survey data and interview themes." },
+  { tag: "03 — Method", label: "Methodology appendix", detail: "Sampling, response count, limitations." },
+  { tag: "04 — Recs", label: "Policy & program recommendations", detail: "Grounded in your state's findings." },
+]
 
-        {/* The ladder */}
-        <motion.div {...fadeUp} className="mt-24">
-          <div className="text-center mb-10">
-            <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-white/30 mb-3">
-              The ladder
-            </p>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Start a chapter. Climb from there.
-            </h3>
-          </div>
+/** What delegates get for completing the program. */
+export const delegateBenefits = [
+  { title: "An official title", detail: "State Delegate & Research Fellow, Ecily." },
+  { title: "Individual authorship", detail: "A published report with a permanent link, cited in the National Report." },
+  { title: "Real research experience", detail: "Survey design, interviewing, analysis, and policy writing." },
+  {
+    title: "Eligibility for the National Research Award",
+    detail:
+      "Presented to the top 5 delegates nationally — each recipient receives a personalized letter of recommendation.",
+  },
+]
 
-          <div className="grid md:grid-cols-3 gap-4">
-            {ladder.map((rung) => (
-              <div
-                key={rung.title}
-                className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-7 flex flex-col"
-              >
-                <span className="font-mono text-xs text-[#C9A96E]/70">{rung.rank}</span>
-                <h4 className="text-xl font-bold text-white mt-1">{rung.title}</h4>
-                <span className="text-[11px] tracking-wide uppercase font-mono text-white/30 mt-1">
-                  {rung.scope}
-                </span>
-                <p className="text-sm text-white/50 leading-relaxed mt-3 mb-4">
-                  {rung.summary}
-                </p>
-                <ul className="mt-auto space-y-2">
-                  {rung.powers.map((power) => (
-                    <li key={power} className="flex gap-2 text-[13px] text-white/55">
-                      <span className="text-[#C9A96E] mt-[2px]">›</span>
-                      <span>{power}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+/** Published selection criteria for the Ecily National Research Award. */
+export const awardCriteria = [
+  "Methodological rigor",
+  "Sample diversity",
+  "Recommendation quality",
+  "Report clarity",
+  "Peer review contribution",
+]
 
-        {/* Apply */}
-        <ChapterForm />
-      </div>
-    </section>
-  )
+/** Contact address used across CTAs. */
+export const CONTACT_EMAIL = "joinecily@gmail.com"
+
+/**
+ * Social links. Leave a value as "" to hide that icon.
+ * Add the LinkedIn page URL when you have it.
+ */
+export const SOCIAL = {
+  instagram: "https://www.instagram.com/join.ecily",
+  linkedin: "https://www.linkedin.com/company/ecilyco",
 }
