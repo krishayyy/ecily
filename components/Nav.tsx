@@ -29,26 +29,22 @@ export default function Nav() {
     }
   }, [open])
 
-  const solid = scrolled || open
-
   return (
     <motion.header
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        solid
-          ? "bg-[#080808]/85 backdrop-blur-md border-b border-white/[0.06]"
-          : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 bg-[#F7F6F3]/90 backdrop-blur-md ${
+        scrolled || open ? "shadow-[0_1px_0_rgba(0,0,0,0.06)]" : ""
       }`}
     >
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 sm:px-8 py-4">
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="text-white font-semibold tracking-tight text-lg"
+          className="text-black font-semibold tracking-tight text-lg"
         >
-          ecily
+          ecily<span className="text-[#C9A96E]">.</span>
         </Link>
 
         {/* Desktop links */}
@@ -57,7 +53,7 @@ export default function Nav() {
             <Link
               key={l.label}
               href={l.href}
-              className="text-sm text-white/55 hover:text-white transition-colors duration-200"
+              className="text-sm text-black/55 hover:text-black transition-colors duration-200"
             >
               {l.label}
             </Link>
@@ -68,14 +64,14 @@ export default function Nav() {
         <div className="flex items-center gap-2.5">
           <Link
             href="/#waitlist"
-            className="hidden sm:inline-flex text-sm text-white/70 hover:text-white transition-colors duration-200 px-3 py-2"
+            className="hidden sm:inline-flex text-sm text-black/70 hover:text-black transition-colors duration-200 px-3 py-2 rounded-full border border-black/10"
           >
             Get the app
           </Link>
           <Link
             href="/#start"
             onClick={() => setOpen(false)}
-            className="inline-flex items-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-4 py-2 hover:bg-[#E0C28A] transition-colors duration-200"
+            className="inline-flex items-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-4 py-2 hover:bg-[#B8965A] transition-colors duration-200"
           >
             Start a chapter
           </Link>
@@ -85,7 +81,7 @@ export default function Nav() {
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="md:hidden ml-0.5 w-9 h-9 flex items-center justify-center text-white"
+            className="md:hidden ml-0.5 w-9 h-9 flex items-center justify-center text-black"
           >
             <div className="relative w-5 h-3.5">
               <span
@@ -111,7 +107,7 @@ export default function Nav() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden overflow-hidden border-t border-white/[0.06] bg-[#080808]/95 backdrop-blur-md"
+            className="md:hidden overflow-hidden border-t border-black/[0.06] bg-[#F7F6F3]/95 backdrop-blur-md"
           >
             <div className="px-6 py-4 flex flex-col">
               {links.map((l) => (
@@ -119,7 +115,7 @@ export default function Nav() {
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="py-3 text-base text-white/75 hover:text-white border-b border-white/[0.05] last:border-0 transition-colors duration-200"
+                  className="py-3 text-base text-black/75 hover:text-black border-b border-black/[0.05] last:border-0 transition-colors duration-200"
                 >
                   {l.label}
                 </Link>
@@ -127,7 +123,7 @@ export default function Nav() {
               <Link
                 href="/#waitlist"
                 onClick={() => setOpen(false)}
-                className="mt-4 inline-flex items-center justify-center rounded-full border border-white/15 text-white text-sm font-semibold py-3 hover:bg-white/5 transition-colors duration-200"
+                className="mt-4 inline-flex items-center justify-center rounded-full border border-black/15 text-black text-sm font-semibold py-3 hover:bg-black/5 transition-colors duration-200"
               >
                 Get the app
               </Link>
