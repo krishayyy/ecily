@@ -135,7 +135,7 @@ export default function Chapters() {
 
         {/* Apply */}
         <motion.div {...fadeUp} className="mt-16 text-center scroll-mt-24" id="apply">
-          
+          <a
             href={DELEGATE_APPLY_URL}
             target="_blank"
             rel="noopener noreferrer"
