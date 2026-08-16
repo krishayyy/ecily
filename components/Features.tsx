@@ -8,25 +8,7 @@ const features = [
     name: "Meet Cily.",
     description:
       "Your personal finance coach, powered by AI. Cily knows your state's minimum wage laws, your income situation, and where you are in your learning journey. Ask her anything.",
-    visual: (
-      <div className="relative w-full aspect-square max-w-[280px] flex items-center justify-center">
-        <div className="w-32 h-32 rounded-full bg-[#8B94D4]/20 border border-[#8B94D4]/30 flex items-center justify-center">
-          <div className="w-20 h-20 rounded-full bg-[#8B94D4]/30 border border-[#8B94D4]/40 flex items-center justify-center">
-            <span className="text-3xl font-bold text-[#8B94D4]">C</span>
-          </div>
-        </div>
-        {/* Orbiting dots */}
-        {[0, 60, 120, 180, 240, 300].map((deg, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-[#8B94D4]/50"
-            style={{
-              transform: `rotate(${deg}deg) translateX(68px)`,
-            }}
-          />
-        ))}
-      </div>
-    ),
+    visual: <CilyChatMockup />,
   },
   {
     label: "PAPER TRADING",
@@ -99,6 +81,82 @@ const features = [
     ),
   },
 ]
+
+function CilyChatMockup() {
+  const prompts = [
+    "I want recession-proof stocks",
+    "How do I start investing with $100?",
+    "Explain compound interest with my money",
+    "Is now a good time to buy?",
+  ]
+
+  return (
+    <div className="relative w-[260px] sm:w-[280px] rounded-[2.5rem] border-[8px] border-black bg-black shadow-[0_30px_70px_rgba(0,0,0,0.5)]">
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 w-24 h-5 bg-black rounded-b-2xl z-10" />
+      <div className="rounded-[2rem] overflow-hidden bg-gradient-to-b from-[#F3E9E4] to-[#EDEAF3] aspect-[9/19.5] p-4 flex flex-col">
+        <div className="flex items-center gap-1.5 mb-5 pt-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#8B94D4]" />
+          <span className="text-xs font-semibold text-black/70">Cily</span>
+        </div>
+
+        <p className="text-lg font-bold text-black leading-tight">Hey Alex</p>
+        <p className="text-sm text-black/45 mb-4 flex items-center gap-1.5">
+          What&apos;s on your mind? <span>🦊</span>
+        </p>
+
+        <div className="space-y-2">
+          {prompts.map((p, i) => (
+            <motion.div
+              key={p}
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.15 + i * 0.08, duration: 0.4, ease: "easeOut" }}
+              className="flex items-center gap-2 bg-white/70 rounded-xl px-3 py-2.5 border border-black/5"
+            >
+              <span className="w-4 h-4 rounded-full bg-[#8B94D4]/15 text-[#8B94D4] text-[9px] flex items-center justify-center shrink-0">
+                ↗
+              </span>
+              <span className="text-[11px] leading-snug text-black/75">{p}</span>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="flex-1" />
+
+        <div className="flex items-center gap-2 bg-white/60 rounded-full px-3 py-2.5 border border-black/5 mb-3">
+          <span className="text-black/30 text-xs">◌</span>
+          <span className="text-[11px] text-black/35 flex-1">Ask Cily anything</span>
+          <span className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center text-black/50 text-[10px]">
+            ↑
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between px-1">
+          {[
+            { icon: "⌂", label: "Home" },
+            { icon: "🌐", label: "Worlds" },
+            { icon: "📈", label: "Trade" },
+            { icon: "💬", label: "Cily" },
+          ].map((tab) => (
+            <div key={tab.label} className="flex flex-col items-center gap-1">
+              <span
+                className={`text-xs ${tab.label === "Cily" ? "text-[#8B94D4]" : "text-black/30"}`}
+              >
+                {tab.icon}
+              </span>
+              <span
+                className={`text-[8px] font-mono ${tab.label === "Cily" ? "text-[#8B94D4]" : "text-black/30"}`}
+              >
+                {tab.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function Features() {
   return (
