@@ -1,5 +1,6 @@
 import Nav from "@/components/Nav"
 import Hero from "@/components/Hero"
+import ScrollStat from "@/components/ScrollStat"
 import CredibilityMarquee from "@/components/CredibilityMarquee"
 import FeaturedOn from "@/components/FeaturedOn"
 import WorldsScroll from "@/components/WorldsScroll"
@@ -15,6 +16,7 @@ export default function Home() {
     <main>
       <Nav />
       <Hero />
+      <ScrollStat />
       <CredibilityMarquee />
       <FeaturedOn />
       <WorldsScroll />

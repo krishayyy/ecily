@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { motion } from "framer-motion"
 
 const features = [
@@ -10,15 +9,22 @@ const features = [
     description:
       "Your personal finance coach, powered by AI. Cily knows your state's minimum wage laws, your income situation, and where you are in your learning journey. Ask her anything.",
     visual: (
-      <div className="relative w-full max-w-[300px] aspect-[1069/1472] rounded-[2rem] overflow-hidden shadow-[0_24px_60px_rgba(28,26,22,0.18)]">
-        <Image
-          src="/images/cily-chat.png"
-          alt="The Cily AI coach chat screen on iPhone"
-          fill
-          sizes="(min-width: 768px) 300px, 80vw"
-          className="object-cover"
-          priority
-        />
+      <div className="relative w-full aspect-square max-w-[280px] flex items-center justify-center">
+        <div className="w-32 h-32 rounded-full bg-[#6B74C4]/15 border border-[#6B74C4]/30 flex items-center justify-center">
+          <div className="w-20 h-20 rounded-full bg-[#6B74C4]/25 border border-[#6B74C4]/40 flex items-center justify-center">
+            <span className="text-3xl font-bold text-[#6B74C4]">C</span>
+          </div>
+        </div>
+        {/* Orbiting dots */}
+        {[0, 60, 120, 180, 240, 300].map((deg, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 rounded-full bg-[#6B74C4]/55"
+            style={{
+              transform: `rotate(${deg}deg) translateX(68px)`,
+            }}
+          />
+        ))}
       </div>
     ),
   },
