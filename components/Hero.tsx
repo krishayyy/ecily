@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { motion } from "framer-motion"
 
 const fadeUp = (delay: number) => ({
@@ -63,45 +64,16 @@ export default function Hero() {
         className="relative max-w-4xl mx-auto mt-20"
       >
         <div className="relative flex justify-center">
-          {/* Phone mockup */}
-          <div className="relative w-[300px] sm:w-[340px] rounded-[2.75rem] border-[10px] border-black bg-black shadow-[0_30px_70px_rgba(0,0,0,0.25)]">
-            <div className="absolute left-1/2 -translate-x-1/2 top-0 w-28 h-6 bg-black rounded-b-2xl z-10" />
-            <div className="rounded-[2.15rem] overflow-hidden bg-[#0B0B0B] aspect-[9/19.5] p-5 flex flex-col">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <p className="text-[11px] text-white/40 font-mono">Welcome back,</p>
-                  <p className="text-sm font-semibold text-white">Alex M.</p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/60 text-xs">
-                  🔔
-                </div>
-              </div>
-
-              <div className="rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4 mb-4">
-                <p className="text-3xl font-bold text-white">Level 4</p>
-                <p className="text-[11px] text-white/40 font-mono mt-1">World: Investing Basics</p>
-                <div className="h-1.5 rounded-full bg-white/10 mt-3 overflow-hidden">
-                  <div className="h-full w-2/3 rounded-full bg-[#C9A96E]" />
-                </div>
-              </div>
-
-              <div className="rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4 flex-1">
-                <p className="text-[11px] text-white/40 font-mono mb-1">Next lesson</p>
-                <p className="text-sm text-white font-medium">Compound Interest</p>
-                <p className="text-[11px] text-white/40 font-mono mt-1">+50 XP</p>
-              </div>
-
-              <div className="mt-4 grid grid-cols-3 gap-2">
-                {["🏠", "🎮", "🏆"].map((icon, i) => (
-                  <div
-                    key={i}
-                    className="aspect-square rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-sm"
-                  >
-                    {icon}
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Product photo — the real Cily app screenshot, background removed */}
+          <div className="relative w-[260px] sm:w-[300px] aspect-[1069/1472]">
+            <Image
+              src="/images/cily-chat-cutout.png"
+              alt="The Cily AI coach chat screen on iPhone"
+              fill
+              sizes="(min-width: 640px) 300px, 260px"
+              className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.25)]"
+              priority
+            />
           </div>
 
           {/* Overlapping card — top right, like a payment-detail card */}
