@@ -32,12 +32,12 @@ const features = [
 
 export default function FeaturedOn() {
   return (
-    <section className="bg-[#080808] py-16 px-6">
+    <section className="bg-[#FBF6EC] py-16 px-6">
       <motion.div {...fadeUp} className="max-w-4xl mx-auto text-center">
-        <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-white/30 mb-9">
+        <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#1C1A16]/35 mb-9">
           Featured on
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
           {features.map((f) => (
             <a
               key={f.name}
@@ -45,7 +45,7 @@ export default function FeaturedOn() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={f.name}
-              className="opacity-55 hover:opacity-90 transition-opacity duration-300"
+              className="rounded-2xl bg-[#1C1A16] px-8 py-5 opacity-80 hover:opacity-100 transition-opacity duration-300"
             >
               <Image
                 src={f.src}
