@@ -47,7 +47,7 @@ export default function WaitlistForm() {
           <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#E0C28A] mb-4">
             Early access
           </p>
-          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold text-white leading-tight tracking-tight mb-4">
+          <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold text-white leading-tight tracking-tight mb-4">
             Be first in.
           </h2>
           <p className="text-base text-white/50 mb-10 leading-relaxed">

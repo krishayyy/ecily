@@ -151,7 +151,7 @@ export default function CredibilityMarquee() {
         <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-[#B0813A]">
           Why Ecily
         </p>
-        <h2 className="text-[clamp(1.4rem,3vw,2rem)] font-bold tracking-tight text-[#1C1A16]">
+        <h2 className="font-display text-[clamp(1.4rem,3vw,2rem)] font-semibold tracking-tight text-[#1C1A16]">
           No gimmicks. Just the fundamentals, done right.
         </h2>
       </motion.div>

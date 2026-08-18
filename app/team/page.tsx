@@ -34,7 +34,7 @@ export default function TeamPage() {
             <motion.p {...fadeUp} className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#B0813A] mb-4">
               National Board
             </motion.p>
-            <motion.h1 {...fadeUp} className="text-[clamp(2.4rem,6vw,4.5rem)] font-extrabold text-[#1C1A16] leading-[1.04] tracking-tight">
+            <motion.h1 {...fadeUp} className="font-display text-[clamp(2.4rem,6vw,4.5rem)] font-semibold text-[#1C1A16] leading-[1.04] tracking-tight">
               Who&apos;s building Ecily.
             </motion.h1>
             <motion.p {...fadeUp} className="mt-5 text-base text-[#1C1A16]/60 max-w-xl mx-auto leading-relaxed">

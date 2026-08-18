@@ -25,7 +25,7 @@ export default function Mission() {
 
         <motion.h2
           {...fadeUp}
-          className="text-[clamp(1.9rem,4.5vw,3.2rem)] font-extrabold text-[#1C1A16] leading-[1.15] tracking-tight text-balance"
+          className="font-display text-[clamp(1.9rem,4.5vw,3.2rem)] font-semibold text-[#1C1A16] leading-[1.15] tracking-tight text-balance"
         >
           Build personal financial literacy
           <span className="text-[#1C1A16]/45"> — for every teenager.</span>

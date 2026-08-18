@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#FBF6EC] border-t border-black/[0.07] px-8 py-10">
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-5">
-        <span className="text-[#1C1A16]/70 font-semibold tracking-tight">ecily</span>
+        <span className="font-display italic text-[#1C1A16]/70 font-semibold tracking-tight">ecily</span>
 
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-[#1C1A16]/40 font-mono">
         <Link href="/#delegate-program" className="hover:text-[#1C1A16]/70 transition-colors duration-200">Delegate Program</Link>

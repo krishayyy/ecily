@@ -42,7 +42,7 @@ export default function Nav() {
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="text-black font-semibold tracking-tight text-lg"
+          className="font-display italic text-black font-semibold tracking-tight text-lg"
         >
           ecily<span className="text-[#C9A96E]">.</span>
         </Link>

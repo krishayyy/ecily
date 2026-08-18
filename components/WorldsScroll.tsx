@@ -272,7 +272,7 @@ function WorldPanel({
           <span className="text-[10px] tracking-[0.3em] uppercase text-[#1C1A16]/55 font-mono mb-5 block">
             {world.label}
           </span>
-          <h2 className="text-[clamp(2.8rem,8vw,6.5rem)] font-extrabold leading-[0.95] tracking-tight text-[#1C1A16] mb-5">
+          <h2 className="font-display text-[clamp(2.8rem,8vw,6.5rem)] font-semibold leading-[0.95] tracking-tight text-[#1C1A16] mb-5">
             {world.name}
           </h2>
           <p className="text-lg sm:text-xl text-[#1C1A16]/70 mb-9 max-w-md font-medium">

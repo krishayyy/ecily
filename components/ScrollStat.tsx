@@ -72,7 +72,7 @@ export default function ScrollStat() {
             Why we exist
           </motion.p>
 
-          <p className="text-[clamp(1.8rem,4.5vw,3.4rem)] font-bold leading-[1.25] tracking-tight">
+          <p className="font-display text-[clamp(1.8rem,4.5vw,3.4rem)] font-semibold leading-[1.25] tracking-tight">
             {words.map((w, i) => (
               <Word
                 key={i}

@@ -22,7 +22,7 @@ export default function Chapters() {
           <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#B0813A] mb-4">
             National Delegate Program
           </p>
-          <h2 className="text-[clamp(2.2rem,5.5vw,4rem)] font-extrabold text-[#1C1A16] leading-[1.05] tracking-tight">
+          <h2 className="font-display text-[clamp(2.2rem,5.5vw,4rem)] font-semibold text-[#1C1A16] leading-[1.05] tracking-tight">
             A research fellowship on how young people learn about money.
           </h2>
           <p className="mt-5 text-base sm:text-lg text-[#1C1A16]/60 max-w-xl mx-auto leading-relaxed">
@@ -69,7 +69,7 @@ export default function Chapters() {
             <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#1C1A16]/35 mb-3">
               What you&apos;ll publish
             </p>
-            <h3 className="text-2xl sm:text-3xl font-bold text-[#1C1A16] tracking-tight">
+            <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#1C1A16] tracking-tight">
               A standalone State Youth Financial Literacy Report.
             </h3>
           </div>

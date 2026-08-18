@@ -22,7 +22,7 @@ export function LegalLayout({
             <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#B0813A] mb-4">
               {eyebrow}
             </p>
-            <h1 className="text-[clamp(2rem,5vw,3.2rem)] font-extrabold text-[#1C1A16] leading-[1.05] tracking-tight">
+            <h1 className="font-display text-[clamp(2rem,5vw,3.2rem)] font-semibold text-[#1C1A16] leading-[1.05] tracking-tight">
               {title}
             </h1>
             <p className="mt-4 text-sm text-[#1C1A16]/40 font-mono">Last updated: {updated}</p>

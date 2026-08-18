@@ -47,7 +47,7 @@ export default function WhyItMatters() {
           <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-[#B0813A]">
             Why this matters
           </p>
-          <h2 className="text-[clamp(2rem,5vw,3.4rem)] font-extrabold leading-[1.08] tracking-tight text-[#1C1A16] text-balance">
+          <h2 className="font-display text-[clamp(2rem,5vw,3.4rem)] font-semibold leading-[1.08] tracking-tight text-[#1C1A16] text-balance">
             Most teens never get taught how money works.
           </h2>
         </motion.div>
@@ -60,7 +60,7 @@ export default function WhyItMatters() {
               transition={{ ...fadeUp.transition, delay: i * 0.1 }}
               className="flex flex-col rounded-2xl border border-black/[0.07] bg-white p-8 shadow-[0_8px_30px_rgba(28,26,22,0.05)]"
             >
-              <span className="text-[clamp(2.8rem,7vw,4.4rem)] font-extrabold leading-none tracking-tight text-[#B0813A]">
+              <span className="font-display text-[clamp(2.8rem,7vw,4.4rem)] font-semibold leading-none tracking-tight text-[#B0813A]">
                 {s.value}
               </span>
               <p className="mt-5 text-[15px] leading-relaxed text-[#1C1A16]/65">

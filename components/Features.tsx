@@ -108,7 +108,7 @@ export default function Features() {
           <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#3F8F6C] mb-4">
             Built different
           </p>
-          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold text-[#1C1A16] leading-tight tracking-tight">
+          <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold text-[#1C1A16] leading-tight tracking-tight">
             Everything you need.<br />Nothing you don&apos;t.
           </h2>
         </motion.div>
@@ -127,7 +127,7 @@ export default function Features() {
                 <span className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#1C1A16]/40">
                   {feature.label}
                 </span>
-                <h3 className="text-3xl md:text-4xl font-extrabold text-[#1C1A16] tracking-tight leading-tight">
+                <h3 className="font-display text-3xl md:text-4xl font-semibold text-[#1C1A16] tracking-tight leading-tight">
                   {feature.name}
                 </h3>
                 <p className="text-base text-[#1C1A16]/60 leading-relaxed max-w-sm">

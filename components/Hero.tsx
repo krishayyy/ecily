@@ -25,13 +25,13 @@ export default function Hero() {
 
         <motion.h1
           {...fadeUp(0.08)}
-          className="text-[clamp(2.5rem,6vw,4.25rem)] font-bold leading-[1.08] tracking-tight text-black"
+          className="font-display text-[clamp(2.5rem,6vw,4.25rem)] font-semibold leading-[1.08] tracking-tight text-black"
         >
           Learn money by playing.
         </motion.h1>
         <motion.h2
           {...fadeUp(0.16)}
-          className="text-[clamp(2.5rem,6vw,4.25rem)] font-bold leading-[1.08] tracking-tight text-black/35 mb-8"
+          className="font-display text-[clamp(2.5rem,6vw,4.25rem)] italic font-medium leading-[1.08] tracking-tight text-black/35 mb-8"
         >
           Earn XP. Level up for life.
         </motion.h2>
