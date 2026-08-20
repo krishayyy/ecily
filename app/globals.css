@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   Ecily design tokens
+   --------------------------------------------------------------------------
+   The brand palette is five earthy, low-chroma colors. It has no saturated
+   accent, which drives one structural decision: emphasis on this site comes
+   from VALUE contrast, never hue. The primary button is solid ink on ivory
+   (9.47:1), not a colored pill.
+
+   Every neutral below is either a brand color verbatim or an OKLab
+   interpolation along the ivory -> ink axis, so the whole ramp stays on the
+   brand's hue. None of these were eyeballed.
+
+   Measured WCAG ratios are noted per token. Two hard rules fall out:
+     - Sage on ivory is 1.71:1. It is DECORATION on light grounds — rules,
+       borders, glows, fills. It must never carry text there.
+     - Ebony and Dim Grey are light-ground-only (1.37:1 and 1.74:1 on the
+       theatre). On the dark theatre the only text colors are ivory and sage.
+   ========================================================================== */
+
+:root {
+  /* --- Light ground: the site's default canvas --- */
+  --canvas: #f5f9e9;          /* Ivory — brand                               */
+  --canvas-sunk: #e9eede;     /* derived, t=0.055 — alternating section band */
+  --hairline: #d8dece;        /* derived, t=0.14  — default rule / border    */
+  --hairline-strong: #c3cabc; /* derived, t=0.24  — emphasized border        */
+
+  /* --- Ink: text on the light ground --- */
+  --ink: #36453b;             /* Dark Slate Grey — brand.  9.47:1  AAA       */
+  --ink-2: #515751;           /* Ebony — brand.            6.92:1  AA        */
+  --ink-3: #596869;           /* Dim Grey — brand.         5.43:1  AA        */
+
+  /* --- Sage: the one decorative accent --- */
+  --sage: #c2c1a5;            /* Dry Sage — brand. 1.71:1 on ivory: NO TEXT  */
+
+  /* --- Dark ground: the Worlds theatre --- */
+  --theatre: #36453b;         /* Dark Slate Grey — brand                     */
+  --theatre-rise: #435045;    /* derived — raised surface on the theatre     */
+  --theatre-line: #525e51;    /* derived — border on the theatre             */
+  --on-theatre: #f5f9e9;      /* Ivory.    9.47:1 on theatre  AAA            */
+  --on-theatre-2: #c2c1a5;    /* Dry Sage. 5.54:1 on theatre  AA             */
+
+  /* --- Vertical rhythm ---
+     Sections are deliberately NOT all the same height. Weight maps to space:
+     a hero breathes, a logo strip does not. */
+  --section-sm: clamp(3.5rem, 6vw, 5rem);
+  --section: clamp(5.5rem, 9vw, 8rem);
+  --section-lg: clamp(7rem, 12vw, 11rem);
+
+  /* --- Motion ---
+     One easing curve for the whole site. Every transition is a multiple of
+     one base duration so nothing drifts out of step. */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 180ms;
+  --dur: 260ms;
+  --dur-slow: 620ms;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -11,43 +68,79 @@ html {
 }
 
 body {
-  background: #080808;
-  color: #ffffff;
+  background: var(--canvas);
+  color: var(--ink);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--sage);
+  color: var(--ink);
+}
+
+/* Focus ring — ink on light grounds, ivory on the theatre. Never removed. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.on-theatre :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline-color: var(--on-theatre);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-
+  .text-pretty {
+    text-wrap: pretty;
+  }
   .font-mono {
     font-family: var(--font-geist-mono), ui-monospace, monospace;
   }
+
+  /* The eyebrow appears above most section headings. It was duplicated with
+     four different letter-spacings across the old components; it is one thing
+     now. */
+  .eyebrow {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* Section padding presets, so no component hand-rolls `py-32` again. */
+  .section-sm { padding-top: var(--section-sm); padding-bottom: var(--section-sm); }
+  .section    { padding-top: var(--section);    padding-bottom: var(--section); }
+  .section-lg { padding-top: var(--section-lg); padding-bottom: var(--section-lg); }
 }
 
-/* Particle float animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px);
-    opacity: 0.4;
-  }
-  33% {
-    transform: translateY(-18px) translateX(6px);
-    opacity: 0.15;
-  }
-  66% {
-    transform: translateY(-8px) translateX(-8px);
-    opacity: 0.3;
-  }
+/* --------------------------------------------------------------------------
+   Grain — a single tiling SVG of fractal noise, applied at very low alpha.
+   On a flat earthy palette this is what separates "printed" from "washed
+   out"; it gives the ivory a paper texture without adding a color.
+   -------------------------------------------------------------------------- */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
+}
+.on-theatre .grain::after,
+.grain.on-theatre::after {
+  mix-blend-mode: screen;
+  opacity: 0.16;
 }
 
-.animate-float {
-  animation: float linear infinite;
-}
-
-/* Credibility marquee — seamless loop via duplicated track translated -50% */
+/* --------------------------------------------------------------------------
+   Credibility marquee — seamless loop via a duplicated track translated -50%.
+   -------------------------------------------------------------------------- */
 @keyframes marquee-left {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -91,8 +184,18 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .marquee-track {
     animation: none;
     transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
