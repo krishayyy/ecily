@@ -10,16 +10,16 @@ const features = [
       "Your personal finance coach, powered by AI. Cily knows your state's minimum wage laws, your income situation, and where you are in your learning journey. Ask her anything.",
     visual: (
       <div className="relative w-full aspect-square max-w-[280px] flex items-center justify-center">
-        <div className="w-32 h-32 rounded-full bg-[#8B94D4]/20 border border-[#8B94D4]/30 flex items-center justify-center">
-          <div className="w-20 h-20 rounded-full bg-[#8B94D4]/30 border border-[#8B94D4]/40 flex items-center justify-center">
-            <span className="text-3xl font-bold text-[#8B94D4]">C</span>
+        <div className="w-32 h-32 rounded-full bg-[#8CBA80]/20 border border-[#8CBA80]/30 flex items-center justify-center">
+          <div className="w-20 h-20 rounded-full bg-[#8CBA80]/30 border border-[#8CBA80]/40 flex items-center justify-center">
+            <span className="text-3xl font-bold text-[#8CBA80]">C</span>
           </div>
         </div>
         {/* Orbiting dots */}
         {[0, 60, 120, 180, 240, 300].map((deg, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 rounded-full bg-[#8B94D4]/50"
+            className="absolute w-2 h-2 rounded-full bg-[#8CBA80]/50"
             style={{
               transform: `rotate(${deg}deg) translateX(68px)`,
             }}
@@ -72,7 +72,7 @@ const features = [
           </div>
           <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-[#8B94D4] rounded-full"
+              className="h-full bg-[#8CBA80] rounded-full"
               initial={{ width: 0 }}
               whileInView={{ width: "82%" }}
               viewport={{ once: true }}
@@ -90,7 +90,7 @@ const features = [
                 border: i < 5 ? "1px solid rgba(139,148,212,0.3)" : "1px solid rgba(255,255,255,0.08)",
               }}
             >
-              {i < 5 && <span className="text-[#8B94D4] text-[10px]">✓</span>}
+              {i < 5 && <span className="text-[#8CBA80] text-[10px]">✓</span>}
             </div>
           ))}
         </div>
@@ -102,7 +102,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="bg-[#0C0C0C] py-32 px-6">
+    <section className="bg-ink py-32 px-6">
       <div className="max-w-5xl mx-auto">
         <motion.div
           className="mb-20 text-center"
@@ -111,10 +111,10 @@ export default function Features() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-white/30 mb-4">
+          <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-cream/35 mb-4">
             Built different
           </p>
-          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white leading-tight tracking-tight">
+          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-bold text-cream leading-tight tracking-tight">
             Everything you need.<br />Nothing you don&apos;t.
           </h2>
         </motion.div>
@@ -130,13 +130,13 @@ export default function Features() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex-1 space-y-4">
-                <span className="text-[10px] tracking-[0.25em] uppercase font-mono text-white/30">
+                <span className="text-[10px] tracking-[0.25em] uppercase font-mono text-cream/35">
                   {feature.label}
                 </span>
-                <h3 className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight">
+                <h3 className="text-3xl md:text-4xl font-bold text-cream tracking-tight leading-tight">
                   {feature.name}
                 </h3>
-                <p className="text-base text-white/50 leading-relaxed max-w-sm">
+                <p className="text-base text-cream/50 leading-relaxed max-w-sm">
                   {feature.description}
                 </p>
               </div>

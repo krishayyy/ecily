@@ -32,9 +32,9 @@ const features = [
 
 export default function FeaturedOn() {
   return (
-    <section className="bg-[#080808] py-16 px-6">
+    <section className="bg-cream py-16 px-6">
       <motion.div {...fadeUp} className="max-w-4xl mx-auto text-center">
-        <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-white/30 mb-9">
+        <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-ink/35 mb-9">
           Featured on
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
@@ -45,7 +45,7 @@ export default function FeaturedOn() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={f.name}
-              className="opacity-55 hover:opacity-90 transition-opacity duration-300"
+              className="opacity-45 hover:opacity-80 transition-opacity duration-300 invert"
             >
               <Image
                 src={f.src}

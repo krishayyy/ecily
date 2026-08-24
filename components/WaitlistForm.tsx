@@ -36,7 +36,7 @@ export default function WaitlistForm() {
   }
 
   return (
-    <section id="waitlist" className="bg-[#080808] py-32 px-6">
+    <section id="waitlist" className="bg-cream py-28 px-6">
       <div className="max-w-xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -44,13 +44,13 @@ export default function WaitlistForm() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-white/30 mb-4">
+          <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-ink/35 mb-4">
             Early access
           </p>
-          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white leading-tight tracking-tight mb-4">
+          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold text-ink leading-tight tracking-tight mb-4">
             Be first in.
           </h2>
-          <p className="text-base text-white/40 mb-10 leading-relaxed">
+          <p className="text-base text-ink/45 mb-10 leading-relaxed">
             Ecily is launching soon. Drop your email and you&apos;ll be among the first to get access.
           </p>
         </motion.div>
@@ -65,13 +65,13 @@ export default function WaitlistForm() {
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="py-6"
             >
-              <div className="w-12 h-12 rounded-full bg-[#5EA88A]/20 border border-[#5EA88A]/30 flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 rounded-full bg-sage/40 border border-sage/60 flex items-center justify-center mx-auto mb-4">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M4 10l4.5 4.5L16 6" stroke="#5EA88A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M4 10l4.5 4.5L16 6" stroke="#4D5382" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <p className="text-white font-semibold text-lg">You&apos;re on the list.</p>
-              <p className="text-white/40 text-sm mt-1">We&apos;ll be in touch when Ecily is ready.</p>
+              <p className="text-ink font-semibold text-lg">You&apos;re on the list.</p>
+              <p className="text-ink/45 text-sm mt-1">We&apos;ll be in touch when Ecily is ready.</p>
             </motion.div>
           ) : (
             <motion.form
@@ -88,12 +88,12 @@ export default function WaitlistForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="flex-1 bg-white/5 border border-white/10 rounded-full px-5 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-colors duration-200"
+                className="flex-1 bg-white border border-ink/12 rounded-full px-5 py-3.5 text-sm text-ink placeholder:text-ink/30 focus:outline-none focus:border-slate/60 transition-colors duration-200"
               />
               <motion.button
                 type="submit"
                 disabled={status === "loading"}
-                className="px-6 py-3.5 rounded-full bg-white text-black text-sm font-semibold disabled:opacity-50 transition-opacity duration-200 whitespace-nowrap"
+                className="px-6 py-3.5 rounded-full bg-ink text-cream text-sm font-semibold disabled:opacity-50 hover:bg-grape transition-colors duration-200 whitespace-nowrap"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -107,7 +107,7 @@ export default function WaitlistForm() {
           <motion.p
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-[#C46E6E] text-xs mt-3 font-mono"
+            className="text-[#B24747] text-xs mt-3 font-mono"
           >
             {errorMsg}
           </motion.p>

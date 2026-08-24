@@ -11,7 +11,7 @@ export default function SupportPage() {
     <LegalLayout eyebrow="Help" title="Support" updated="July 2026">
       <LegalCard title="Contact Us">
         For any question, bug report, or feedback, email{" "}
-        <a href="mailto:joinecily@gmail.com" className="text-[#C9A96E] underline">
+        <a href="mailto:joinecily@gmail.com" className="text-slate underline">
           joinecily@gmail.com
         </a>
         . We read every message and typically respond within 2 business days.
@@ -22,7 +22,7 @@ export default function SupportPage() {
       <LegalCard title="How do I delete my account?">
         In the app, go to Settings → Account → Delete Account. This permanently removes your
         personal data within 30 days. You can also request deletion by emailing{" "}
-        <a href="mailto:joinecily@gmail.com" className="text-[#C9A96E] underline">
+        <a href="mailto:joinecily@gmail.com" className="text-slate underline">
           joinecily@gmail.com
         </a>
         .
@@ -33,7 +33,7 @@ export default function SupportPage() {
       </LegalCard>
       <LegalCard title="I found a bug or something looks wrong.">
         Email{" "}
-        <a href="mailto:joinecily@gmail.com" className="text-[#C9A96E] underline">
+        <a href="mailto:joinecily@gmail.com" className="text-slate underline">
           joinecily@gmail.com
         </a>{" "}
         with your device model and iOS version if you can, plus what you were doing when it
@@ -48,14 +48,14 @@ export default function SupportPage() {
 
       <LegalCard title="Privacy Policy" accent="#7B8FD4">
         See our{" "}
-        <a href="/privacy" className="text-[#C9A96E] underline">
+        <a href="/privacy" className="text-slate underline">
           Privacy Policy
         </a>{" "}
         for what we collect and why.
       </LegalCard>
       <LegalCard title="Terms of Service" accent="#7B8FD4">
         See our{" "}
-        <a href="/terms" className="text-[#C9A96E] underline">
+        <a href="/terms" className="text-slate underline">
           Terms of Service
         </a>
         .

@@ -123,10 +123,10 @@ function Row({
           <span
             key={i}
             aria-hidden={i >= chips.length}
-            className="inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-full border border-white/10 bg-white/[0.035] px-5 py-2.5"
+            className="inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-full border border-ink/10 bg-ink/[0.02] px-5 py-2.5"
           >
-            <span className="shrink-0 text-[#C9A96E]">{c.icon}</span>
-            <span className="text-[13px] font-medium text-white/70 sm:text-sm">
+            <span className="shrink-0 text-slate">{c.icon}</span>
+            <span className="text-[13px] font-medium text-ink/65 sm:text-sm">
               {c.label}
             </span>
           </span>
@@ -138,9 +138,7 @@ function Row({
 
 export default function CredibilityMarquee() {
   return (
-    <section className="relative overflow-hidden bg-[#080808] py-20 sm:py-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,169,110,0.05),transparent_70%)]" />
-
+    <section className="relative overflow-hidden bg-cream py-20 sm:py-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -148,10 +146,10 @@ export default function CredibilityMarquee() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="relative mb-10 px-6 text-center"
       >
-        <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-[#C9A96E]/70">
+        <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-slate">
           Why Ecily
         </p>
-        <h2 className="text-[clamp(1.4rem,3vw,2rem)] font-bold tracking-tight text-white">
+        <h2 className="text-[clamp(1.4rem,3vw,2rem)] font-bold tracking-tight text-ink">
           No gimmicks. Just the fundamentals, done right.
         </h2>
       </motion.div>

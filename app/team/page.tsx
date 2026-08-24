@@ -26,18 +26,17 @@ export default function TeamPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[#080808] min-h-screen">
+      <main className="bg-cream min-h-screen">
         {/* Header */}
-        <section className="relative px-6 pt-36 pb-16">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,169,110,0.10),transparent_55%)]" />
+        <section className="relative px-6 pt-32 pb-16">
           <div className="relative max-w-5xl mx-auto text-center">
-            <motion.p {...fadeUp} className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#C9A96E]/70 mb-4">
+            <motion.p {...fadeUp} className="text-[10px] tracking-[0.25em] uppercase font-mono text-slate mb-4">
               National Board
             </motion.p>
-            <motion.h1 {...fadeUp} className="text-[clamp(2.4rem,6vw,4.5rem)] font-bold text-white leading-[1.04] tracking-tight">
+            <motion.h1 {...fadeUp} className="text-[clamp(2.4rem,6vw,4.5rem)] font-extrabold text-ink leading-[1.04] tracking-tight">
               Who&apos;s building Ecily.
             </motion.h1>
-            <motion.p {...fadeUp} className="mt-5 text-base text-white/50 max-w-xl mx-auto leading-relaxed">
+            <motion.p {...fadeUp} className="mt-5 text-base text-ink/50 max-w-xl mx-auto leading-relaxed">
               The leadership running the organization — and the officials carrying it
               into states across the nation.
             </motion.p>
@@ -47,12 +46,12 @@ export default function TeamPage() {
         {/* Leadership */}
         <section className="px-6 pb-24">
           <div className="max-w-5xl mx-auto">
-            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">
+            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-2">
               Leadership
             </motion.h2>
-            <motion.div {...fadeUp} className="h-px bg-white/[0.08] mb-12" />
+            <motion.div {...fadeUp} className="h-px bg-ink/[0.08] mb-12" />
 
-            <div className="divide-y divide-white/[0.07]">
+            <div className="divide-y divide-ink/[0.07]">
               {leadership.map((m) => (
                 <motion.div
                   key={m.name}
@@ -61,19 +60,19 @@ export default function TeamPage() {
                 >
                   <div className="min-w-0 max-w-xl">
                     <div className="flex flex-wrap items-baseline gap-x-3">
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                      <h3 className="text-xl sm:text-2xl font-semibold text-ink tracking-tight">
                         {m.name}
                       </h3>
-                      <span className="text-[12px] text-[#C9A96E]/80">{m.role}</span>
+                      <span className="text-[12px] text-slate">{m.role}</span>
                     </div>
                     {m.bio && (
-                      <p className="text-sm text-white/50 mt-1.5 leading-relaxed">{m.bio}</p>
+                      <p className="text-sm text-ink/50 mt-1.5 leading-relaxed">{m.bio}</p>
                     )}
                   </div>
                   {(m.school || m.linkedin) && (
                     <div className="flex items-center gap-5 shrink-0">
                       {m.school && (
-                        <span className="text-[10px] tracking-[0.15em] uppercase font-mono text-white/35">
+                        <span className="text-[10px] tracking-[0.15em] uppercase font-mono text-ink/35">
                           {m.school}
                         </span>
                       )}
@@ -83,7 +82,7 @@ export default function TeamPage() {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`${m.name} on LinkedIn`}
-                          className="text-white/35 hover:text-[#C9A96E] transition-colors duration-200"
+                          className="text-ink/35 hover:text-slate transition-colors duration-200"
                         >
                           <LinkedInIcon />
                         </a>
@@ -101,13 +100,13 @@ export default function TeamPage() {
           <div className="max-w-5xl mx-auto">
             <motion.div
               {...fadeUp}
-              className="rounded-3xl border border-white/10 bg-white/[0.03] p-10 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6"
+              className="rounded-3xl bg-slate/10 p-10 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6"
             >
               <div>
-                <h3 className="text-2xl font-bold text-white tracking-tight mb-2">
+                <h3 className="text-2xl font-bold text-ink tracking-tight mb-2">
                   Want to help build Ecily?
                 </h3>
-                <p className="text-sm text-white/45 max-w-md leading-relaxed">
+                <p className="text-sm text-ink/50 max-w-md leading-relaxed">
                   We&apos;re a small team growing fast. If you want to lead outreach,
                   build product, run a state, or start a chapter — we want to hear from you.
                 </p>
@@ -115,13 +114,13 @@ export default function TeamPage() {
               <div className="flex flex-col sm:flex-row gap-3 shrink-0">
                 <a
                   href={`mailto:${CONTACT_EMAIL}?subject=I%20want%20to%20join%20the%20Ecily%20team`}
-                  className="inline-flex justify-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-6 py-3 hover:bg-[#E0C28A] transition-colors duration-200"
+                  className="inline-flex justify-center rounded-full bg-ink text-cream text-sm font-semibold px-6 py-3 hover:bg-grape transition-colors duration-200"
                 >
                   Join the team
                 </a>
                 <Link
                   href="/#start"
-                  className="inline-flex justify-center rounded-full border border-white/15 text-white text-sm font-semibold px-6 py-3 hover:bg-white/5 transition-colors duration-200"
+                  className="inline-flex justify-center rounded-full border border-ink/15 text-ink text-sm font-semibold px-6 py-3 hover:bg-ink/5 transition-colors duration-200"
                 >
                   Start a chapter
                 </Link>
@@ -133,27 +132,27 @@ export default function TeamPage() {
         {/* Chapters */}
         <section className="px-6 pb-32">
           <div className="max-w-5xl mx-auto">
-            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">
+            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-2">
               Chapters
             </motion.h2>
-            <motion.div {...fadeUp} className="h-px bg-white/[0.08] mb-12" />
+            <motion.div {...fadeUp} className="h-px bg-ink/[0.08] mb-12" />
 
             {chapters.length === 0 ? (
               <motion.div
                 {...fadeUp}
-                className="rounded-3xl border border-[#C9A96E]/20 bg-gradient-to-b from-[#C9A96E]/[0.06] to-transparent p-10 sm:p-14 text-center"
+                className="rounded-3xl bg-ink text-cream p-10 sm:p-14 text-center"
               >
-                <p className="text-[#C9A96E] font-mono text-sm tracking-wide mb-3">No chapters yet.</p>
-                <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
+                <p className="text-sand font-mono text-sm tracking-wide mb-3">No chapters yet.</p>
+                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
                   Be the first.
                 </h3>
-                <p className="text-sm text-white/45 max-w-md mx-auto mb-8 leading-relaxed">
+                <p className="text-sm text-cream/50 max-w-md mx-auto mb-8 leading-relaxed">
                   Found your school&apos;s chapter and your name appears here as a Founding
                   State Delegate. Every chapter after yours started second.
                 </p>
                 <Link
                   href="/#start"
-                  className="inline-flex rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-6 py-3 hover:bg-[#E0C28A] transition-colors duration-200"
+                  className="inline-flex rounded-full bg-cream text-ink text-sm font-semibold px-6 py-3 hover:bg-sand transition-colors duration-200"
                 >
                   Start a chapter
                 </Link>
@@ -164,21 +163,21 @@ export default function TeamPage() {
                   <motion.div
                     key={`${c.school}-${c.state}`}
                     {...fadeUp}
-                    className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6"
+                    className="rounded-2xl bg-white border border-ink/[0.08] p-6"
                   >
-                    <p className="text-white font-semibold">{c.school}</p>
-                    <p className="text-[13px] text-white/40 mt-0.5">{c.state}</p>
-                    <p className="text-xs text-white/35 mt-3">
-                      Delegate · <span className="text-white/55">{c.delegate}</span>
+                    <p className="text-ink font-semibold">{c.school}</p>
+                    <p className="text-[13px] text-ink/40 mt-0.5">{c.state}</p>
+                    <p className="text-xs text-ink/35 mt-3">
+                      Delegate · <span className="text-ink/55">{c.delegate}</span>
                     </p>
                   </motion.div>
                 ))}
               </div>
             )}
 
-            <motion.p {...fadeUp} className="text-center text-xs text-white/30 font-mono mt-10">
+            <motion.p {...fadeUp} className="text-center text-xs text-ink/35 font-mono mt-10">
               Questions?{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-[#C9A96E]/80 hover:text-[#C9A96E]">
+              <a href={`mailto:${CONTACT_EMAIL}`} className="text-slate hover:text-grape">
                 {CONTACT_EMAIL}
               </a>
             </motion.p>

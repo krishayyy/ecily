@@ -1,10 +1,11 @@
 import type { Metadata } from "next"
-import { Inter, DM_Mono } from "next/font/google"
+import { Plus_Jakarta_Sans, DM_Mono } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({
+const display = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-geist-sans",
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 })
 
@@ -16,9 +17,9 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Ecily — Level up your money game",
+  title: "Ecily — Literacy for a world run by decisions",
   description:
-    "Ecily teaches teens real financial literacy through 8 interactive worlds, paper trading, and an AI coach. Start a chapter at your school, become a State Delegate, and teach it forward.",
+    "Ecily builds literacy — starting with money, building toward AI — through a teen finance app and student-led chapters teaching it forward, nationwide.",
 }
 
 export default function RootLayout({
@@ -29,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${dmMono.variable} antialiased bg-[#080808] overflow-x-hidden`}
+        className={`${display.variable} ${dmMono.variable} antialiased bg-[#F7F6F1] overflow-x-hidden`}
       >
         {children}
       </body>

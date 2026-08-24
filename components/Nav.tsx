@@ -5,21 +5,14 @@ import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 
 const links = [
+  { label: "Mission", href: "/#mission" },
+  { label: "Chapters", href: "/#delegate-program" },
   { label: "App", href: "/#app" },
-  { label: "Delegate Program", href: "/#delegate-program" },
-  { label: "National Board", href: "/team" },
+  { label: "Team", href: "/team" },
 ]
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
 
   // Lock body scroll while the mobile menu is open
   useEffect(() => {
@@ -34,26 +27,24 @@ export default function Nav() {
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 bg-[#F7F6F3]/90 backdrop-blur-md ${
-        scrolled || open ? "shadow-[0_1px_0_rgba(0,0,0,0.06)]" : ""
-      }`}
+      className="fixed top-4 left-0 right-0 z-50 px-4"
     >
-      <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 sm:px-8 py-4">
+      <nav className="max-w-4xl mx-auto flex items-center justify-between gap-4 rounded-full bg-white/80 backdrop-blur-md border border-ink/[0.06] shadow-[0_8px_30px_rgba(22,21,15,0.06)] px-5 py-2.5">
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="text-black font-semibold tracking-tight text-lg"
+          className="text-ink font-bold tracking-tight text-lg shrink-0"
         >
-          ecily<span className="text-[#C9A96E]">.</span>
+          ecily<span className="text-slate">.</span>
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-7">
+        {/* Desktop links — pill-in-pill, Cleo-style */}
+        <div className="hidden md:flex items-center gap-1 rounded-full bg-ink/[0.04] p-1">
           {links.map((l) => (
             <Link
               key={l.label}
               href={l.href}
-              className="text-sm text-black/55 hover:text-black transition-colors duration-200"
+              className="text-sm text-ink/60 hover:text-ink hover:bg-white rounded-full px-4 py-1.5 transition-colors duration-200"
             >
               {l.label}
             </Link>
@@ -61,17 +52,11 @@ export default function Nav() {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-2.5">
-          <Link
-            href="/#waitlist"
-            className="hidden sm:inline-flex text-sm text-black/70 hover:text-black transition-colors duration-200 px-3 py-2 rounded-full border border-black/10"
-          >
-            Get the app
-          </Link>
+        <div className="flex items-center gap-2">
           <Link
             href="/#start"
             onClick={() => setOpen(false)}
-            className="inline-flex items-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-4 py-2 hover:bg-[#B8965A] transition-colors duration-200"
+            className="inline-flex items-center rounded-full bg-ink text-cream text-sm font-semibold px-4 py-2 hover:bg-grape transition-colors duration-200"
           >
             Start a chapter
           </Link>
@@ -81,7 +66,7 @@ export default function Nav() {
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="md:hidden ml-0.5 w-9 h-9 flex items-center justify-center text-black"
+            className="md:hidden ml-0.5 w-9 h-9 flex items-center justify-center text-ink shrink-0"
           >
             <div className="relative w-5 h-3.5">
               <span
@@ -103,11 +88,11 @@ export default function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden overflow-hidden border-t border-black/[0.06] bg-[#F7F6F3]/95 backdrop-blur-md"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="md:hidden max-w-4xl mx-auto mt-2 rounded-3xl bg-white/95 backdrop-blur-md border border-ink/[0.06] shadow-[0_8px_30px_rgba(22,21,15,0.08)] overflow-hidden"
           >
             <div className="px-6 py-4 flex flex-col">
               {links.map((l) => (
@@ -115,7 +100,7 @@ export default function Nav() {
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="py-3 text-base text-black/75 hover:text-black border-b border-black/[0.05] last:border-0 transition-colors duration-200"
+                  className="py-3 text-base text-ink/75 hover:text-ink border-b border-ink/[0.05] last:border-0 transition-colors duration-200"
                 >
                   {l.label}
                 </Link>
@@ -123,7 +108,7 @@ export default function Nav() {
               <Link
                 href="/#waitlist"
                 onClick={() => setOpen(false)}
-                className="mt-4 inline-flex items-center justify-center rounded-full border border-black/15 text-black text-sm font-semibold py-3 hover:bg-black/5 transition-colors duration-200"
+                className="mt-4 inline-flex items-center justify-center rounded-full border border-ink/15 text-ink text-sm font-semibold py-3 hover:bg-ink/5 transition-colors duration-200"
               >
                 Get the app
               </Link>

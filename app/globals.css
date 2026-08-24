@@ -11,8 +11,8 @@ html {
 }
 
 body {
-  background: #080808;
-  color: #ffffff;
+  background: #F7F6F1;
+  color: #16150F;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -95,4 +95,20 @@ body {
     animation: none;
     transform: none;
   }
+}
+
+/* Warm ambient glow used behind hero-style sections — Cleo-esque */
+.warm-glow {
+  background:
+    radial-gradient(45% 55% at 22% 20%, rgba(202,207,133,0.55), transparent 70%),
+    radial-gradient(40% 50% at 78% 15%, rgba(101,142,156,0.35), transparent 70%),
+    radial-gradient(50% 60% at 50% 85%, rgba(140,186,128,0.35), transparent 70%);
+}
+
+/* Photo-card placeholder: gradient fallback sits under a real photo when one lands */
+.photo-card {
+  background-color: #E9E4D8;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
