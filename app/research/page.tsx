@@ -5,6 +5,7 @@ import { GraduationCap } from "lucide-react"
 import { Sidebar, type SavedSearch } from "@/components/research/Sidebar"
 import { ChatInput } from "@/components/research/ChatInput"
 import { AnswerView } from "@/components/research/AnswerView"
+import { consumeSSE } from "@/lib/research/sse"
 import type { Source } from "@/lib/research/types"
 
 interface Turn {
@@ -49,18 +50,36 @@ export default function ResearchPage() {
           history: priorTurns.map((t) => ({ question: t.question, answer: t.answer })),
         }),
       })
-      const data = await res.json()
 
       if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
         setError(data.error || "Something went wrong.")
         setTurns((prev) => prev.filter((t) => t.id !== id))
         return
       }
 
-      setTurns((prev) =>
-        prev.map((t) => (t.id === id ? { ...t, answer: data.answer, sources: data.sources, loading: false } : t)),
-      )
-      setRefreshKey((k) => k + 1)
+      let sawToken = false
+      await consumeSSE(res, {
+        onSources: (sources) => {
+          setTurns((prev) => prev.map((t) => (t.id === id ? { ...t, sources: sources as Source[] } : t)))
+        },
+        onToken: (text) => {
+          sawToken = true
+          setTurns((prev) =>
+            prev.map((t) => (t.id === id ? { ...t, answer: t.answer + text, loading: false } : t)),
+          )
+        },
+        onError: (message) => {
+          setError(message)
+        },
+        onDone: () => {
+          setRefreshKey((k) => k + 1)
+        },
+      })
+
+      if (!sawToken) {
+        setTurns((prev) => prev.map((t) => (t.id === id ? { ...t, loading: false } : t)))
+      }
     } catch {
       setError("Couldn't reach the server. Try again.")
       setTurns((prev) => prev.filter((t) => t.id !== id))
