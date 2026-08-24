@@ -26,14 +26,14 @@ export default function Mission() {
           className="text-[clamp(1.8rem,4.2vw,2.8rem)] font-extrabold text-ink leading-[1.12] tracking-tight text-balance"
         >
           Increase AI literacy across the nation
-          <span className="text-ink/35"> — for everyone, not just the technical.</span>
+          <span className="text-ink/35"> for everyone, not just the technical.</span>
         </motion.h2>
 
         <motion.p
           {...fadeUp}
           className="mt-6 text-base text-ink/55 leading-relaxed max-w-xl mx-auto"
         >
-          Ecily is a student-run organization closing that gap — starting with the people
+          Ecily is a student-run organization closing that gap, starting with the people
           furthest from it, meeting them where they already spend time.
         </motion.p>
 

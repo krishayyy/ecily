@@ -13,7 +13,7 @@ const segments = [
   {
     label: "K-12",
     title: "Students",
-    detail: "Learning the line between using AI and letting it think for you — and how to build real, high-impact work with it.",
+    detail: "Learning the line between using AI and letting it think for you, and how to build real, high-impact work with it.",
     bg: "bg-sand/40",
   },
   {
@@ -25,7 +25,7 @@ const segments = [
   {
     label: "Everyday work",
     title: "Non-technical workforce",
-    detail: "No-code AI workflows that save real hours — a resource library, not a course.",
+    detail: "No-code AI workflows that save real hours: a resource library, not a course.",
     bg: "bg-slate/20",
   },
   {
@@ -37,7 +37,7 @@ const segments = [
   {
     label: "Builders",
     title: "Technical youth",
-    detail: "Hands-on skill — hackathons, real tools, real projects — for teens ready to build with AI, not just use it.",
+    detail: "Hands-on skill: hackathons, real tools, real projects, for teens ready to build with AI, not just use it.",
     bg: "bg-plum/15",
   },
 ]

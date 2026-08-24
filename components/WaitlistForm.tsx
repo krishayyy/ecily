@@ -51,7 +51,7 @@ export default function WaitlistForm() {
             Be part of it early.
           </h2>
           <p className="text-base text-ink/45 mb-10 leading-relaxed">
-            Chapters, the app, and everything in between — drop your email and we&apos;ll
+            Chapters, the app, and everything in between: drop your email and we&apos;ll
             reach out as things launch.
           </p>
         </motion.div>

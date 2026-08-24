@@ -20,15 +20,20 @@ export default function Hero() {
         Ecily &middot; A literacy organization
       </motion.p>
 
-      {/* Photo-card row — left tilted photo, center callout, right photo */}
+      {/* Card row — three content cards, no placeholder imagery */}
       <div className="relative max-w-5xl mx-auto grid grid-cols-3 gap-3 sm:gap-5 items-center mb-12">
         <motion.div
           initial={{ opacity: 0, y: 24, rotate: -6 }}
           animate={{ opacity: 1, y: 0, rotate: -4 }}
           transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="photo-card hidden sm:block aspect-[3/4] rounded-[1.75rem] shadow-[0_20px_50px_rgba(22,21,15,0.12)]"
-          style={{ backgroundImage: "linear-gradient(160deg, rgba(202,207,133,0.7), rgba(140,186,128,0.5)), url(/images/hero-friends.jpg)" }}
-        />
+          className="hidden sm:flex aspect-[3/4] rounded-[1.75rem] bg-sage/40 shadow-[0_20px_50px_rgba(22,21,15,0.1)] p-6 flex-col justify-end"
+        >
+          <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-ink/45 mb-3">
+            Who we serve
+          </span>
+          <p className="text-3xl font-extrabold text-ink leading-none">5</p>
+          <p className="text-xs text-ink/50 mt-2">groups, one gap to close</p>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -49,9 +54,14 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24, rotate: 6 }}
           animate={{ opacity: 1, y: 0, rotate: 4 }}
           transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="photo-card hidden sm:block aspect-[3/4] rounded-[1.75rem] shadow-[0_20px_50px_rgba(22,21,15,0.12)]"
-          style={{ backgroundImage: "linear-gradient(200deg, rgba(101,142,156,0.6), rgba(81,70,99,0.5)), url(/images/hero-chapter.jpg)" }}
-        />
+          className="hidden sm:flex aspect-[3/4] rounded-[1.75rem] bg-slate/25 shadow-[0_20px_50px_rgba(22,21,15,0.1)] p-6 flex-col justify-end"
+        >
+          <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-ink/45 mb-3">
+            How
+          </span>
+          <p className="text-3xl font-extrabold text-ink leading-none">Chapters</p>
+          <p className="text-xs text-ink/50 mt-2">student-run, school by school</p>
+        </motion.div>
       </div>
 
       {/* Headline */}
@@ -68,8 +78,8 @@ export default function Hero() {
           {...fadeUp(0.36)}
           className="mt-6 text-base text-ink/55 max-w-lg mx-auto leading-relaxed"
         >
-          Ecily builds AI literacy for the people education forgot — students, educators,
-          the non-technical workforce, and underserved communities — through chapters,
+          Ecily builds AI literacy for the people education forgot: students, educators,
+          the non-technical workforce, and underserved communities, through chapters,
           content, and tools that meet people where they already are.
         </motion.p>
 

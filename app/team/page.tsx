@@ -37,7 +37,7 @@ export default function TeamPage() {
               Who&apos;s building Ecily.
             </motion.h1>
             <motion.p {...fadeUp} className="mt-5 text-base text-ink/50 max-w-xl mx-auto leading-relaxed">
-              The leadership running the organization — and the officials carrying it
+              The leadership running the organization, and the officials carrying it
               into states across the nation.
             </motion.p>
           </div>
@@ -108,7 +108,7 @@ export default function TeamPage() {
                 </h3>
                 <p className="text-sm text-ink/50 max-w-md leading-relaxed">
                   We&apos;re a small team growing fast. If you want to lead outreach,
-                  build product, run a state, or start a chapter — we want to hear from you.
+                  build product, run a state, or start a chapter, we want to hear from you.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 shrink-0">

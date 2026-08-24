@@ -17,9 +17,9 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Ecily — Literacy for a world run by decisions",
+  title: "Ecily · Literacy for a world run by decisions",
   description:
-    "Ecily builds literacy — starting with money, building toward AI — through a teen finance app and student-led chapters teaching it forward, nationwide.",
+    "Ecily builds literacy, starting with money and building toward AI, through a teen finance app and student-led chapters teaching it forward, nationwide.",
 }
 
 export default function RootLayout({
