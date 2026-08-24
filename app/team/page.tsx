@@ -119,7 +119,7 @@ export default function TeamPage() {
                   Join the team
                 </a>
                 <Link
-                  href="/#start"
+                  href="/#get-involved"
                   className="inline-flex justify-center rounded-full border border-ink/15 text-ink text-sm font-semibold px-6 py-3 hover:bg-ink/5 transition-colors duration-200"
                 >
                   Start a chapter
@@ -151,7 +151,7 @@ export default function TeamPage() {
                   State Delegate. Every chapter after yours started second.
                 </p>
                 <Link
-                  href="/#start"
+                  href="/#get-involved"
                   className="inline-flex rounded-full bg-cream text-ink text-sm font-semibold px-6 py-3 hover:bg-sand transition-colors duration-200"
                 >
                   Start a chapter

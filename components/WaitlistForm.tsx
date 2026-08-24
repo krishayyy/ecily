@@ -36,7 +36,7 @@ export default function WaitlistForm() {
   }
 
   return (
-    <section id="waitlist" className="bg-cream py-28 px-6">
+    <section id="get-involved" className="bg-cream py-28 px-6 scroll-mt-24">
       <div className="max-w-xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -45,13 +45,14 @@ export default function WaitlistForm() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-ink/35 mb-4">
-            Early access
+            Get involved
           </p>
           <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold text-ink leading-tight tracking-tight mb-4">
-            Be first in.
+            Be part of it early.
           </h2>
           <p className="text-base text-ink/45 mb-10 leading-relaxed">
-            Ecily is launching soon. Drop your email and you&apos;ll be among the first to get access.
+            Chapters, the app, and everything in between — drop your email and we&apos;ll
+            reach out as things launch.
           </p>
         </motion.div>
 

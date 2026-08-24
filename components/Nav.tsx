@@ -6,8 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 
 const links = [
   { label: "Mission", href: "/#mission" },
-  { label: "Chapters", href: "/#delegate-program" },
-  { label: "App", href: "/#app" },
+  { label: "Who we serve", href: "/#who" },
   { label: "Team", href: "/team" },
 ]
 
@@ -54,11 +53,11 @@ export default function Nav() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <Link
-            href="/#start"
+            href="/#get-involved"
             onClick={() => setOpen(false)}
             className="inline-flex items-center rounded-full bg-ink text-cream text-sm font-semibold px-4 py-2 hover:bg-grape transition-colors duration-200"
           >
-            Start a chapter
+            Get involved
           </Link>
 
           {/* Hamburger — mobile only */}
@@ -106,11 +105,11 @@ export default function Nav() {
                 </Link>
               ))}
               <Link
-                href="/#waitlist"
+                href="/#get-involved"
                 onClick={() => setOpen(false)}
                 className="mt-4 inline-flex items-center justify-center rounded-full border border-ink/15 text-ink text-sm font-semibold py-3 hover:bg-ink/5 transition-colors duration-200"
               >
-                Get the app
+                Get involved
               </Link>
             </div>
           </motion.div>

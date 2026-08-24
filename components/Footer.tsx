@@ -8,7 +8,7 @@ export default function Footer() {
         <span className="text-cream/70 font-bold tracking-tight">ecily</span>
 
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-cream/35 font-mono">
-          <Link href="/#delegate-program" className="hover:text-cream/70 transition-colors duration-200">Chapters</Link>
+          <Link href="/#who" className="hover:text-cream/70 transition-colors duration-200">Who we serve</Link>
           <Link href="/team" className="hover:text-cream/70 transition-colors duration-200">Team</Link>
           <Link href="/privacy" className="hover:text-cream/70 transition-colors duration-200">Privacy</Link>
           <Link href="/terms" className="hover:text-cream/70 transition-colors duration-200">Terms</Link>

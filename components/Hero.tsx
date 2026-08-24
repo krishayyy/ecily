@@ -60,34 +60,35 @@ export default function Hero() {
           {...fadeUp(0.28)}
           className="text-[clamp(2.4rem,6vw,4rem)] font-extrabold leading-[1.02] tracking-tight text-ink text-balance"
         >
-          Real life doesn&apos;t come with a syllabus.
-          <span className="text-slate"> We&apos;re writing one.</span>
+          AI is changing everything.
+          <span className="text-slate"> Almost nobody&apos;s teaching how to use it well.</span>
         </motion.h1>
 
         <motion.p
           {...fadeUp(0.36)}
           className="mt-6 text-base text-ink/55 max-w-lg mx-auto leading-relaxed"
         >
-          Ecily teaches the decisions that actually shape a life — starting with money,
-          through a game teens love — and chapters that carry it into schools nationwide.
+          Ecily builds AI literacy for the people education forgot — students, educators,
+          the non-technical workforce, and underserved communities — through chapters,
+          content, and tools that meet people where they already are.
         </motion.p>
 
         <motion.div {...fadeUp(0.44)} className="mt-9 flex flex-wrap items-center justify-center gap-3">
           <motion.a
-            href="#start"
+            href="#get-involved"
             className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-ink text-cream text-sm font-semibold hover:bg-grape transition-colors duration-200"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
-            Start a chapter
+            Get involved
           </motion.a>
           <motion.a
-            href="#waitlist"
+            href="#mission"
             className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-ink/15 text-ink text-sm font-semibold hover:bg-white transition-colors duration-200"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
-            Get the app
+            Our mission
           </motion.a>
         </motion.div>
       </div>

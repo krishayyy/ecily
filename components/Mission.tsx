@@ -12,8 +12,8 @@ const fadeUp = {
 
 export default function Mission() {
   return (
-    <section id="mission" className="relative bg-cream py-28 px-6">
-      <div className="relative max-w-3xl mx-auto text-center">
+    <section id="mission" className="relative bg-cream py-24 px-6 scroll-mt-24">
+      <div className="relative max-w-2xl mx-auto text-center">
         <motion.p
           {...fadeUp}
           className="text-[10px] tracking-[0.25em] uppercase font-mono text-slate mb-6"
@@ -23,25 +23,21 @@ export default function Mission() {
 
         <motion.h2
           {...fadeUp}
-          className="text-[clamp(1.9rem,4.5vw,3.2rem)] font-extrabold text-ink leading-[1.12] tracking-tight text-balance"
+          className="text-[clamp(1.8rem,4.2vw,2.8rem)] font-extrabold text-ink leading-[1.12] tracking-tight text-balance"
         >
-          Build the literacy that decisions require
-          <span className="text-ink/35"> — for everyone.</span>
+          Increase AI literacy across the nation
+          <span className="text-ink/35"> — for everyone, not just the technical.</span>
         </motion.h2>
 
         <motion.p
           {...fadeUp}
-          className="mt-7 text-base sm:text-lg text-ink/55 leading-relaxed max-w-xl mx-auto"
+          className="mt-6 text-base text-ink/55 leading-relaxed max-w-xl mx-auto"
         >
-          Most people leave school never taught how money works, and few of us have been
-          taught how to think clearly about the AI systems shaping our lives. We start where
-          the stakes are concrete — personal finance — and build outward, one chapter, one
-          school, one state at a time.
+          Ecily is a student-run organization closing that gap — starting with the people
+          furthest from it, meeting them where they already spend time.
         </motion.p>
 
-        <motion.div {...fadeUp} className="mt-10 flex items-center justify-center gap-3">
-          <span className="text-xs text-ink/30 font-mono mr-1">Follow along</span>
-
+        <motion.div {...fadeUp} className="mt-9 flex items-center justify-center gap-3">
           {SOCIAL.instagram && (
             <a
               href={SOCIAL.instagram}
