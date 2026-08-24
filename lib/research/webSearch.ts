@@ -27,29 +27,37 @@ export async function searchCredibleWeb(query: string, limit = 6): Promise<Sourc
   const apiKey = process.env.TAVILY_API_KEY
   if (!apiKey) return []
 
-  const res = await fetch(API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      api_key: apiKey,
-      query: `${query} (site:.gov OR site:.edu OR ${CREDIBLE_ORGS.map((d) => `site:${d}`).join(" OR ")})`,
-      search_depth: "advanced",
-      max_results: limit,
-    }),
-  })
+  try {
+    const res = await fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        api_key: apiKey,
+        query: `${query} (site:.gov OR site:.edu OR ${CREDIBLE_ORGS.map((d) => `site:${d}`).join(" OR ")})`,
+        search_depth: "advanced",
+        max_results: limit,
+      }),
+    })
 
-  if (!res.ok) return []
+    if (!res.ok) {
+      console.error(`[tavily] ${res.status} ${res.statusText}: ${(await res.text()).slice(0, 300)}`)
+      return []
+    }
 
-  const data = await res.json()
-  const results: any[] = data?.results ?? []
+    const data = await res.json()
+    const results: any[] = data?.results ?? []
 
-  return results
-    .filter((r) => r.title && r.url)
-    .map((r) => ({
-      id: `web-${r.url}`,
-      kind: "web" as const,
-      title: r.title as string,
-      url: r.url as string,
-      snippet: (r.content as string) || "",
-    }))
+    return results
+      .filter((r) => r.title && r.url)
+      .map((r) => ({
+        id: `web-${r.url}`,
+        kind: "web" as const,
+        title: r.title as string,
+        url: r.url as string,
+        snippet: (r.content as string) || "",
+      }))
+  } catch (err) {
+    console.error("[tavily] fetch failed:", err)
+    return []
+  }
 }
