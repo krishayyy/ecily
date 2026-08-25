@@ -1,0 +1,26 @@
+{
+  "skill_name": "research",
+  "evals": [
+    {
+      "id": 1,
+      "name": "minwage",
+      "prompt": "what's the current federal minimum wage in the US and when was it last raised?",
+      "expected_output": "Correct current figure and last-change date, each backed by a credible source link (ideally .gov, e.g. DOL), not just stated from memory.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "coffee-myth",
+      "prompt": "is it actually true that drinking coffee stunts your growth? my mom always told me this as a kid",
+      "expected_output": "A myth-busting answer grounded in actual research/medical sources rather than folk wisdom, with citations, and honest about the state of the evidence.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "tokyo-pop",
+      "prompt": "how many people live in Tokyo right now",
+      "expected_output": "A current population figure with a citation to an official/statistical source, and clarity about what 'Tokyo' means (city proper vs metro area) since that changes the number a lot.",
+      "files": []
+    }
+  ]
+}
