@@ -32,7 +32,14 @@ user (or anyone reading the answer later) can click through and verify it themse
    where it came from, placed right next to the claim (not just dumped in a list at the end).
    General framing, your own reasoning, or common knowledge doesn't need a citation — specific
    facts, figures, quotes, and claims about current events or research findings do.
-5. **Say what you couldn't verify.** If a solid source doesn't exist for part of the question —
+5. **Before finalizing, audit your own links.** Go back over every citation you're about to use
+   and check it against the tier table below — it's easy to grab whatever page had the number
+   and move on, even if that page is itself just repeating a stat an aggregator or SEO site
+   pulled from somewhere else. If a link you're about to cite is Tier 3, or is a secondary
+   source restating a stat with no sourcing of its own, swap it for the primary source or a
+   Tier 1/2 source instead. This is where most citation-quality slips happen, so don't skip it
+   just because the answer already "looks" done.
+6. **Say what you couldn't verify.** If a solid source doesn't exist for part of the question —
    too recent, too obscure, genuinely disputed, or you just can't find one — say that plainly
    instead of filling the gap from memory or a weak source. "I couldn't find a credible source
    for X" is a better answer than an uncited guess.
