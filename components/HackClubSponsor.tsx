@@ -34,12 +34,12 @@ function Cube({ label, color }: { label: string; color: string }) {
       type="button"
       onClick={() => setSpins((n) => n + 1)}
       aria-label={`Spin the ${label} cube`}
-      className="group [perspective:800px] cursor-pointer select-none"
-      style={{ width: size, height: size }}
+      className="group cursor-pointer select-none"
+      style={{ width: size, height: size, perspective: 800 }}
     >
       <motion.div
-        className="relative [transform-style:preserve-3d]"
-        style={{ width: size, height: size }}
+        className="relative"
+        style={{ width: size, height: size, transformStyle: "preserve-3d" }}
         animate={{ rotateY: spins * 360, rotateX: spins * 360 }}
         transition={{ type: "spring", stiffness: 60, damping: 12 }}
         whileHover={{ scale: 1.06 }}
@@ -50,6 +50,7 @@ function Cube({ label, color }: { label: string; color: string }) {
             className="absolute inset-0 flex items-center justify-center rounded-lg border text-xs font-mono font-semibold tracking-wide"
             style={{
               transform: f.transform,
+              backfaceVisibility: "hidden",
               background: `${color}1A`,
               borderColor: `${color}55`,
               color,
