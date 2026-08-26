@@ -4,7 +4,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
-import { leadership, chapters } from "@/lib/people"
+import { founders, chapterPresidents, chapters, type Leader } from "@/lib/people"
 import { CONTACT_EMAIL } from "@/lib/program"
 
 const fadeUp = {
@@ -22,6 +22,63 @@ function LinkedInIcon() {
   )
 }
 
+function PeopleSection({ title, people }: { title: string; people: Leader[] }) {
+  if (people.length === 0) return null
+
+  return (
+    <section className="px-6 pb-24">
+      <div className="max-w-5xl mx-auto">
+        <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">
+          {title}
+        </motion.h2>
+        <motion.div {...fadeUp} className="h-px bg-white/[0.08] mb-12" />
+
+        <div className="divide-y divide-white/[0.07]">
+          {people.map((m) => (
+            <motion.div
+              key={m.name}
+              {...fadeUp}
+              className="py-7 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3"
+            >
+              <div className="min-w-0 max-w-xl">
+                <div className="flex flex-wrap items-baseline gap-x-3">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                    {m.name}
+                  </h3>
+                  <span className="text-[12px] text-[#C9A96E]/80">{m.role}</span>
+                </div>
+                {m.bio && (
+                  <p className="text-sm text-white/50 mt-1.5 leading-relaxed">{m.bio}</p>
+                )}
+              </div>
+              {(m.school || m.linkedin) && (
+                <div className="flex items-center gap-5 shrink-0">
+                  {m.school && (
+                    <span className="text-[10px] tracking-[0.15em] uppercase font-mono text-white/35">
+                      {m.school}
+                    </span>
+                  )}
+                  {m.linkedin && (
+                    <a
+                      href={m.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${m.name} on LinkedIn`}
+                      className="text-white/35 hover:text-[#C9A96E] transition-colors duration-200"
+                    >
+                      <LinkedInIcon />
+                    </a>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function TeamPage() {
   return (
     <>
@@ -35,7 +92,7 @@ export default function TeamPage() {
               National Board
             </motion.p>
             <motion.h1 {...fadeUp} className="text-[clamp(2.4rem,6vw,4.5rem)] font-bold text-white leading-[1.04] tracking-tight">
-              Who&apos;s building Ecily.
+              The team behind Ecily.
             </motion.h1>
             <motion.p {...fadeUp} className="mt-5 text-base text-white/50 max-w-xl mx-auto leading-relaxed">
               The leadership running the organization — and the officials carrying it
@@ -44,57 +101,11 @@ export default function TeamPage() {
           </div>
         </section>
 
-        {/* Leadership */}
-        <section className="px-6 pb-24">
-          <div className="max-w-5xl mx-auto">
-            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">
-              Leadership
-            </motion.h2>
-            <motion.div {...fadeUp} className="h-px bg-white/[0.08] mb-12" />
+        {/* Founders */}
+        <PeopleSection title="Founders" people={founders} />
 
-            <div className="divide-y divide-white/[0.07]">
-              {leadership.map((m) => (
-                <motion.div
-                  key={m.name}
-                  {...fadeUp}
-                  className="py-7 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3"
-                >
-                  <div className="min-w-0 max-w-xl">
-                    <div className="flex flex-wrap items-baseline gap-x-3">
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
-                        {m.name}
-                      </h3>
-                      <span className="text-[12px] text-[#C9A96E]/80">{m.role}</span>
-                    </div>
-                    {m.bio && (
-                      <p className="text-sm text-white/50 mt-1.5 leading-relaxed">{m.bio}</p>
-                    )}
-                  </div>
-                  {(m.school || m.linkedin) && (
-                    <div className="flex items-center gap-5 shrink-0">
-                      {m.school && (
-                        <span className="text-[10px] tracking-[0.15em] uppercase font-mono text-white/35">
-                          {m.school}
-                        </span>
-                      )}
-                      {m.linkedin && (
-                        <a
-                          href={m.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${m.name} on LinkedIn`}
-                          className="text-white/35 hover:text-[#C9A96E] transition-colors duration-200"
-                        >
-                          <LinkedInIcon />
-                        </a>
-                      )}
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Chapter Presidents */}
+        <PeopleSection title="Chapter Presidents" people={chapterPresidents} />
 
         {/* Join the team */}
         <section className="px-6 pb-24">

@@ -14,9 +14,9 @@ export interface Leader {
   linkedin?: string
 }
 
-// One flat founding team, in display order. Rows hide any field that's
-// missing, so fill in bio/school/linkedin per person as you get them.
-export const leadership: Leader[] = [
+// Founders, in display order. Rows hide any field that's missing, so
+// fill in bio/school/linkedin per person as you get them.
+export const founders: Leader[] = [
   {
     name: "Krishay Suresh",
     role: "Founder",
@@ -29,6 +29,10 @@ export const leadership: Leader[] = [
     role: "Founder",
     // bio: "…",
   },
+]
+
+// Chapter presidents, in display order.
+export const chapterPresidents: Leader[] = [
   {
     name: "Khaled Albasheer",
     role: "Chapter President",
