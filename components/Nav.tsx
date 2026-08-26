@@ -57,7 +57,7 @@ export default function Nav() {
           onClick={() => setOpen(false)}
           className="justify-self-center font-serif text-black text-2xl"
         >
-          ecily<span className="text-[#C9A96E]">.</span>
+          ecily
         </Link>
 
         {/* Right side */}
