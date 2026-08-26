@@ -95,8 +95,7 @@ export default function TeamPage() {
               The team behind Ecily.
             </motion.h1>
             <motion.p {...fadeUp} className="mt-5 text-base text-white/50 max-w-xl mx-auto leading-relaxed">
-              The leadership running the organization — and the officials carrying it
-              into states across the nation.
+              The founders and chapter leaders building Ecily.
             </motion.p>
           </div>
         </section>
