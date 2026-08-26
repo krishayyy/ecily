@@ -9,23 +9,6 @@ const fadeUp = (delay: number) => ({
   transition: { delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
 })
 
-const initiatives = [
-  {
-    eyebrow: "Financial Literacy",
-    title: "Learn money by playing.",
-    body: "A game that teaches teens how money actually works, across 8 worlds. Play it yourself, or start a chapter at your school and teach it forward.",
-    cta: "Play now",
-    href: "#start",
-  },
-  {
-    eyebrow: "AI & Computer Science",
-    title: "Build at a hackathon.",
-    body: "Free, beginner-friendly hackathons where teens learn AI and code by shipping something real in a weekend.",
-    cta: "See hackathons",
-    href: "/hackathons",
-  },
-]
-
 export default function Hero() {
   return (
     <section className="relative bg-white pt-48 pb-32 px-6">
@@ -50,38 +33,35 @@ export default function Hero() {
           {...fadeUp(0.25)}
           className="mt-8 text-base text-black/55 max-w-lg mx-auto leading-relaxed"
         >
-          Two programs, one goal: give teens real financial and technical skills
-          before they need them.
+          Free hackathons that give teens the AI and coding skills school doesn&apos;t.
         </motion.p>
       </div>
 
-      <div className="relative max-w-4xl mx-auto mt-16 grid sm:grid-cols-2 gap-5">
-        {initiatives.map((item, i) => (
-          <motion.div
-            key={item.title}
-            {...fadeUp(0.35 + i * 0.1)}
-            className="text-left rounded-3xl border border-black/[0.08] bg-[#FAFAF8] p-8 flex flex-col"
+      <div className="relative max-w-md mx-auto mt-16">
+        <motion.div
+          {...fadeUp(0.35)}
+          className="text-left rounded-3xl border border-black/[0.08] bg-[#FAFAF8] p-8 flex flex-col"
+        >
+          <p className="text-[11px] tracking-[0.15em] uppercase font-mono text-[#C9A96E]">
+            AI & Computer Science
+          </p>
+          <h2 className="mt-3 text-2xl font-bold tracking-tight text-black">
+            Build at a hackathon.
+          </h2>
+          <p className="mt-3 text-sm text-black/55 leading-relaxed">
+            Free, beginner-friendly hackathons where teens learn AI and code by
+            shipping something real in a weekend.
+          </p>
+          <Link
+            href="/hackathons"
+            className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-black group"
           >
-            <p className="text-[11px] tracking-[0.15em] uppercase font-mono text-[#C9A96E]">
-              {item.eyebrow}
-            </p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-black">
-              {item.title}
-            </h2>
-            <p className="mt-3 text-sm text-black/55 leading-relaxed flex-1">
-              {item.body}
-            </p>
-            <Link
-              href={item.href}
-              className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-black group"
-            >
-              {item.cta}
-              <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-                →
-              </span>
-            </Link>
-          </motion.div>
-        ))}
+            See hackathons
+            <span className="transition-transform duration-200 group-hover:translate-x-0.5">
+              →
+            </span>
+          </Link>
+        </motion.div>
       </div>
     </section>
   )
