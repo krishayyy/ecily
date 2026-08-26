@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { LegalLayout, LegalCard, LegalSectionHeading } from "@/components/LegalLayout"
 
 export const metadata: Metadata = {
-  title: "Support — Ecily",
-  description: "Get help with Ecily — contact us, report a bug, or request account deletion.",
+  title: "Support: Ecily",
+  description: "Get help with Ecily: contact us, report a bug, or request account deletion.",
 }
 
 export default function SupportPage() {
@@ -28,7 +28,7 @@ export default function SupportPage() {
         .
       </LegalCard>
       <LegalCard title="Is my trading real money?">
-        No. Ecily is a paper-trading simulator for learning — no real money, brokerage account, or
+        No. Ecily is a paper-trading simulator for learning, with no real money, brokerage account, or
         real trades are ever involved.
       </LegalCard>
       <LegalCard title="I found a bug or something looks wrong.">

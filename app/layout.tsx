@@ -24,7 +24,7 @@ const fraunces = Fraunces({
 })
 
 export const metadata: Metadata = {
-  title: "Ecily — Level up your money game",
+  title: "Ecily: Level up your money game",
   description:
     "Ecily teaches teens real financial literacy through 8 interactive worlds, paper trading, and an AI coach. Start a chapter at your school, become a State Delegate, and teach it forward.",
 }

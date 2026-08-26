@@ -82,7 +82,7 @@ export default function ChapterForm() {
               </h3>
               <p className="text-sm text-white/45 mb-8 max-w-md mx-auto">
                 Apply to found your school&apos;s chapter and become a Founding State Delegate.
-                We hand you the curriculum and the platform — you bring the people.
+                We hand you the curriculum and the platform, you bring the people.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-3 text-left">

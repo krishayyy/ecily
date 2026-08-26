@@ -9,7 +9,7 @@ export const pillars = [
     key: "Learn",
     title: "Learn",
     detail:
-      "Members work through Ecily's curriculum — budgeting, investing, credit, taxes — built around the national standards for financial literacy.",
+      "Members work through Ecily's curriculum: budgeting, investing, credit, and taxes, built around the national standards for financial literacy.",
   },
   {
     key: "Serve",
@@ -27,7 +27,7 @@ export const pillars = [
     key: "Lead",
     title: "Lead",
     detail:
-      "Found a chapter, run it, and climb the ladder — from delegate to state board to national board. Leadership you actually own.",
+      "Found a chapter, run it, and climb the ladder, from delegate to state board to national board. Leadership you actually own.",
   },
 ]
 
@@ -108,10 +108,10 @@ export const programPhases = [
 
 /** The four sections every delegate's published report contains. */
 export const reportSections = [
-  { tag: "01 — Summary", label: "Executive summary & state overview", detail: "Key findings and context." },
-  { tag: "02 — Findings", label: "Youth financial pain point analysis", detail: "Survey data and interview themes." },
-  { tag: "03 — Method", label: "Methodology appendix", detail: "Sampling, response count, limitations." },
-  { tag: "04 — Recs", label: "Policy & program recommendations", detail: "Grounded in your state's findings." },
+  { tag: "01. Summary", label: "Executive summary & state overview", detail: "Key findings and context." },
+  { tag: "02. Findings", label: "Youth financial pain point analysis", detail: "Survey data and interview themes." },
+  { tag: "03. Method", label: "Methodology appendix", detail: "Sampling, response count, limitations." },
+  { tag: "04. Recs", label: "Policy & program recommendations", detail: "Grounded in your state's findings." },
 ]
 
 /** What delegates get for completing the program. */
@@ -122,7 +122,7 @@ export const delegateBenefits = [
   {
     title: "Eligibility for the National Research Award",
     detail:
-      "Presented to the top 5 delegates nationally — each recipient receives a personalized letter of recommendation.",
+      "Presented to the top 5 delegates nationally. Each recipient receives a personalized letter of recommendation.",
   },
 ]
 

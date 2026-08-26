@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { LegalLayout, LegalCard, LegalSectionHeading, DataRow } from "@/components/LegalLayout"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Ecily",
+  title: "Privacy Policy: Ecily",
   description: "What Ecily collects, why, and how long it's kept.",
 }
 

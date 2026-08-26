@@ -28,7 +28,7 @@ export default function Mission() {
           className="text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold text-white leading-[1.15] tracking-tight text-balance"
         >
           Build personal financial literacy
-          <span className="text-white/40"> — for every teenager.</span>
+          <span className="text-white/40">, for every teenager.</span>
         </motion.h2>
 
         <motion.p
@@ -36,7 +36,7 @@ export default function Mission() {
           className="mt-7 text-base sm:text-lg text-white/55 leading-relaxed max-w-xl mx-auto"
         >
           Most people leave high school never taught how money actually works. We&apos;re
-          changing that — teaching real, personal finance through a game teens want to
+          changing that by teaching real, personal finance through a game teens want to
           play, and a student movement that teaches it forward, school by school.
         </motion.p>
 

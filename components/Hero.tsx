@@ -13,7 +13,7 @@ const initiatives = [
   {
     eyebrow: "Financial Literacy",
     title: "Learn money by playing.",
-    body: "A game that teaches teens how money actually works — across 8 worlds. Play it yourself, or start a chapter at your school and teach it forward.",
+    body: "A game that teaches teens how money actually works, across 8 worlds. Play it yourself, or start a chapter at your school and teach it forward.",
     cta: "Play now",
     href: "#start",
   },

@@ -119,7 +119,7 @@ export default function TeamPage() {
                 </h3>
                 <p className="text-sm text-white/45 max-w-md leading-relaxed">
                   We&apos;re a small team growing fast. If you want to lead outreach,
-                  build product, run a state, or start a chapter — we want to hear from you.
+                  build product, run a state, or start a chapter, we want to hear from you.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 shrink-0">

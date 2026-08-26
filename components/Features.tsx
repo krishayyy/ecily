@@ -62,7 +62,7 @@ const features = [
     label: "XP & STREAKS",
     name: "Progress that feels real.",
     description:
-      "Every lesson earns XP. Every day you come back builds your streak. Level up, unlock new worlds, and collect achievements — the grind is the point.",
+      "Every lesson earns XP. Every day you come back builds your streak. Level up, unlock new worlds, and collect achievements: the grind is the point.",
     visual: (
       <div className="w-full max-w-[280px] space-y-4">
         <div className="bg-white/5 border border-white/10 rounded-2xl p-4">

@@ -35,7 +35,7 @@ export default function AiForGood() {
           className="mt-7 text-base sm:text-lg text-white/55 leading-relaxed max-w-xl mx-auto"
         >
           Free lessons, taught live, where you learn to use AI tools to ship real
-          work for real organizations — no experience required.
+          work for real organizations. No experience required.
         </motion.p>
 
         <motion.div {...fadeUp} className="mt-10">
