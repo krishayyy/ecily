@@ -44,6 +44,7 @@ function PeopleSection({ title, people }: { title: string; people: Leader[] }) {
                     fill
                     sizes="(max-width: 640px) 50vw, 25vw"
                     className="object-cover"
+                    style={{ objectPosition: m.photoPosition ?? "center 25%" }}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-white/20 text-4xl font-serif">

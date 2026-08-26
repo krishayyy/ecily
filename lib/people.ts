@@ -14,6 +14,8 @@ export interface Leader {
   linkedin?: string
   /** Path under /public, e.g. "/team/krishay.jpg". */
   photo?: string
+  /** CSS object-position for the square crop, e.g. "center 15%". Defaults to "center 25%". */
+  photoPosition?: string
 }
 
 // Founders, in display order. Rows hide any field that's missing, so
