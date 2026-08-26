@@ -156,7 +156,7 @@ export function Venue() {
           <div className="kick rv">The venue</div>
           <h2 className="sec-h rv">Zoho Corporation,<br /><em>Pleasanton</em>.</h2>
           <p className="lede rv">A real office rather than a school gym. Doors open at eight in
-            the morning on Saturday, December 5, and close at half past eight that night — one
+            the morning on Saturday, December 5, and close at half past eight that night: one
             room, one day, and everything you need already in it.</p>
           <dl className="venue-facts rv">
             <div><dt>Address</dt><dd>4141 Hacienda Drive<br />Pleasanton, California</dd></div>
@@ -289,7 +289,7 @@ export function BigCta() {
         <Felt name="mango-cheer" className="cheer" alt="" />
         <h2 className="rv">Come build something.</h2>
         <p className="rv">December 5, 2026 at Zoho Corporation in Pleasanton. Applications are open now,
-          and sponsors, we would love to hear from you early — shirts and food orders lock eight
+          and sponsors, we would love to hear from you early: shirts and food orders lock eight
           weeks out.</p>
         <div className="row rv">
           <a className="btn btn-felt" href={APPLY_URL} target="_blank" rel="noopener noreferrer">

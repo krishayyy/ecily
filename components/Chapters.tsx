@@ -27,7 +27,7 @@ export default function Chapters() {
           </h2>
           <p className="mt-5 text-base sm:text-lg text-white/50 max-w-xl mx-auto leading-relaxed">
             High school delegates design a study, collect real data from their state, and
-            publish a report with their name on it — cited in Ecily&apos;s National Youth
+            publish a report with their name on it, cited in Ecily&apos;s National Youth
             Financial Insights Report.
           </p>
         </motion.div>
@@ -37,7 +37,7 @@ export default function Chapters() {
           <p className="text-sm sm:text-base text-white/45 leading-relaxed">
             Most teenagers file a tax return, sign a lease, apply for financial aid, or get
             targeted by a predatory loan before anyone teaches them how any of it works. This
-            program exists to document that gap — state by state, with real data — and turn it
+            program exists to document that gap, state by state, with real data, and turn it
             into research that schools, families, and policymakers can use.{" "}
             <span className="text-white/70">This isn&apos;t a marketing internship.</span> It&apos;s
             a research fellowship.
@@ -85,7 +85,7 @@ export default function Chapters() {
                 </span>
                 <div>
                   <span className="text-white font-semibold text-sm sm:text-base">{s.label}</span>
-                  <span className="text-white/45 text-sm"> — {s.detail}</span>
+                  <span className="text-white/45 text-sm">: {s.detail}</span>
                 </div>
               </div>
             ))}

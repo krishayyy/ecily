@@ -12,39 +12,40 @@ export interface Leader {
   school?: string
   /** Full LinkedIn profile URL. */
   linkedin?: string
+  /** Path under /public, e.g. "/team/krishay.jpg". */
+  photo?: string
+  /** CSS object-position for the square crop, e.g. "center 15%". Defaults to "center 25%". */
+  photoPosition?: string
 }
 
-// One flat founding team, in display order. Rows hide any field that's
-// missing, so fill in bio/school/linkedin per person as you get them.
-export const leadership: Leader[] = [
+// Founders, in display order. Rows hide any field that's missing, so
+// fill in bio/school/linkedin per person as you get them.
+export const founders: Leader[] = [
   {
     name: "Krishay Suresh",
-    role: "Executive Director",
+    role: "Founder",
+    photo: "/team/krishay.jpg",
     // bio: "…",
     // school: "… High School · Class of 2028",
     // linkedin: "https://www.linkedin.com/in/…",
   },
   {
     name: "Kush Theethira",
-    role: "Executive Director",
+    role: "Founder",
+    photo: "/team/kush.webp",
     // bio: "…",
   },
+]
+
+// Chapter presidents, in display order.
+export const chapterPresidents: Leader[] = [
   {
-    name: "Akshat Singh",
-    role: "Director of Outreach",
-    linkedin: "https://www.linkedin.com/in/akshtsngh",
+    name: "Khaled Albasheer",
+    role: "Chapter President",
+    photo: "/team/khaled.webp",
     // bio: "…",
-  },
-  {
-    name: "Atharv Ravanikar",
-    role: "Technical Director",
-    // bio: "…",
-  },
-  {
-    name: "Ryan Yarlagadda",
-    role: "Director of Marketing",
-    linkedin: "https://www.linkedin.com/in/ryan-yarlagadda-08aa053b4",
-    // bio: "…",
+    // school: "… High School · Class of 2028",
+    // linkedin: "https://www.linkedin.com/in/…",
   },
 ]
 

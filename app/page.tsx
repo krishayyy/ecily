@@ -1,5 +1,6 @@
 import Nav from "@/components/Nav"
 import Hero from "@/components/Hero"
+import AiForGood from "@/components/AiForGood"
 import CredibilityMarquee from "@/components/CredibilityMarquee"
 import FeaturedOn from "@/components/FeaturedOn"
 import WorldsScroll from "@/components/WorldsScroll"
@@ -15,6 +16,7 @@ export default function Home() {
     <main>
       <Nav />
       <Hero />
+      <AiForGood />
       <CredibilityMarquee />
       <FeaturedOn />
       <WorldsScroll />

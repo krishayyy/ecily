@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { LegalLayout, LegalCard } from "@/components/LegalLayout"
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Ecily",
+  title: "Terms of Service: Ecily",
   description: "The terms that govern using the Ecily app.",
 }
 
@@ -21,7 +21,7 @@ export default function TermsPage() {
       <LegalCard title="3. Educational Content Only">
         All financial information in Ecily is for educational purposes only. Nothing constitutes
         financial, investment, tax, or legal advice. Paper trading is simulated with virtual
-        money only — no real money is ever used or at risk.
+        money only, and no real money is ever used or at risk.
       </LegalCard>
       <LegalCard title="4. Account Responsibility">
         You are responsible for keeping your login credentials secure. Do not share your account.

@@ -18,7 +18,7 @@ export const worlds: World[] = [
     label: "WORLD 01 / 08",
     tagline: "Where every dollar has a job.",
     feature: "Budgeting Basics",
-    detail: "Learn the 50/30/20 rule, track spending by category, and build a budget that actually sticks — without a spreadsheet.",
+    detail: "Learn the 50/30/20 rule, track spending by category, and build a budget that actually sticks, without a spreadsheet.",
   },
   {
     id: 2,
@@ -38,7 +38,7 @@ export const worlds: World[] = [
     label: "WORLD 03 / 08",
     tagline: "Keep more of what you earn.",
     feature: "Taxes Demystified",
-    detail: "Understand W-2s, deductions, and why your paycheck is smaller than you expected — with laws tailored to your state.",
+    detail: "Understand W-2s, deductions, and why your paycheck is smaller than you expected, with laws tailored to your state.",
   },
   {
     id: 4,
@@ -88,6 +88,6 @@ export const worlds: World[] = [
     label: "WORLD 08 / 08",
     tagline: "The game starts in your head.",
     feature: "Psychology of Money",
-    detail: "Explore lifestyle inflation, delayed gratification, and the mental traps that keep people broke — even high earners.",
+    detail: "Explore lifestyle inflation, delayed gratification, and the mental traps that keep people broke, even high earners.",
   },
 ]
