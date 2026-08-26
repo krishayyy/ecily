@@ -19,7 +19,7 @@ const initiatives = [
   },
   {
     eyebrow: "AI & Computer Science",
-    title: "Teaching AI and CS to the community.",
+    title: "Build at a hackathon.",
     body: "Free, beginner-friendly hackathons where teens learn AI and code by shipping something real in a weekend.",
     cta: "See hackathons",
     href: "/hackathons",
@@ -41,9 +41,9 @@ export default function Hero() {
           {...fadeUp(0.1)}
           className="font-serif italic font-light text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.08] text-black"
         >
-          Teaching the skills
+          Teaching AI and CS
           <br />
-          school skips.
+          to the community.
         </motion.h1>
 
         <motion.p
