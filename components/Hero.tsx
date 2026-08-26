@@ -10,7 +10,7 @@ const fadeUp = (delay: number) => ({
 
 export default function Hero() {
   return (
-    <section className="relative bg-[#F7F6F3] pt-48 pb-40 px-6">
+    <section className="relative bg-white pt-48 pb-40 px-6">
       <div className="relative max-w-4xl mx-auto text-center">
         <motion.p
           {...fadeUp(0)}

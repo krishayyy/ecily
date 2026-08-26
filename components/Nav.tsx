@@ -34,19 +34,11 @@ export default function Nav() {
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 bg-[#F7F6F3]/90 backdrop-blur-md ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 bg-white/90 backdrop-blur-md ${
         scrolled || open ? "shadow-[0_1px_0_rgba(0,0,0,0.06)]" : ""
       }`}
     >
-      <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 sm:px-8 py-4">
-        <Link
-          href="/"
-          onClick={() => setOpen(false)}
-          className="text-black font-semibold tracking-tight text-lg"
-        >
-          ecily<span className="text-[#C9A96E]">.</span>
-        </Link>
-
+      <nav className="max-w-6xl mx-auto grid grid-cols-[1fr_auto_1fr] items-center px-6 sm:px-8 py-4">
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-7">
           {links.map((l) => (
@@ -60,8 +52,16 @@ export default function Nav() {
           ))}
         </div>
 
+        <Link
+          href="/"
+          onClick={() => setOpen(false)}
+          className="justify-self-center font-serif text-black text-2xl"
+        >
+          ecily<span className="text-[#C9A96E]">.</span>
+        </Link>
+
         {/* Right side */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center justify-self-end gap-2.5">
           <Link
             href="/#waitlist"
             className="hidden sm:inline-flex text-sm text-black/70 hover:text-black transition-colors duration-200 px-3 py-2 rounded-full border border-black/10"
@@ -107,7 +107,7 @@ export default function Nav() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden overflow-hidden border-t border-black/[0.06] bg-[#F7F6F3]/95 backdrop-blur-md"
+            className="md:hidden overflow-hidden border-t border-black/[0.06] bg-white/95 backdrop-blur-md"
           >
             <div className="px-6 py-4 flex flex-col">
               {links.map((l) => (
