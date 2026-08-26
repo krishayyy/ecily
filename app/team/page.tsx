@@ -29,61 +29,46 @@ function PeopleSection({ title, people }: { title: string; people: Leader[] }) {
   return (
     <section className="px-6 pb-24">
       <div className="max-w-5xl mx-auto">
-        <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">
+        <motion.h2 {...fadeUp} className="text-[11px] tracking-[0.2em] uppercase font-mono text-white/40 mb-6">
           {title}
         </motion.h2>
-        <motion.div {...fadeUp} className="h-px bg-white/[0.08] mb-12" />
 
-        <div className="divide-y divide-white/[0.07]">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
           {people.map((m) => (
-            <motion.div
-              key={m.name}
-              {...fadeUp}
-              className="py-7 flex flex-wrap items-center justify-between gap-x-8 gap-y-3"
-            >
-              <div className="min-w-0 max-w-xl flex items-center gap-4">
+            <motion.div key={m.name} {...fadeUp}>
+              <div className="relative aspect-square rounded-2xl overflow-hidden bg-white/[0.04] border border-white/[0.08]">
                 {m.photo ? (
                   <Image
                     src={m.photo}
                     alt={m.name}
-                    width={56}
-                    height={56}
-                    className="w-14 h-14 rounded-full object-cover shrink-0 border border-white/10"
+                    fill
+                    sizes="(max-width: 640px) 50vw, 25vw"
+                    className="object-cover"
                   />
                 ) : (
-                  <div className="w-14 h-14 rounded-full bg-white/[0.06] border border-white/10 shrink-0" />
-                )}
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-x-3">
-                    <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
-                      {m.name}
-                    </h3>
-                    <span className="text-[12px] text-[#C9A96E]/80">{m.role}</span>
+                  <div className="w-full h-full flex items-center justify-center text-white/20 text-4xl font-serif">
+                    {m.name.charAt(0)}
                   </div>
-                  {m.bio && (
-                    <p className="text-sm text-white/50 mt-1.5 leading-relaxed">{m.bio}</p>
-                  )}
-                </div>
+                )}
+                {m.linkedin && (
+                  <a
+                    href={m.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${m.name} on LinkedIn`}
+                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white/80 hover:text-[#C9A96E] hover:bg-black/70 transition-colors duration-200"
+                  >
+                    <LinkedInIcon />
+                  </a>
+                )}
               </div>
-              {(m.school || m.linkedin) && (
-                <div className="flex items-center gap-5 shrink-0">
-                  {m.school && (
-                    <span className="text-[10px] tracking-[0.15em] uppercase font-mono text-white/35">
-                      {m.school}
-                    </span>
-                  )}
-                  {m.linkedin && (
-                    <a
-                      href={m.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${m.name} on LinkedIn`}
-                      className="text-white/35 hover:text-[#C9A96E] transition-colors duration-200"
-                    >
-                      <LinkedInIcon />
-                    </a>
-                  )}
-                </div>
+              <h3 className="mt-4 text-lg font-semibold text-white tracking-tight">{m.name}</h3>
+              <p className="text-sm text-[#C9A96E]/80">{m.role}</p>
+              {m.school && (
+                <p className="text-[11px] text-white/35 font-mono mt-1">{m.school}</p>
+              )}
+              {m.bio && (
+                <p className="text-sm text-white/50 mt-1.5 leading-relaxed">{m.bio}</p>
               )}
             </motion.div>
           ))}
