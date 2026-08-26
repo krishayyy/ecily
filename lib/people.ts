@@ -19,32 +19,22 @@ export interface Leader {
 export const leadership: Leader[] = [
   {
     name: "Krishay Suresh",
-    role: "Executive Director",
+    role: "Founder",
     // bio: "…",
     // school: "… High School · Class of 2028",
     // linkedin: "https://www.linkedin.com/in/…",
   },
   {
     name: "Kush Theethira",
-    role: "Executive Director",
+    role: "Founder",
     // bio: "…",
   },
   {
-    name: "Akshat Singh",
-    role: "Director of Outreach",
-    linkedin: "https://www.linkedin.com/in/akshtsngh",
+    name: "Khaled Albasheer",
+    role: "Chapter President",
     // bio: "…",
-  },
-  {
-    name: "Atharv Ravanikar",
-    role: "Technical Director",
-    // bio: "…",
-  },
-  {
-    name: "Ryan Yarlagadda",
-    role: "Director of Marketing",
-    linkedin: "https://www.linkedin.com/in/ryan-yarlagadda-08aa053b4",
-    // bio: "…",
+    // school: "… High School · Class of 2028",
+    // linkedin: "https://www.linkedin.com/in/…",
   },
 ]
 
