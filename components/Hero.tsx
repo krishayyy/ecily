@@ -1,13 +1,66 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import type { MouseEvent } from "react"
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
   transition: { delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
 })
+
+function TiltCard() {
+  const mx = useMotionValue(0.5)
+  const my = useMotionValue(0.5)
+  const rotateX = useSpring(useTransform(my, [0, 1], [8, -8]), { stiffness: 200, damping: 20 })
+  const rotateY = useSpring(useTransform(mx, [0, 1], [-8, 8]), { stiffness: 200, damping: 20 })
+
+  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    mx.set((e.clientX - rect.left) / rect.width)
+    my.set((e.clientY - rect.top) / rect.height)
+  }
+
+  const onMouseLeave = () => {
+    mx.set(0.5)
+    my.set(0.5)
+  }
+
+  return (
+    <motion.div
+      {...fadeUp(0.35)}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{ perspective: 1000 }}
+    >
+      <motion.div
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="text-left rounded-3xl border border-black/[0.08] bg-[#FAFAF8] p-8 flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.06)]"
+      >
+        <p className="text-[11px] tracking-[0.15em] uppercase font-mono text-[#C9A96E]">
+          AI & Computer Science
+        </p>
+        <h2 className="mt-3 text-2xl font-bold tracking-tight text-black">
+          Build at a hackathon.
+        </h2>
+        <p className="mt-3 text-sm text-black/55 leading-relaxed">
+          Free, beginner-friendly hackathons where teens learn AI and code by
+          shipping something real in a weekend.
+        </p>
+        <Link
+          href="/hackathons"
+          className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-black group"
+        >
+          See hackathons
+          <span className="transition-transform duration-200 group-hover:translate-x-0.5">
+            →
+          </span>
+        </Link>
+      </motion.div>
+    </motion.div>
+  )
+}
 
 export default function Hero() {
   return (
@@ -38,30 +91,7 @@ export default function Hero() {
       </div>
 
       <div className="relative max-w-md mx-auto mt-16">
-        <motion.div
-          {...fadeUp(0.35)}
-          className="text-left rounded-3xl border border-black/[0.08] bg-[#FAFAF8] p-8 flex flex-col"
-        >
-          <p className="text-[11px] tracking-[0.15em] uppercase font-mono text-[#C9A96E]">
-            AI & Computer Science
-          </p>
-          <h2 className="mt-3 text-2xl font-bold tracking-tight text-black">
-            Build at a hackathon.
-          </h2>
-          <p className="mt-3 text-sm text-black/55 leading-relaxed">
-            Free, beginner-friendly hackathons where teens learn AI and code by
-            shipping something real in a weekend.
-          </p>
-          <Link
-            href="/hackathons"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-black group"
-          >
-            See hackathons
-            <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-              →
-            </span>
-          </Link>
-        </motion.div>
+        <TiltCard />
       </div>
     </section>
   )

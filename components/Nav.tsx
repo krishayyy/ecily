@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { SOCIAL } from "@/lib/program"
+import Magnetic from "./Magnetic"
 
 const links = [
   { label: "Hackathons", href: "/hackathons" },
@@ -96,15 +97,17 @@ export default function Nav() {
               )}
             </div>
 
-            <a
-              href="https://classroom.google.com/c/ODc0NDE4NzAzODQy?cjc=getjt3ix"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setOpen(false)}
-              className="inline-flex items-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-4 py-2 hover:bg-[#B8965A] transition-colors duration-200"
-            >
-              Join the class
-            </a>
+            <Magnetic strength={0.25}>
+              <a
+                href="https://classroom.google.com/c/ODc0NDE4NzAzODQy?cjc=getjt3ix"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="inline-flex items-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-4 py-2 hover:bg-[#B8965A] transition-colors duration-200"
+              >
+                Join the class
+              </a>
+            </Magnetic>
 
             {/* Hamburger — mobile only */}
             <button

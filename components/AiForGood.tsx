@@ -1,6 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Spotlight, { useSpotlight } from "./Spotlight"
+import Magnetic from "./Magnetic"
 
 const fadeUp = {
   initial: { opacity: 0, y: 28 },
@@ -10,9 +12,15 @@ const fadeUp = {
 }
 
 export default function AiForGood() {
+  const spot = useSpotlight()
+
   return (
-    <section className="relative bg-[#080808] py-32 px-6 overflow-hidden">
+    <section
+      onMouseMove={spot.onMouseMove}
+      className="relative bg-[#080808] py-32 px-6 overflow-hidden"
+    >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,169,110,0.08),transparent_60%)]" />
+      <Spotlight x={spot.x} y={spot.y} />
 
       <div className="relative max-w-3xl mx-auto text-center">
         <motion.p
@@ -39,14 +47,16 @@ export default function AiForGood() {
         </motion.p>
 
         <motion.div {...fadeUp} className="mt-10">
-          <a
-            href="https://classroom.google.com/c/ODc0NDE4NzAzODQy?cjc=getjt3ix"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#C9A96E] text-black text-sm font-semibold hover:bg-[#B8965A] transition-colors duration-200"
-          >
-            Join the class
-          </a>
+          <Magnetic>
+            <a
+              href="https://classroom.google.com/c/ODc0NDE4NzAzODQy?cjc=getjt3ix"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#C9A96E] text-black text-sm font-semibold hover:bg-[#B8965A] transition-colors duration-200"
+            >
+              Join the class
+            </a>
+          </Magnetic>
         </motion.div>
       </div>
     </section>
