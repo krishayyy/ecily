@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter, DM_Mono } from "next/font/google"
+import { Inter, DM_Mono, Fraunces } from "next/font/google"
 import "./globals.css"
 
 const inter = Inter({
@@ -12,6 +12,14 @@ const dmMono = DM_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
   weight: ["300", "400", "500"],
+  display: "swap",
+})
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
   display: "swap",
 })
 
@@ -29,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${dmMono.variable} antialiased bg-[#080808] overflow-x-hidden`}
+        className={`${inter.variable} ${dmMono.variable} ${fraunces.variable} antialiased bg-[#080808] overflow-x-hidden`}
       >
         {children}
       </body>
