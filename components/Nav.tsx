@@ -97,19 +97,15 @@ export default function Nav() {
               )}
             </div>
 
-            <Link
-              href="/#waitlist"
-              className="hidden sm:inline-flex text-sm text-black/70 hover:text-black transition-colors duration-200 px-3 py-2 rounded-full border border-black/10"
-            >
-              Get the app
-            </Link>
-            <Link
-              href="/#start"
+            <a
+              href="https://classroom.google.com/c/ODc0NDE4NzAzODQy?cjc=getjt3ix"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setOpen(false)}
               className="inline-flex items-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-4 py-2 hover:bg-[#B8965A] transition-colors duration-200"
             >
-              Start a chapter
-            </Link>
+              Join the class
+            </a>
 
             {/* Hamburger — mobile only */}
             <button
@@ -155,13 +151,15 @@ export default function Nav() {
                     {l.label}
                   </Link>
                 ))}
-                <Link
-                  href="/#waitlist"
+                <a
+                  href="https://classroom.google.com/c/ODc0NDE4NzAzODQy?cjc=getjt3ix"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
-                  className="mt-4 inline-flex items-center justify-center rounded-full border border-black/15 text-black text-sm font-semibold py-3 hover:bg-black/5 transition-colors duration-200"
+                  className="mt-4 inline-flex items-center justify-center rounded-full bg-[#C9A96E] text-black text-sm font-semibold py-3 hover:bg-[#B8965A] transition-colors duration-200"
                 >
-                  Get the app
-                </Link>
+                  Join the class
+                </a>
                 <div className="flex items-center justify-center gap-5 mt-4 pt-4 border-t border-black/[0.05]">
                   {SOCIAL.instagram && (
                     <a
