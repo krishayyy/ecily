@@ -19,7 +19,7 @@ const initiatives = [
   },
   {
     eyebrow: "AI & Computer Science",
-    title: "Build at a hackathon.",
+    title: "Teaching AI and CS to the community.",
     body: "Free, beginner-friendly hackathons where teens learn AI and code by shipping something real in a weekend.",
     cta: "See hackathons",
     href: "/hackathons",
