@@ -129,12 +129,12 @@ export default function TeamPage() {
                 >
                   Join the team
                 </a>
-                <Link
-                  href="/#start"
+                <a
+                  href={`mailto:${CONTACT_EMAIL}?subject=I%20want%20to%20start%20a%20chapter`}
                   className="inline-flex justify-center rounded-full border border-white/15 text-white text-sm font-semibold px-6 py-3 hover:bg-white/5 transition-colors duration-200"
                 >
                   Start a chapter
-                </Link>
+                </a>
               </div>
             </motion.div>
           </div>
@@ -161,12 +161,12 @@ export default function TeamPage() {
                   Found your school&apos;s chapter and your name appears here as a Founding
                   State Delegate. Every chapter after yours started second.
                 </p>
-                <Link
-                  href="/#start"
+                <a
+                  href={`mailto:${CONTACT_EMAIL}?subject=I%20want%20to%20start%20a%20chapter`}
                   className="inline-flex rounded-full bg-[#C9A96E] text-black text-sm font-semibold px-6 py-3 hover:bg-[#E0C28A] transition-colors duration-200"
                 >
                   Start a chapter
-                </Link>
+                </a>
               </motion.div>
             ) : (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
