@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
@@ -38,18 +39,31 @@ function PeopleSection({ title, people }: { title: string; people: Leader[] }) {
             <motion.div
               key={m.name}
               {...fadeUp}
-              className="py-7 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3"
+              className="py-7 flex flex-wrap items-center justify-between gap-x-8 gap-y-3"
             >
-              <div className="min-w-0 max-w-xl">
-                <div className="flex flex-wrap items-baseline gap-x-3">
-                  <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
-                    {m.name}
-                  </h3>
-                  <span className="text-[12px] text-[#C9A96E]/80">{m.role}</span>
-                </div>
-                {m.bio && (
-                  <p className="text-sm text-white/50 mt-1.5 leading-relaxed">{m.bio}</p>
+              <div className="min-w-0 max-w-xl flex items-center gap-4">
+                {m.photo ? (
+                  <Image
+                    src={m.photo}
+                    alt={m.name}
+                    width={56}
+                    height={56}
+                    className="w-14 h-14 rounded-full object-cover shrink-0 border border-white/10"
+                  />
+                ) : (
+                  <div className="w-14 h-14 rounded-full bg-white/[0.06] border border-white/10 shrink-0" />
                 )}
+                <div>
+                  <div className="flex flex-wrap items-baseline gap-x-3">
+                    <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                      {m.name}
+                    </h3>
+                    <span className="text-[12px] text-[#C9A96E]/80">{m.role}</span>
+                  </div>
+                  {m.bio && (
+                    <p className="text-sm text-white/50 mt-1.5 leading-relaxed">{m.bio}</p>
+                  )}
+                </div>
               </div>
               {(m.school || m.linkedin) && (
                 <div className="flex items-center gap-5 shrink-0">

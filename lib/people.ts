@@ -12,6 +12,8 @@ export interface Leader {
   school?: string
   /** Full LinkedIn profile URL. */
   linkedin?: string
+  /** Path under /public, e.g. "/team/krishay.jpg". */
+  photo?: string
 }
 
 // Founders, in display order. Rows hide any field that's missing, so
@@ -20,6 +22,7 @@ export const founders: Leader[] = [
   {
     name: "Krishay Suresh",
     role: "Founder",
+    photo: "/team/krishay.jpg",
     // bio: "…",
     // school: "… High School · Class of 2028",
     // linkedin: "https://www.linkedin.com/in/…",
@@ -27,6 +30,7 @@ export const founders: Leader[] = [
   {
     name: "Kush Theethira",
     role: "Founder",
+    photo: "/team/kush.webp",
     // bio: "…",
   },
 ]
@@ -36,6 +40,7 @@ export const chapterPresidents: Leader[] = [
   {
     name: "Khaled Albasheer",
     role: "Chapter President",
+    photo: "/team/khaled.webp",
     // bio: "…",
     // school: "… High School · Class of 2028",
     // linkedin: "https://www.linkedin.com/in/…",
