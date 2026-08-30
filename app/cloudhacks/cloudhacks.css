@@ -1,0 +1,199 @@
+/* Cloud Hacks — retro desktop / drifting-toasters theme, scoped to this route. */
+
+.ch-hero, .ch-hero * {
+  box-sizing: border-box;
+}
+
+.ch-hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 96px 20px 40px;
+}
+
+/* ---------- sky + toaster fleet ---------- */
+
+.toaster-sky {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.sky-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #1b3a7a 0%, #2f5aa8 30%, #5f8fd6 60%, #a9c8ec 100%);
+}
+
+.sky-clouds {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(60px 24px at 15% 20%, #fff, transparent 70%),
+    radial-gradient(80px 30px at 70% 12%, #fff, transparent 70%),
+    radial-gradient(70px 26px at 40% 60%, #fff, transparent 70%),
+    radial-gradient(90px 34px at 85% 75%, #fff, transparent 70%),
+    radial-gradient(60px 22px at 25% 85%, #fff, transparent 70%);
+}
+
+.toaster-track {
+  position: absolute;
+  right: -10%;
+  animation-name: toaster-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes toaster-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-130vw); }
+}
+
+.toaster-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
+}
+
+.toaster-body { fill: #d7dce2; }
+.toaster-dial { fill: #8b93a0; }
+.toast { fill: #d8a765; }
+
+.wing path { fill: #eef1f4; }
+.wing-left { transform-origin: 24px 24px; animation: flap 0.5s ease-in-out infinite alternate; }
+.wing-right { transform-origin: 40px 24px; animation: flap 0.5s ease-in-out infinite alternate-reverse; }
+
+@keyframes flap {
+  from { transform: scaleY(1) rotate(0deg); }
+  to { transform: scaleY(0.7) rotate(8deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toaster-track, .wing-left, .wing-right {
+    animation: none;
+  }
+}
+
+/* ---------- retro window chrome ---------- */
+
+.ch-window {
+  position: relative;
+  z-index: 1;
+  width: min(640px, 100%);
+  background: #f4f4f2;
+  border: 1px solid #8a8a8a;
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.ch-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, #e4e4e2, #cfcfcd);
+  border-bottom: 1px solid #8a8a8a;
+}
+
+.ch-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.ch-dot-r { background: #ff5f57; }
+.ch-dot-y { background: #febc2e; }
+.ch-dot-g { background: #28c840; }
+
+.ch-titletext {
+  margin-left: 8px;
+  font-family: "VT323", monospace;
+  font-size: 18px;
+  color: #444;
+}
+
+.ch-window-body {
+  padding: 40px clamp(24px, 6vw, 56px) 48px;
+  text-align: center;
+}
+
+.ch-window-body h1 {
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  margin: 0 0 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #14203f;
+}
+
+.ch-tagline {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.5;
+  max-width: 46ch;
+  margin: 0 auto 20px;
+}
+
+.ch-countdown {
+  font-family: "VT323", monospace;
+  font-size: 1.3rem;
+  color: #2f5aa8;
+  margin: 0 0 24px;
+}
+
+.ch-cta { display: flex; justify-content: center; }
+
+.ch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 22px;
+  border-radius: 6px;
+  background: #1b3a7a;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.ch-btn:hover { background: #14285a; transform: translateY(-1px); }
+
+/* ---------- nav ---------- */
+
+.ch-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background: rgba(20, 30, 60, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.ch-nav-in {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ch-brand {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.ch-btn-s {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
