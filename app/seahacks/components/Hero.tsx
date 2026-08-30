@@ -16,10 +16,11 @@ export function Hero() {
       <JellyfishOcean />
 
       <div className="sh-card">
-        <h1>Sea Hacks</h1>
+        <p className="sh-eyebrow">A fully virtual, international hackathon</p>
+        <h1>Welcome to Sea Hacks</h1>
         <p className="sh-tagline">
-          A fully virtual, international hackathon. Every coastline, every timezone,
-          one tide — build from wherever you are.
+          Every coastline, every timezone, one tide — build from wherever you are,
+          ship something real, and demo it live.
         </p>
         <p className="sh-countdown">{days} {days === 1 ? "day" : "days"} until we dive in</p>
         <div className="sh-cta">
@@ -28,10 +29,6 @@ export function Hero() {
           </a>
         </div>
       </div>
-
-      <svg className="sh-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 60 C 240 110, 480 10, 720 60 C 960 110, 1200 10, 1440 60 L1440 120 L0 120 Z" />
-      </svg>
     </header>
   )
 }
