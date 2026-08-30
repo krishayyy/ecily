@@ -1,6 +1,7 @@
 "use client"
 
 import { APPLY_URL, FAQS, SCHEDULE, SPONSOR_EMAIL, STATS, TRACKS } from "../config"
+import { MagneticButton } from "./MagneticButton"
 
 export function Sections() {
   return (
@@ -19,7 +20,7 @@ export function Sections() {
 
           <ul className="sh-stats">
             {STATS.map((s) => (
-              <li key={s.unit} className="sh-stat rv">
+              <li key={s.unit} className="sh-stat sh-lit rv">
                 <span className="sh-stat-v">{s.value}</span>
                 <span className="sh-stat-u">{s.unit}</span>
                 <span className="sh-stat-l">{s.label}</span>
@@ -41,7 +42,7 @@ export function Sections() {
 
           <div className="sh-tracks">
             {TRACKS.map((t) => (
-              <article key={t.name} className="sh-track rv">
+              <article key={t.name} className="sh-track sh-lit rv">
                 <h3>{t.name}</h3>
                 <p>{t.body}</p>
               </article>
@@ -60,7 +61,7 @@ export function Sections() {
             affects your score happens while you are asleep.
           </p>
 
-          <div className="sh-table-wrap rv">
+          <div className="sh-table-wrap sh-lit rv">
             <table className="sh-table">
               <thead>
                 <tr>
@@ -118,12 +119,12 @@ export function Sections() {
             it is a good hour to start.
           </h2>
           <div className="sh-hero-actions sh-close-actions rv">
-            <a className="sh-btn" href={APPLY_URL} target="_blank" rel="noopener noreferrer">
+            <MagneticButton href={APPLY_URL} external>
               Apply to hack
-            </a>
-            <a className="sh-btn sh-btn-ghost" href={`mailto:${SPONSOR_EMAIL}`}>
+            </MagneticButton>
+            <MagneticButton href={`mailto:${SPONSOR_EMAIL}`} variant="ghost">
               Sponsor Sea Hacks
-            </a>
+            </MagneticButton>
           </div>
         </div>
       </section>

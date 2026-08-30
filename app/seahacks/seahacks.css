@@ -116,66 +116,19 @@
   }
 }
 
-.sh-plankton {
+/* The living layer: jellyfish, bioluminescence and the cursor wake all
+   render into one canvas. It sits above the painted plate but below the
+   reef, and dims slightly as the page descends. */
+.sh-aquarium {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-}
-
-/* --- jellyfish: depth expressed as size + blur + speed together --- */
-.sh-jelly {
-  position: absolute;
-  height: auto;
   opacity: 0;
-  transition: opacity 1.2s ease;
+  transition: opacity 1.4s ease;
 }
-.sh-jelly.is-ready {
-  opacity: 1;
-}
-
-.sh-jelly-near {
-  width: min(58vw, 760px);
-  right: -8%;
-  top: 4%;
-  transform: translate(calc(var(--mx) * -22px), calc(var(--my) * -16px));
-  animation: sh-drift-a 19s ease-in-out infinite;
-  filter: drop-shadow(0 0 60px rgba(127, 233, 255, 0.22))
-    drop-shadow(0 0 120px rgba(255, 127, 212, 0.12));
-}
-.sh-jelly-near.is-ready {
-  opacity: calc(1 - var(--descent) * 0.35);
-}
-
-.sh-jelly-far {
-  width: min(26vw, 300px);
-  left: 2%;
-  top: 46%;
-  filter: blur(2.5px);
-  transform: translate(calc(var(--mx) * -9px), calc(var(--my) * -6px));
-  animation: sh-drift-b 27s ease-in-out infinite;
-}
-.sh-jelly-far.is-ready {
-  opacity: calc(0.5 - var(--descent) * 0.2);
-}
-
-@keyframes sh-drift-a {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: -22px -40px;
-  }
-}
-@keyframes sh-drift-b {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 26px -30px;
-  }
+.sh-aquarium.is-ready {
+  opacity: calc(1 - var(--descent) * 0.22);
 }
 
 /* --- the shallow reef is left behind as you descend --- */
@@ -288,6 +241,11 @@
    ============================================================ */
 
 .sh-btn {
+  --tx: 0px;
+  --ty: 0px;
+  --gx: 50%;
+  --gy: 50%;
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -302,12 +260,59 @@
   letter-spacing: 0.01em;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease,
-    background 0.2s ease;
+  overflow: hidden;
+  isolation: isolate;
+  transform: translate(var(--tx), var(--ty));
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease,
+    background 0.25s ease, border-color 0.25s ease;
+}
+
+/* A soft light that tracks the cursor across the button face. */
+.sh-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    130px circle at var(--gx) var(--gy),
+    rgba(127, 233, 255, 0.65),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.sh-btn:hover::before {
+  opacity: 1;
 }
 .sh-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 40px rgba(127, 233, 255, 0.28);
+  box-shadow: 0 16px 46px rgba(127, 233, 255, 0.32);
+}
+
+.sh-btn-label {
+  position: relative;
+  z-index: 1;
+}
+
+/* Press ripple, spawned at the pointer and removed on animation end. */
+.sh-ink {
+  position: absolute;
+  z-index: 0;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: rgba(1, 18, 30, 0.4);
+  pointer-events: none;
+  animation: sh-ink 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.sh-btn-ghost .sh-ink {
+  background: rgba(127, 233, 255, 0.32);
+}
+@keyframes sh-ink {
+  to {
+    transform: scale(26);
+    opacity: 0;
+  }
 }
 
 .sh-btn-sm {
@@ -322,12 +327,41 @@
 }
 .sh-btn-ghost:hover {
   background: rgba(127, 233, 255, 0.07);
+  border-color: var(--c-glow);
   box-shadow: none;
+}
+.sh-btn-ghost::before {
+  background: radial-gradient(
+    150px circle at var(--gx) var(--gy),
+    rgba(127, 233, 255, 0.16),
+    transparent 70%
+  );
 }
 
 /* ============================================================
    Hero — type sits in the water, no card
    ============================================================ */
+
+/* Anchors shade under the headline without touching the right-hand water,
+   so the type stays legible however the jellyfish happen to drift. */
+.sh-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(1, 6, 12, 0.78) 0%,
+    rgba(1, 6, 12, 0.55) 32%,
+    rgba(1, 6, 12, 0.12) 55%,
+    transparent 68%
+  );
+}
 
 .sh-hero {
   position: relative;
@@ -518,6 +552,29 @@
   background: rgba(2, 10, 18, 0.55);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+/* --- cards lit by the cursor: a soft light follows the hand across them --- */
+.sh-lit {
+  --sx: 50%;
+  --sy: 50%;
+  position: relative;
+}
+.sh-lit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    340px circle at var(--sx) var(--sy),
+    rgba(127, 233, 255, 0.09),
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.sh-lit:hover::after {
+  opacity: 1;
 }
 .sh-stat-v {
   font-family: var(--f-display);
@@ -727,6 +784,35 @@
   transform: none;
 }
 
+/* --- hero arrives on load, staggered, rising like something surfacing --- */
+.sh-in {
+  animation: sh-surface 1.15s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.sh-in-1 {
+  animation-delay: 0.1s;
+}
+.sh-in-2 {
+  animation-delay: 0.24s;
+}
+.sh-in-3 {
+  animation-delay: 0.42s;
+}
+.sh-in-4 {
+  animation-delay: 0.58s;
+}
+@keyframes sh-surface {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(9px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sh-root *,
   .sh-root *::before,
@@ -735,13 +821,17 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .sh-water,
-  .sh-jelly-near,
-  .sh-jelly-far {
+  .sh-water {
     transform: none;
   }
-  .rv {
+  .sh-btn {
+    transform: none;
+  }
+  .rv,
+  .sh-in {
     opacity: 1;
     transform: none;
+    filter: none;
+    animation: none;
   }
 }

@@ -2,12 +2,13 @@
 
 import { useEffect, useRef } from "react"
 import { AlphaCutout } from "./AlphaCutout"
-import { Plankton } from "./Plankton"
+import { Aquarium } from "./Aquarium"
 
-/** The scene is fixed behind the whole document rather than scoped to the
- *  hero, so scrolling the page reads as descending through one continuous
- *  body of water: the surface light falls away, the scrim deepens toward the
- *  abyss, and the jellyfish drift past at their own depths the whole way. */
+/** The scene is fixed behind the whole document, so scrolling the page reads
+ *  as descending through one continuous body of water: the surface light
+ *  falls away, the shallow reef is left behind, and the scrim deepens toward
+ *  the abyss. The living layer — jellyfish, bioluminescence, cursor wake —
+ *  is one canvas on top of the painted plate. */
 export function Ocean() {
   const rootRef = useRef<HTMLDivElement>(null)
 
@@ -29,10 +30,10 @@ export function Ocean() {
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
 
-    let onMove: ((e: MouseEvent) => void) | undefined
+    let onMove: ((e: PointerEvent) => void) | undefined
     if (!reduced) {
       let mTicking = false
-      onMove = (e: MouseEvent) => {
+      onMove = (e: PointerEvent) => {
         if (mTicking) return
         mTicking = true
         requestAnimationFrame(() => {
@@ -41,12 +42,12 @@ export function Ocean() {
           mTicking = false
         })
       }
-      window.addEventListener("mousemove", onMove)
+      window.addEventListener("pointermove", onMove, { passive: true })
     }
 
     return () => {
       window.removeEventListener("scroll", onScroll)
-      if (onMove) window.removeEventListener("mousemove", onMove)
+      if (onMove) window.removeEventListener("pointermove", onMove)
     }
   }, [])
 
@@ -54,8 +55,8 @@ export function Ocean() {
     <div className="sh-scene" ref={rootRef} aria-hidden="true">
       <img className="sh-water" src="/seahacks/background-deep-sea.jpg" alt="" />
 
-      {/* Light shafts sit above the plate and shimmer independently, so the
-          surface reads as moving water rather than a still photograph. */}
+      {/* Light shafts shimmer independently of the plate, so the surface
+          reads as moving water rather than a still photograph. */}
       <div className="sh-rays">
         <span style={{ left: "18%", ["--w" as string]: "6vw", ["--d" as string]: "0s" }} />
         <span style={{ left: "34%", ["--w" as string]: "3vw", ["--d" as string]: "-4s" }} />
@@ -64,24 +65,7 @@ export function Ocean() {
         <span style={{ left: "79%", ["--w" as string]: "7vw", ["--d" as string]: "-6s" }} />
       </div>
 
-      <Plankton />
-
-      {/* Far jellyfish: small, blurred, slow — atmospheric perspective. */}
-      <AlphaCutout
-        src="/seahacks/jellyfish-secondary.jpg"
-        className="sh-jelly sh-jelly-far"
-        invert
-        lowThreshold={30}
-        highThreshold={105}
-      />
-      {/* Near jellyfish: large, sharp, the anchor of the composition. */}
-      <AlphaCutout
-        src="/seahacks/jellyfish-hero.jpg"
-        className="sh-jelly sh-jelly-near"
-        invert
-        lowThreshold={34}
-        highThreshold={112}
-      />
+      <Aquarium />
 
       <AlphaCutout src="/seahacks/coral-foreground.jpg" className="sh-reef" />
 
