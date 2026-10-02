@@ -9,7 +9,10 @@
 // locally; production refuses to publish rather than silently losing sites.
 
 import { createHash, randomBytes, timingSafeEqual } from "crypto"
-import type { Site } from "@/lib/siteBuilder"
+import { siteCard, type Site, type SiteCard } from "@/lib/siteBuilder"
+
+/** Gallery is opt-in and reviewed: pending → approved (shown) or rejected. Absent = not submitted. */
+export type GalleryStatus = "pending" | "approved" | "rejected"
 
 export type StoredSite = {
   site: Site
@@ -17,6 +20,7 @@ export type StoredSite = {
   tokenHash: string
   createdAt: number
   updatedAt: number
+  gallery?: GalleryStatus
 }
 
 const REST_URL = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL
@@ -46,13 +50,34 @@ async function redis<T = unknown>(cmd: Cmd): Promise<T> {
   return memRedis(cmd) as T
 }
 
+const gz = globalThis as unknown as { __ecilyZ?: Map<string, Map<string, number>> }
+const zsets: Map<string, Map<string, number>> = (gz.__ecilyZ ??= new Map())
+
 /** Just the handful of commands this file uses. */
 function memRedis([op, key, ...args]: Cmd): unknown {
   const k = String(key)
   const now = Date.now()
   const hit = mem.get(k)
   const live = hit && (!hit.exp || hit.exp > now) ? hit : undefined
+  const z = zsets.get(k) ?? new Map<string, number>()
   switch (op) {
+    case "ZADD":
+      z.set(String(args[1]), Number(args[0]))
+      zsets.set(k, z)
+      return 1
+    case "ZREM":
+      return z.delete(String(args[0])) ? 1 : 0
+    case "ZCARD":
+      return z.size
+    case "ZREVRANGE": {
+      const sorted = Array.from(z.entries()).sort((a, b) => b[1] - a[1]).map(([m]) => m)
+      return sorted.slice(Number(args[0]), Number(args[1]) + 1)
+    }
+    case "MGET":
+      return [k, ...args].map((x) => {
+        const h = mem.get(String(x))
+        return h && (!h.exp || h.exp > now) ? h.v : null
+      })
     case "GET":
       return live?.v ?? null
     case "SET": {
@@ -117,6 +142,77 @@ export async function saveSite(slug: string, record: StoredSite): Promise<void> 
 
 export async function deleteSite(slug: string): Promise<void> {
   await redis(["DEL", key(slug)])
+  await clearGallery(slug)
+}
+
+// ── Gallery ──
+// Two sorted sets hold the review queue and the public list; card:<slug>
+// holds the small summary each gallery tile needs.
+
+const Z_PENDING = "gallery:pending"
+const Z_APPROVED = "gallery:approved"
+const cardKey = (slug: string) => `card:${slug}`
+
+async function clearGallery(slug: string) {
+  await redis(["ZREM", Z_PENDING, slug])
+  await redis(["ZREM", Z_APPROVED, slug])
+  await redis(["DEL", cardKey(slug)])
+}
+
+/** Keeps the card and queues in step with a record. Call after any write to the record. */
+export async function syncGallery(slug: string, record: StoredSite): Promise<void> {
+  if (record.gallery === "pending" || record.gallery === "approved") {
+    await redis(["SET", cardKey(slug), JSON.stringify(siteCard(record.site, slug, record.updatedAt))])
+  }
+  if (record.gallery === "pending") {
+    await redis(["ZREM", Z_APPROVED, slug])
+    await redis(["ZADD", Z_PENDING, record.updatedAt, slug])
+  } else if (record.gallery === "approved") {
+    await redis(["ZREM", Z_PENDING, slug])
+  } else {
+    await clearGallery(slug)
+  }
+}
+
+/** What happens when the owner asks to be in (or out of) the gallery. Rejected stays rejected. */
+export function requestedStatus(current: GalleryStatus | undefined, want: boolean): GalleryStatus | undefined {
+  if (!want) return current === "rejected" ? "rejected" : undefined
+  return current ?? "pending"
+}
+
+export async function approve(slug: string, record: StoredSite): Promise<void> {
+  const next = { ...record, gallery: "approved" as const }
+  await saveSite(slug, next)
+  await redis(["ZADD", Z_APPROVED, Date.now(), slug])
+  await syncGallery(slug, next)
+}
+
+export async function reject(slug: string, record: StoredSite): Promise<void> {
+  await saveSite(slug, { ...record, gallery: "rejected" })
+  await clearGallery(slug)
+}
+
+export async function listGallery(
+  which: "approved" | "pending",
+  offset = 0,
+  limit = 48,
+): Promise<{ cards: SiteCard[]; total: number }> {
+  const z = which === "approved" ? Z_APPROVED : Z_PENDING
+  const [slugs, total] = await Promise.all([
+    redis<string[]>(["ZREVRANGE", z, offset, offset + limit - 1]),
+    redis<number>(["ZCARD", z]),
+  ])
+  if (!slugs?.length) return { cards: [], total: total ?? 0 }
+  const raw = await redis<(string | null)[]>(["MGET", ...slugs.map(cardKey)])
+  const cards = raw.flatMap((r) => {
+    if (!r) return []
+    try {
+      return [JSON.parse(r) as SiteCard]
+    } catch {
+      return []
+    }
+  })
+  return { cards, total }
 }
 
 // ── Slugs ──

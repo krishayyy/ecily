@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "crypto"
 import { NextResponse } from "next/server"
 import { LIMITS, sanitizeSite, type Site } from "@/lib/siteBuilder"
 
@@ -25,4 +26,13 @@ export async function readSiteBody(req: Request): Promise<{ site: Site; body: Re
 export function bearer(req: Request): string {
   const h = req.headers.get("authorization") || ""
   return h.startsWith("Bearer ") ? h.slice(7).trim() : ""
+}
+
+/** SITES_ADMIN_TOKEN holder: can take sites down and review the gallery. */
+export function isAdmin(token: string): boolean {
+  const admin = process.env.SITES_ADMIN_TOKEN
+  if (!admin || !token) return false
+  const a = Buffer.from(token)
+  const b = Buffer.from(admin)
+  return a.length === b.length && timingSafeEqual(a, b)
 }

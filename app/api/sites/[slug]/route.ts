@@ -1,28 +1,32 @@
-import { timingSafeEqual } from "crypto"
 import { NextResponse } from "next/server"
-import { bearer, jsonError, readSiteBody } from "@/lib/siteApi"
-import { SLUG_RE, clientIp, deleteSite, getSite, overLimit, saveSite, storeConfigured, tokenMatches } from "@/lib/siteStore"
+import { bearer, isAdmin, jsonError, readSiteBody } from "@/lib/siteApi"
+import {
+  SLUG_RE,
+  clientIp,
+  deleteSite,
+  getSite,
+  overLimit,
+  requestedStatus,
+  saveSite,
+  storeConfigured,
+  syncGallery,
+  tokenMatches,
+} from "@/lib/siteStore"
 
 export const dynamic = "force-dynamic"
 
 type Ctx = { params: { slug: string } }
 
-function isAdmin(token: string): boolean {
-  const admin = process.env.SITES_ADMIN_TOKEN
-  if (!admin || !token) return false
-  const a = Buffer.from(token)
-  const b = Buffer.from(admin)
-  return a.length === b.length && timingSafeEqual(a, b)
-}
-
 /** The editable site JSON, used when someone opens their edit link. Same content the public page shows. */
-export async function GET(_req: Request, { params }: Ctx) {
+export async function GET(req: Request, { params }: Ctx) {
   if (!storeConfigured) return jsonError("Publishing isn't switched on yet.", 503)
   if (!SLUG_RE.test(params.slug)) return jsonError("Not found.", 404)
   const record = await getSite(params.slug)
   if (!record) return jsonError("That site doesn't exist anymore.", 404)
+  // Gallery review status is only the owner's business.
+  const owner = tokenMatches(bearer(req), record.tokenHash)
   return NextResponse.json(
-    { site: record.site, updatedAt: record.updatedAt },
+    { site: record.site, updatedAt: record.updatedAt, ...(owner ? { gallery: record.gallery ?? null } : {}) },
     { headers: { "Cache-Control": "no-store" } },
   )
 }
@@ -44,11 +48,39 @@ export async function PUT(req: Request, { params }: Ctx) {
     if (!tokenMatches(bearer(req), record.tokenHash)) return jsonError("This browser can't edit that site.", 403)
 
     const updatedAt = Date.now()
-    await saveSite(params.slug, { ...record, site: parsed.site, updatedAt })
-    return NextResponse.json({ slug: params.slug, updatedAt })
+    const next = { ...record, site: parsed.site, updatedAt }
+    await saveSite(params.slug, next)
+    await syncGallery(params.slug, next)
+    return NextResponse.json({ slug: params.slug, updatedAt, gallery: next.gallery ?? null })
   } catch (e) {
     console.error("[sites] update failed", e)
     return jsonError("Couldn't update right now. Try again in a minute.", 500)
+  }
+}
+
+/** Opt in to (or out of) the community gallery. Body: { gallery: boolean } */
+export async function PATCH(req: Request, { params }: Ctx) {
+  if (!storeConfigured) return jsonError("Publishing isn't switched on yet.", 503)
+  try {
+    if (!SLUG_RE.test(params.slug)) return jsonError("Not found.", 404)
+    let want: unknown
+    try {
+      want = (await req.json())?.gallery
+    } catch {
+      /* handled below */
+    }
+    if (typeof want !== "boolean") return jsonError("That request didn't make sense.", 400)
+    const record = await getSite(params.slug)
+    if (!record) return jsonError("That site doesn't exist anymore.", 404)
+    if (!tokenMatches(bearer(req), record.tokenHash)) return jsonError("This browser can't edit that site.", 403)
+
+    const next = { ...record, gallery: requestedStatus(record.gallery, want) }
+    await saveSite(params.slug, next)
+    await syncGallery(params.slug, next)
+    return NextResponse.json({ slug: params.slug, gallery: next.gallery ?? null })
+  } catch (e) {
+    console.error("[sites] gallery toggle failed", e)
+    return jsonError("Couldn't change that right now. Try again in a minute.", 500)
   }
 }
 
