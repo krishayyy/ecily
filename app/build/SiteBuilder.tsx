@@ -9,12 +9,14 @@ import {
   FONTS,
   PALETTES,
   PREVIEW_CSS,
+  LIMITS,
   TEMPLATES,
-  isSite,
   newBlock,
   renderBody,
   renderHead,
   renderSite,
+  sanitizeSite,
+  slugify,
   uid,
   type Block,
   type BlockType,
@@ -23,6 +25,44 @@ import {
 } from "@/lib/siteBuilder"
 
 const STORAGE_KEY = "ecily-website-maker:v1"
+/** Sites this browser has published, with the secret tokens that let it edit them. */
+const PUBLISH_KEY = "ecily-website-maker:published:v1"
+
+type Owned = { slug: string; token: string; name: string }
+type Published = { current: string | null; sites: Owned[] }
+
+function readPublished(): Published {
+  try {
+    const x = JSON.parse(localStorage.getItem(PUBLISH_KEY) || "null")
+    if (x && Array.isArray(x.sites)) {
+      const sites = (x.sites as Owned[]).filter(
+        (o) => o && typeof o.slug === "string" && typeof o.token === "string" && typeof o.name === "string",
+      )
+      const current = sites.some((o) => o.slug === x.current) ? (x.current as string) : null
+      return { current, sites }
+    }
+  } catch {
+    /* fall through */
+  }
+  return { current: null, sites: [] }
+}
+
+function writePublished(p: Published) {
+  try {
+    localStorage.setItem(PUBLISH_KEY, JSON.stringify(p))
+  } catch {
+    /* storage full or blocked; publishing still worked */
+  }
+}
+
+async function errorFrom(res: Response, fallback: string): Promise<string> {
+  try {
+    const data = await res.json()
+    return typeof data?.error === "string" ? data.error : fallback
+  } catch {
+    return fallback
+  }
+}
 const GOLD = "#C9A96E"
 
 const FONT_NOTES: Record<string, string> = {
@@ -55,6 +95,8 @@ const ICONS = {
   external: "M14 3h7v7M21 3l-9 9M19 14v6H4V5h6",
   download: "M12 3v12M7 10l5 5 5-5M4 21h16",
   close: "M6 6l12 12M18 6L6 18",
+  grid: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",
+  globe: "M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z",
 }
 
 function IconButton({
@@ -103,7 +145,7 @@ function Segmented<T extends string>({
           title={o.title}
           aria-pressed={value === o.value}
           onClick={() => onChange(o.value)}
-          className={`px-3 h-7 rounded-full text-xs font-medium inline-flex items-center gap-1.5 transition-colors ${
+          className={`px-2.5 sm:px-3 h-7 rounded-full text-xs font-medium inline-flex items-center gap-1.5 transition-colors ${
             value === o.value ? "bg-white text-black" : "text-white/55 hover:text-white"
           }`}
         >
@@ -274,7 +316,14 @@ export default function SiteBuilder() {
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop")
   const [pane, setPane] = useState<"edit" | "preview">("edit")
   const [showTemplates, setShowTemplates] = useState(false)
+  const [showDownloaded, setShowDownloaded] = useState(false)
   const [showPublish, setShowPublish] = useState(false)
+  const [published, setPublishedState] = useState<Published>({ current: null, sites: [] })
+  const [slugInput, setSlugInput] = useState("")
+  const [busy, setBusy] = useState(false)
+  const [publishError, setPublishError] = useState("")
+  const [publishNote, setPublishNote] = useState("")
+  const [copiedWhat, setCopiedWhat] = useState("")
   const [addOpen, setAddOpen] = useState(false)
   const [saveState, setSaveState] = useState<SaveState>("idle")
   const [copied, setCopied] = useState(false)
@@ -284,19 +333,73 @@ export default function SiteBuilder() {
   const frameHeadRef = useRef("")
   const coalesceRef = useRef({ key: "", at: 0 })
   const scrollPreviewRef = useRef(false)
+  const siteRef = useRef(site)
+  siteRef.current = site
 
-  // Load the saved site (or offer templates on a first visit).
+  const setPublished = useCallback((fn: (p: Published) => Published) => {
+    setPublishedState((prev) => {
+      const next = fn(prev)
+      writePublished(next)
+      return next
+    })
+  }, [])
+
+  /** Pull a published site from the server into the editor (undoable). */
+  const loadPublished = useCallback(
+    async (slug: string) => {
+      setBusy(true)
+      setPublishError("")
+      try {
+        const res = await fetch(`/api/sites/${encodeURIComponent(slug)}`, { cache: "no-store" })
+        if (!res.ok) throw new Error(await errorFrom(res, "Couldn't open that site."))
+        const remote = sanitizeSite((await res.json())?.site)
+        if (!remote) throw new Error("That site couldn't be opened.")
+        setPast((p) => [...p.slice(-49), siteRef.current])
+        setSite(remote)
+        setActiveId(null)
+        setPublished((p) => ({ ...p, current: slug }))
+        setShowTemplates(false)
+        return true
+      } catch (e) {
+        setPublishError(e instanceof Error ? e.message : "Couldn't open that site.")
+        setShowPublish(true)
+        return false
+      } finally {
+        setBusy(false)
+      }
+    },
+    [setPublished],
+  )
+
+  // Load the saved site (or offer templates on a first visit), then handle #edit=slug.token links.
   useEffect(() => {
+    let hasSaved = false
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
-      const parsed = raw ? JSON.parse(raw) : null
-      if (isSite(parsed)) setSite(parsed)
-      else setShowTemplates(true)
+      const parsed = sanitizeSite(raw ? JSON.parse(raw) : null)
+      if (parsed) {
+        setSite(parsed)
+        hasSaved = true
+      }
     } catch {
+      /* treat as a first visit */
+    }
+    const pub = readPublished()
+    setPublishedState(pub)
+
+    const m = window.location.hash.match(/^#edit=([a-z0-9-]{3,40})\.([A-Za-z0-9_-]{20,64})$/)
+    if (m) {
+      const [, slug, token] = m
+      history.replaceState(null, "", window.location.pathname + window.location.search)
+      const name = pub.sites.find((o) => o.slug === slug)?.name ?? slug
+      const sites = [...pub.sites.filter((o) => o.slug !== slug), { slug, token, name }]
+      setPublished(() => ({ current: pub.current, sites }))
+      loadPublished(slug)
+    } else if (!hasSaved) {
       setShowTemplates(true)
     }
     setLoaded(true)
-  }, [])
+  }, [loadPublished, setPublished])
 
   // Autosave, debounced.
   useEffect(() => {
@@ -395,6 +498,7 @@ export default function SiteBuilder() {
     const t = TEMPLATES.find((x) => x.id === id)
     if (!t) return
     change(t.build())
+    setPublished((p) => ({ ...p, current: null })) // a new site, not an edit of the published one
     setActiveId(null)
     setShowTemplates(false)
     setTab("content")
@@ -479,7 +583,106 @@ export default function SiteBuilder() {
     a.download = "index.html"
     a.click()
     setTimeout(() => URL.revokeObjectURL(url), 1000)
+    setShowDownloaded(true)
+  }
+
+  // ── Publishing ──
+
+  const owned = published.sites.find((o) => o.slug === published.current) ?? null
+  const origin = typeof window === "undefined" ? "https://ecily.org" : window.location.origin
+  const liveUrl = (slug: string) => `${origin}/s/${slug}`
+
+  const tooBig = () => {
+    if (JSON.stringify(site).length <= LIMITS.siteBytes) return false
+    setPublishError("Your site is too big to publish. Try using fewer or smaller photos.")
+    return true
+  }
+
+  const openPublish = () => {
+    setPublishError("")
+    setPublishNote("")
+    if (!owned) setSlugInput((v) => v || slugify(site.name))
     setShowPublish(true)
+    if (owned) updatePublished()
+  }
+
+  const publishNew = async () => {
+    const slug = slugify(slugInput)
+    setPublishError("")
+    if (tooBig()) return
+    setBusy(true)
+    try {
+      const res = await fetch("/api/sites", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ site, slug }),
+      })
+      if (!res.ok) throw new Error(await errorFrom(res, "Couldn't publish right now."))
+      const data = (await res.json()) as { slug: string; token: string }
+      setPublished((p) => ({
+        current: data.slug,
+        sites: [...p.sites.filter((o) => o.slug !== data.slug), { slug: data.slug, token: data.token, name: site.name }],
+      }))
+      setPublishNote("Published just now.")
+    } catch (e) {
+      setPublishError(e instanceof Error ? e.message : "Couldn't publish right now.")
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const updatePublished = async () => {
+    if (!owned) return
+    setPublishError("")
+    setPublishNote("")
+    if (tooBig()) return
+    setBusy(true)
+    try {
+      const res = await fetch(`/api/sites/${owned.slug}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${owned.token}` },
+        body: JSON.stringify({ site }),
+      })
+      if (res.status === 404) {
+        setPublished((p) => ({ current: null, sites: p.sites.filter((o) => o.slug !== owned.slug) }))
+        setSlugInput(owned.slug)
+      }
+      if (!res.ok) throw new Error(await errorFrom(res, "Couldn't update right now."))
+      setPublished((p) => ({ ...p, sites: p.sites.map((o) => (o.slug === owned.slug ? { ...o, name: site.name } : o)) }))
+      setPublishNote("Updated. Changes show up within about 30 seconds.")
+    } catch (e) {
+      setPublishError(e instanceof Error ? e.message : "Couldn't update right now.")
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const unpublish = async () => {
+    if (!owned) return
+    if (!window.confirm(`Take ${liveUrl(owned.slug)} offline? Anyone with the link will see "site not found". Your work stays in the editor.`)) return
+    setBusy(true)
+    setPublishError("")
+    try {
+      const res = await fetch(`/api/sites/${owned.slug}`, { method: "DELETE", headers: { Authorization: `Bearer ${owned.token}` } })
+      if (!res.ok) throw new Error(await errorFrom(res, "Couldn't unpublish right now."))
+      setPublished((p) => ({ current: null, sites: p.sites.filter((o) => o.slug !== owned.slug) }))
+      setSlugInput(owned.slug)
+      setPublishNote("Unpublished. Your work is still here in the editor.")
+    } catch (e) {
+      setPublishError(e instanceof Error ? e.message : "Couldn't unpublish right now.")
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const copyText = async (what: string, text: string) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedWhat(what)
+      setTimeout(() => setCopiedWhat(""), 1600)
+    } catch {
+      window.prompt("Copy this:", text)
+    }
   }
 
   const openInTab = () => {
@@ -511,12 +714,12 @@ export default function SiteBuilder() {
   return (
     <div className="h-[100dvh] flex flex-col bg-[#080808] text-white">
       {/* Top bar */}
-      <header className="shrink-0 h-14 flex items-center gap-3 px-3 sm:px-5 border-b border-white/[0.07]">
+      <header className="shrink-0 h-14 flex items-center gap-2 sm:gap-3 px-3 sm:px-5 border-b border-white/[0.07]">
         <Link href="/" className="font-serif text-xl text-white">ecily</Link>
         <span className="hidden sm:inline text-white/20">/</span>
         <span className="hidden sm:inline text-sm text-white/70">Website Maker</span>
 
-        <div className="lg:hidden ml-1">
+        <div className="lg:hidden">
           <Segmented
             value={pane}
             onChange={setPane}
@@ -527,7 +730,7 @@ export default function SiteBuilder() {
           />
         </div>
 
-        <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+        <div className="ml-auto flex items-center gap-0.5 sm:gap-2">
           <span className="hidden md:inline text-[11px] font-mono text-white/30 mr-2">
             {saveState === "saved" && "Saved in this browser"}
             {saveState === "too-big" && <span className="text-amber-300/80">Too big to autosave. Download to keep it.</span>}
@@ -545,18 +748,31 @@ export default function SiteBuilder() {
           <button
             type="button"
             onClick={() => setShowTemplates(true)}
-            className="h-8 px-2.5 sm:px-3 rounded-full text-xs text-white/60 hover:text-white hover:bg-white/[0.08]"
+            aria-label="Templates"
+            title="Templates and your published sites"
+            className="h-8 px-2.5 sm:px-3 inline-flex items-center gap-1.5 rounded-full text-xs text-white/60 hover:text-white hover:bg-white/[0.08]"
           >
-            Templates
+            <span className="sm:hidden"><Icon d={ICONS.grid} size={14} /></span>
+            <span className="hidden sm:inline">Templates</span>
           </button>
           <button
             type="button"
             onClick={download}
             aria-label="Download"
-            className="h-8 px-3 sm:px-4 inline-flex items-center gap-1.5 rounded-full bg-[#C9A96E] hover:bg-[#B8965A] text-black text-xs font-semibold transition-colors"
+            title="Download index.html"
+            className="h-8 px-2.5 inline-flex items-center gap-1.5 rounded-full text-xs text-white/60 hover:text-white hover:bg-white/[0.08]"
           >
             <Icon d={ICONS.download} size={14} />
-            <span className="hidden sm:inline">Download</span>
+            <span className="hidden xl:inline">Download</span>
+          </button>
+          <button
+            type="button"
+            onClick={openPublish}
+            disabled={busy}
+            className="h-8 px-3 sm:px-4 inline-flex items-center gap-1.5 rounded-full bg-[#C9A96E] hover:bg-[#B8965A] disabled:opacity-60 text-black text-xs font-semibold transition-colors"
+          >
+            <Icon d={ICONS.globe} size={14} />
+            {owned ? "Update" : "Publish"}
           </button>
         </div>
       </header>
@@ -899,6 +1115,36 @@ export default function SiteBuilder() {
           <p className="text-[10px] tracking-[0.25em] uppercase font-mono text-[#C9A96E]/80 mb-3">Website Maker</p>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What are you building?</h2>
           <p className="mt-2 text-sm text-white/50">Pick a starting point. You can change every word, color, and section after.</p>
+          {published.sites.length > 0 && (
+            <div className="mt-6">
+              <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-white/40 mb-2">Your published sites</p>
+              <div className="rounded-2xl border border-white/10 divide-y divide-white/[0.07]">
+                {published.sites.map((o) => (
+                  <div key={o.slug} className="flex items-center gap-3 px-4 py-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm text-white truncate">{o.name || o.slug}</p>
+                      <a href={`/s/${o.slug}`} target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-white/40 hover:text-[#C9A96E] truncate block">
+                        /s/{o.slug}
+                      </a>
+                    </div>
+                    {o.slug === published.current ? (
+                      <span className="text-xs text-white/40">Open now</span>
+                    ) : (
+                      <button
+                        type="button"
+                        disabled={busy}
+                        onClick={() => loadPublished(o.slug)}
+                        className="h-8 px-3 rounded-full border border-white/15 text-xs text-white/75 hover:text-white hover:border-white/30 disabled:opacity-50"
+                      >
+                        Edit
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <p className="mt-5 text-[11px] font-mono uppercase tracking-[0.12em] text-white/40">Or start something new</p>
+            </div>
+          )}
           <div className="mt-6 grid sm:grid-cols-2 gap-3">
             {TEMPLATES.map((t) => (
               <button
@@ -921,6 +1167,100 @@ export default function SiteBuilder() {
 
       {showPublish && (
         <Modal onClose={() => setShowPublish(false)}>
+          <p className="text-[10px] tracking-[0.25em] uppercase font-mono mb-3" style={{ color: GOLD }}>
+            {owned ? "Published" : "Publish"}
+          </p>
+
+          {owned ? (
+            <>
+              <h2 className="text-2xl font-bold tracking-tight">Your site is live.</h2>
+              <p className="mt-1 text-sm min-h-[1.25rem] text-emerald-300/90">{busy ? "Saving your changes…" : publishNote}</p>
+              <div className="mt-5 flex items-center gap-2 rounded-xl border border-white/10 bg-black/40 pl-4 pr-1.5 py-1.5">
+                <a href={`/s/${owned.slug}`} target="_blank" rel="noopener noreferrer" className="flex-1 min-w-0 truncate text-sm font-mono text-[#C9A96E] hover:underline">
+                  {liveUrl(owned.slug).replace(/^https?:\/\//, "")}
+                </a>
+                <button type="button" onClick={() => copyText("link", liveUrl(owned.slug))} className="shrink-0 h-8 px-3 rounded-lg bg-white/[0.08] text-xs text-white/80 hover:text-white">
+                  {copiedWhat === "link" ? "Copied!" : "Copy"}
+                </button>
+                <a href={`/s/${owned.slug}`} target="_blank" rel="noopener noreferrer" className="shrink-0 h-8 px-3 inline-flex items-center rounded-lg bg-white/[0.08] text-xs text-white/80 hover:text-white">
+                  Open
+                </a>
+              </div>
+              <p className="mt-3 text-xs text-white/45 leading-relaxed">
+                Share that link with anyone. When you change something, hit <span className="text-white/75">Update</span> and it goes live in about 30 seconds.
+              </p>
+
+              <div className="mt-6 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+                <p className="text-sm text-white/80">Edit from another computer</p>
+                <p className="mt-1 text-xs text-white/45 leading-relaxed">
+                  This secret link lets anyone who has it change your site. Save it somewhere safe and don&apos;t share it.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => copyText("edit", `${origin}/build#edit=${owned.slug}.${owned.token}`)}
+                  className="mt-3 h-8 px-3 rounded-lg border border-white/15 text-xs text-white/75 hover:text-white hover:border-white/30"
+                >
+                  {copiedWhat === "edit" ? "Copied!" : "Copy secret edit link"}
+                </button>
+              </div>
+
+              <div className="mt-6 flex items-center justify-between gap-3">
+                <button type="button" onClick={unpublish} disabled={busy} className="text-xs text-white/40 hover:text-red-300 disabled:opacity-50">
+                  Unpublish
+                </button>
+                <button
+                  type="button"
+                  onClick={updatePublished}
+                  disabled={busy}
+                  className="h-10 px-5 rounded-full bg-[#C9A96E] hover:bg-[#B8965A] disabled:opacity-60 text-black text-sm font-semibold"
+                >
+                  {busy ? "Working…" : "Update again"}
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="text-2xl font-bold tracking-tight">Put your site online.</h2>
+              <p className="mt-2 text-sm text-white/55 leading-relaxed">Free, no account needed. Pick the address people will type.</p>
+              <form
+                className="mt-5"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  publishNew()
+                }}
+              >
+                <label className="flex items-center rounded-xl border border-white/10 bg-black/40 focus-within:border-[#C9A96E]/70 overflow-hidden">
+                  <span className="pl-4 text-sm font-mono text-white/40 whitespace-nowrap">{origin.replace(/^https?:\/\//, "")}/s/</span>
+                  <input
+                    value={slugInput}
+                    autoFocus
+                    maxLength={40}
+                    aria-label="Site address"
+                    onChange={(e) => setSlugInput(e.target.value.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, ""))}
+                    className="flex-1 min-w-0 bg-transparent py-3 pr-4 text-sm font-mono text-white focus:outline-none"
+                  />
+                </label>
+                <div className="mt-4 rounded-xl border border-amber-300/20 bg-amber-300/[0.05] px-4 py-3 text-xs text-amber-100/80 leading-relaxed">
+                  Anyone on the internet can see published sites. Don&apos;t include private info like your home address, your own phone number, or
+                  your school schedule.
+                </div>
+                <button
+                  type="submit"
+                  disabled={busy || slugInput.length < 3}
+                  className="mt-5 w-full h-11 rounded-full bg-[#C9A96E] hover:bg-[#B8965A] disabled:opacity-50 text-black text-sm font-semibold"
+                >
+                  {busy ? "Publishing…" : "Publish"}
+                </button>
+              </form>
+              {publishNote && <p className="mt-3 text-xs text-white/50">{publishNote}</p>}
+            </>
+          )}
+          {publishError && <p role="alert" className="mt-4 text-sm text-red-300">{publishError}</p>}
+        </Modal>
+      )}
+
+      {showDownloaded && (
+        <Modal onClose={() => setShowDownloaded(false)}>
           <p className="text-[10px] tracking-[0.25em] uppercase font-mono mb-3" style={{ color: GOLD }}>Downloaded</p>
           <h2 className="text-2xl font-bold tracking-tight">Put it on the internet, free.</h2>
           <p className="mt-2 text-sm text-white/55 leading-relaxed">
@@ -947,7 +1287,10 @@ export default function SiteBuilder() {
           <p className="mt-5 text-xs text-white/40 leading-relaxed">
             Your work is saved in this browser, so you can come back and keep editing. Download again any time you make changes.
           </p>
-          <button type="button" onClick={() => setShowPublish(false)} className="mt-6 w-full h-11 rounded-full bg-[#C9A96E] hover:bg-[#B8965A] text-black text-sm font-semibold">
+          <p className="mt-3 text-xs text-white/40 leading-relaxed">
+            Or skip all that: hit <span className="text-white/70">Publish</span> to get a free ecily.org link in one click.
+          </p>
+          <button type="button" onClick={() => setShowDownloaded(false)} className="mt-6 w-full h-11 rounded-full bg-[#C9A96E] hover:bg-[#B8965A] text-black text-sm font-semibold">
             Got it
           </button>
         </Modal>

@@ -608,7 +608,9 @@ export const TEMPLATES: Template[] = [
   },
 ]
 
-// ── Validation (for anything read back from localStorage) ────
+// ── Validation ───────────────────────────────────────────────
+// Anything that didn't come from this tab's own state (localStorage, an edit
+// link, a publish request) goes through sanitizeSite before it's used.
 
 export function isSite(x: unknown): x is Site {
   if (!x || typeof x !== "object") return false
@@ -631,6 +633,65 @@ export function isSite(x: unknown): x is Site {
         Array.isArray(b.items),
     )
   )
+}
+
+export const LIMITS = {
+  blocks: 40,
+  name: 80,
+  text: 4000,
+  /** Uploaded photos are already shrunk client-side to ~200KB; this is a backstop. */
+  image: 1_500_000,
+  /** Whole site as JSON, which is what gets published. */
+  siteBytes: 3_000_000,
+}
+
+function str(v: unknown, max: number): string {
+  return typeof v === "string" ? v.slice(0, max) : ""
+}
+
+function cleanFields(fields: Field[], src: unknown): Record<string, string> {
+  const o = (src && typeof src === "object" ? src : {}) as Record<string, unknown>
+  return Object.fromEntries(
+    fields.map((f) => {
+      if (f.kind !== "image") return [f.key, str(o[f.key], LIMITS.text)]
+      const raw = typeof o[f.key] === "string" ? (o[f.key] as string) : ""
+      return [f.key, raw.length <= LIMITS.image && safeImageSrc(raw) ? raw : ""]
+    }),
+  )
+}
+
+/** Rebuild a site from untrusted input, keeping only known fields within limits. */
+export function sanitizeSite(x: unknown): Site | null {
+  if (!isSite(x)) return null
+  const seen = new Set<string>()
+  const blocks = x.blocks.slice(0, LIMITS.blocks).map((b): Block => {
+    const def = BLOCKS[b.type]
+    let id = /^[a-z0-9]{1,16}$/.test(b.id) && !seen.has(b.id) ? b.id : uid()
+    while (seen.has(id)) id = uid()
+    seen.add(id)
+    return {
+      id,
+      type: def.type,
+      props: cleanFields(def.fields, b.props),
+      items: def.list ? b.items.slice(0, def.list.max).map((it) => cleanFields(def.list!.fields, it)) : [],
+    }
+  })
+  return {
+    version: 1,
+    name: str(x.name, LIMITS.name),
+    showNav: x.showNav === true,
+    theme: {
+      palette: x.theme.palette,
+      accent: isHex(x.theme.accent) ? x.theme.accent : "",
+      font: x.theme.font,
+      corners: x.theme.corners,
+    },
+    blocks,
+  }
+}
+
+export function slugify(s: string): string {
+  return slug(s)
 }
 
 // ── Renderer ─────────────────────────────────────────────────
@@ -852,6 +913,8 @@ export type RenderOptions = {
   /** Adds data-block-id hooks + hover outlines so the editor can map clicks to sections. */
   preview?: boolean
   activeId?: string | null
+  /** Set when serving a published site: adds a "Report" link to the footer. */
+  reportHref?: string
 }
 
 /** The <head> contents. Kept separate so the live preview can skip reloading fonts on every keystroke. */
@@ -886,7 +949,7 @@ export function renderBody(site: Site, opts: RenderOptions = {}): string {
 
   const sections = site.blocks
     .map((b) => {
-      const hook = opts.preview ? ` data-block-id="${b.id}"${opts.activeId === b.id ? ` data-active` : ""}` : ""
+      const hook = opts.preview ? ` data-block-id="${escapeHtml(b.id)}"${opts.activeId === b.id ? ` data-active` : ""}` : ""
       return `<section id="${ids.get(b.id)}"${hook}>
     ${renderBlock(b)}
   </section>`
@@ -903,7 +966,9 @@ export function renderBody(site: Site, opts: RenderOptions = {}): string {
   <footer>
     <div class="wrap">
       <span>© ${year} ${escapeHtml(site.name || "My website")}</span>
-      <span>Made with the <a href="https://ecily.org/build">Ecily Website Maker</a></span>
+      <span>Made with the <a href="https://ecily.org/build">Ecily Website Maker</a>${
+        opts.reportHref ? ` · <a href="${escapeHtml(opts.reportHref)}">Report</a>` : ""
+      }</span>
     </div>
   </footer>`
 }
@@ -915,15 +980,15 @@ export const PREVIEW_CSS = `
 [data-block-id][data-active] { outline: 2px solid var(--accent); outline-offset: -6px; }
 `
 
-/** The complete, standalone index.html a student downloads. */
-export function renderSite(site: Site): string {
+/** The complete, standalone index.html a student downloads (or that /s/[slug] serves). */
+export function renderSite(site: Site, opts: Pick<RenderOptions, "reportHref"> = {}): string {
   return `<!doctype html>
 <html lang="en">
 <head>
   ${renderHead(site)}
 </head>
 <body>
-  ${renderBody(site)}
+  ${renderBody(site, opts)}
 </body>
 </html>
 `
