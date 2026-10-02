@@ -9,6 +9,7 @@ export default function Footer() {
 
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-white/30 font-mono">
         <Link href="/hackathons" className="hover:text-white/60 transition-colors duration-200">Hackathons</Link>
+          <Link href="/build" className="hover:text-white/60 transition-colors duration-200">Website Maker</Link>
           <Link href="/team" className="hover:text-white/60 transition-colors duration-200">National Board</Link>
           <Link href="/privacy" className="hover:text-white/60 transition-colors duration-200">Privacy</Link>
           <Link href="/terms" className="hover:text-white/60 transition-colors duration-200">Terms</Link>
