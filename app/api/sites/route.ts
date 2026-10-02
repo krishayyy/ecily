@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { jsonError, readSiteBody } from "@/lib/siteApi"
-import { clientIp, createSite, hashToken, newToken, overLimit, slugProblem, storeConfigured } from "@/lib/siteStore"
+import { clientIp, createSite, hashToken, newToken, overLimit, slugProblem, storeConfigured, syncGallery, type StoredSite } from "@/lib/siteStore"
 
 export const dynamic = "force-dynamic"
 
@@ -23,10 +23,18 @@ export async function POST(req: Request) {
 
     const token = newToken()
     const now = Date.now()
-    const claimed = await createSite(slug, { site, tokenHash: hashToken(token), createdAt: now, updatedAt: now })
+    const record: StoredSite = {
+      site,
+      tokenHash: hashToken(token),
+      createdAt: now,
+      updatedAt: now,
+      gallery: body.gallery === true ? "pending" : undefined,
+    }
+    const claimed = await createSite(slug, record)
     if (!claimed) return jsonError("Someone already has that address. Try another.", 409)
+    await syncGallery(slug, record)
 
-    return NextResponse.json({ slug, token, path: `/s/${slug}` }, { status: 201 })
+    return NextResponse.json({ slug, token, path: `/s/${slug}`, gallery: record.gallery ?? null }, { status: 201 })
   } catch (e) {
     console.error("[sites] publish failed", e)
     return jsonError("Couldn't publish right now. Try again in a minute.", 500)

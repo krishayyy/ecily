@@ -16,6 +16,7 @@ import {
   renderHead,
   renderSite,
   sanitizeSite,
+  siteDescription,
   slugify,
   uid,
   type Block,
@@ -28,7 +29,9 @@ const STORAGE_KEY = "ecily-website-maker:v1"
 /** Sites this browser has published, with the secret tokens that let it edit them. */
 const PUBLISH_KEY = "ecily-website-maker:published:v1"
 
-type Owned = { slug: string; token: string; name: string }
+type GalleryStatus = "pending" | "approved" | "rejected" | null
+/** gallery is undefined until the server has told this browser the status. */
+type Owned = { slug: string; token: string; name: string; gallery?: GalleryStatus }
 type Published = { current: string | null; sites: Owned[] }
 
 function readPublished(): Published {
@@ -324,6 +327,7 @@ export default function SiteBuilder() {
   const [publishError, setPublishError] = useState("")
   const [publishNote, setPublishNote] = useState("")
   const [copiedWhat, setCopiedWhat] = useState("")
+  const [galleryOptIn, setGalleryOptIn] = useState(true)
   const [addOpen, setAddOpen] = useState(false)
   const [saveState, setSaveState] = useState<SaveState>("idle")
   const [copied, setCopied] = useState(false)
@@ -350,14 +354,22 @@ export default function SiteBuilder() {
       setBusy(true)
       setPublishError("")
       try {
-        const res = await fetch(`/api/sites/${encodeURIComponent(slug)}`, { cache: "no-store" })
+        const token = readPublished().sites.find((o) => o.slug === slug)?.token
+        const res = await fetch(`/api/sites/${encodeURIComponent(slug)}`, {
+          cache: "no-store",
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        })
         if (!res.ok) throw new Error(await errorFrom(res, "Couldn't open that site."))
-        const remote = sanitizeSite((await res.json())?.site)
+        const data = await res.json()
+        const remote = sanitizeSite(data?.site)
         if (!remote) throw new Error("That site couldn't be opened.")
         setPast((p) => [...p.slice(-49), siteRef.current])
         setSite(remote)
         setActiveId(null)
-        setPublished((p) => ({ ...p, current: slug }))
+        setPublished((p) => ({
+          current: slug,
+          sites: p.sites.map((o) => (o.slug === slug ? { ...o, name: remote.name, gallery: data.gallery } : o)),
+        }))
         setShowTemplates(false)
         return true
       } catch (e) {
@@ -615,13 +627,16 @@ export default function SiteBuilder() {
       const res = await fetch("/api/sites", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ site, slug }),
+        body: JSON.stringify({ site, slug, gallery: galleryOptIn }),
       })
       if (!res.ok) throw new Error(await errorFrom(res, "Couldn't publish right now."))
-      const data = (await res.json()) as { slug: string; token: string }
+      const data = (await res.json()) as { slug: string; token: string; gallery: GalleryStatus }
       setPublished((p) => ({
         current: data.slug,
-        sites: [...p.sites.filter((o) => o.slug !== data.slug), { slug: data.slug, token: data.token, name: site.name }],
+        sites: [
+          ...p.sites.filter((o) => o.slug !== data.slug),
+          { slug: data.slug, token: data.token, name: site.name, gallery: data.gallery },
+        ],
       }))
       setPublishNote("Published just now.")
     } catch (e) {
@@ -648,10 +663,34 @@ export default function SiteBuilder() {
         setSlugInput(owned.slug)
       }
       if (!res.ok) throw new Error(await errorFrom(res, "Couldn't update right now."))
-      setPublished((p) => ({ ...p, sites: p.sites.map((o) => (o.slug === owned.slug ? { ...o, name: site.name } : o)) }))
+      const data = (await res.json()) as { gallery: GalleryStatus }
+      setPublished((p) => ({
+        ...p,
+        sites: p.sites.map((o) => (o.slug === owned.slug ? { ...o, name: site.name, gallery: data.gallery } : o)),
+      }))
       setPublishNote("Updated. Changes show up within about 30 seconds.")
     } catch (e) {
       setPublishError(e instanceof Error ? e.message : "Couldn't update right now.")
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const setGallery = async (want: boolean) => {
+    if (!owned) return
+    setBusy(true)
+    setPublishError("")
+    try {
+      const res = await fetch(`/api/sites/${owned.slug}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${owned.token}` },
+        body: JSON.stringify({ gallery: want }),
+      })
+      if (!res.ok) throw new Error(await errorFrom(res, "Couldn't change that right now."))
+      const data = (await res.json()) as { gallery: GalleryStatus }
+      setPublished((p) => ({ ...p, sites: p.sites.map((o) => (o.slug === owned.slug ? { ...o, gallery: data.gallery } : o)) }))
+    } catch (e) {
+      setPublishError(e instanceof Error ? e.message : "Couldn't change that right now.")
     } finally {
       setBusy(false)
     }
@@ -735,6 +774,14 @@ export default function SiteBuilder() {
             {saveState === "saved" && "Saved in this browser"}
             {saveState === "too-big" && <span className="text-amber-300/80">Too big to autosave. Download to keep it.</span>}
           </span>
+          <a
+            href="/gallery"
+            target="_blank"
+            rel="noopener"
+            className="hidden md:inline-flex h-8 px-3 items-center rounded-full text-xs text-white/60 hover:text-white hover:bg-white/[0.08]"
+          >
+            Gallery
+          </a>
           <button
             type="button"
             onClick={undo}
@@ -799,6 +846,26 @@ export default function SiteBuilder() {
                   <Labeled label="Site name">
                     <input value={site.name} onChange={(e) => change({ ...site, name: e.target.value }, "site-name")} className={inputCls} />
                   </Labeled>
+                  <Labeled label="Search description">
+                    <textarea
+                      value={site.description ?? ""}
+                      maxLength={LIMITS.description}
+                      rows={2}
+                      placeholder="One or two sentences about the site. Shown under your title on Google."
+                      onChange={(e) => change({ ...site, description: e.target.value }, "site-description")}
+                      className={`${inputCls} resize-y leading-relaxed`}
+                    />
+                  </Labeled>
+                  <div className="rounded-xl bg-white px-4 py-3" aria-label="How this might look on Google">
+                    <p className="text-[11px] text-[#4d5156] truncate">
+                      {origin.replace(/^https?:\/\//, "")} › s › {owned?.slug || slugify(site.name) || "your-site"}
+                    </p>
+                    <p className="text-[15px] leading-snug text-[#1a0dab] truncate">{site.name || "My website"}</p>
+                    <p className="mt-0.5 text-[12px] leading-snug text-[#4d5156] line-clamp-2">{siteDescription(site)}</p>
+                  </div>
+                  <p className="text-[11px] text-white/35 leading-relaxed -mt-1">
+                    Search preview. Tip: say what you do and where, like &ldquo;Free groceries for families in Riverside&rdquo;.
+                  </p>
                   <label className="flex items-center justify-between gap-3 text-sm text-white/70 cursor-pointer">
                     Show a menu bar at the top
                     <input
@@ -1190,7 +1257,40 @@ export default function SiteBuilder() {
                 Share that link with anyone. When you change something, hit <span className="text-white/75">Update</span> and it goes live in about 30 seconds.
               </p>
 
-              <div className="mt-6 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+              <div className="mt-6 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 flex items-start gap-3">
+                <div className="flex-1">
+                  <p className="text-sm text-white/80">Community gallery</p>
+                  <p className="mt-1 text-xs text-white/45 leading-relaxed">
+                    {owned.gallery === "approved" && "Your site is in the gallery. Nice work!"}
+                    {owned.gallery === "pending" && "Waiting for a quick review. It shows up in the gallery once approved."}
+                    {owned.gallery === "rejected" && "This site wasn't added to the gallery. It's still live at your link."}
+                    {owned.gallery === null && "Not in the gallery. Want other people to discover it?"}
+                    {owned.gallery === undefined && "Hit Update to see this site's gallery status."}
+                  </p>
+                </div>
+                {owned.gallery === null && (
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => setGallery(true)}
+                    className="shrink-0 h-8 px-3 rounded-lg border border-white/15 text-xs text-white/75 hover:text-white hover:border-white/30 disabled:opacity-50"
+                  >
+                    Submit
+                  </button>
+                )}
+                {(owned.gallery === "pending" || owned.gallery === "approved") && (
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => setGallery(false)}
+                    className="shrink-0 h-8 px-3 rounded-lg text-xs text-white/45 hover:text-white disabled:opacity-50"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+
+              <div className="mt-3 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
                 <p className="text-sm text-white/80">Edit from another computer</p>
                 <p className="mt-1 text-xs text-white/45 leading-relaxed">
                   This secret link lets anyone who has it change your site. Save it somewhere safe and don&apos;t share it.
@@ -1241,9 +1341,24 @@ export default function SiteBuilder() {
                   />
                 </label>
                 <div className="mt-4 rounded-xl border border-amber-300/20 bg-amber-300/[0.05] px-4 py-3 text-xs text-amber-100/80 leading-relaxed">
-                  Anyone on the internet can see published sites. Don&apos;t include private info like your home address, your own phone number, or
-                  your school schedule.
+                  Anyone on the internet can see published sites, and they can show up on Google. Don&apos;t include private info like your home
+                  address, your own phone number, or your school schedule.
                 </div>
+                <label className="mt-4 flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={galleryOptIn}
+                    onChange={(e) => setGalleryOptIn(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 accent-[#C9A96E]"
+                  />
+                  <span className="text-sm text-white/75 leading-snug">
+                    Show it in the{" "}
+                    <a href="/gallery" target="_blank" rel="noopener" className="underline decoration-white/30 hover:decoration-white">
+                      community gallery
+                    </a>
+                    <span className="block text-xs text-white/40 mt-0.5">After a quick review by the Ecily team.</span>
+                  </span>
+                </label>
                 <button
                   type="submit"
                   disabled={busy || slugInput.length < 3}

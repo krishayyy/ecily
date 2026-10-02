@@ -48,6 +48,8 @@ export type CornerId = "round" | "soft" | "sharp"
 export type Site = {
   version: 1
   name: string
+  /** What shows under the title in Google results. Falls back to the header text. */
+  description?: string
   showNav: boolean
   theme: {
     palette: PaletteId
@@ -638,6 +640,7 @@ export function isSite(x: unknown): x is Site {
 export const LIMITS = {
   blocks: 40,
   name: 80,
+  description: 300,
   text: 4000,
   /** Uploaded photos are already shrunk client-side to ~200KB; this is a backstop. */
   image: 1_500_000,
@@ -679,6 +682,7 @@ export function sanitizeSite(x: unknown): Site | null {
   return {
     version: 1,
     name: str(x.name, LIMITS.name),
+    description: str(x.description, LIMITS.description),
     showNav: x.showNav === true,
     theme: {
       palette: x.theme.palette,
@@ -692,6 +696,69 @@ export function sanitizeSite(x: unknown): Site | null {
 
 export function slugify(s: string): string {
   return slug(s)
+}
+
+function oneLine(s: string, max: number): string {
+  const t = s.replace(/\s+/g, " ").trim()
+  return t.length > max ? t.slice(0, max - 1).replace(/\s+\S*$/, "") + "…" : t
+}
+
+/** The search-result blurb: the student's own, or the first real sentence on the page. */
+export function siteDescription(site: Site): string {
+  if (site.description?.trim()) return oneLine(site.description, 160)
+  for (const b of site.blocks) {
+    const text = b.type === "hero" || b.type === "text" || b.type === "contact" ? b.props.body : ""
+    if (text?.trim()) return oneLine(text, 160)
+  }
+  return `${site.name || "A website"}, made with the Ecily Website Maker.`
+}
+
+function heroOf(site: Site): Block | undefined {
+  return site.blocks.find((b) => b.type === "hero")
+}
+
+/** Small, photo-free summary used for gallery cards, so listing sites never loads full pages. */
+export type SiteCard = {
+  slug: string
+  name: string
+  eyebrow: string
+  heading: string
+  blurb: string
+  bg: string
+  surface: string
+  text: string
+  muted: string
+  accent: string
+  onAccent: string
+  font: FontId
+  radius: string
+  button: string
+  sections: number
+  updatedAt: number
+}
+
+export function siteCard(site: Site, slug: string, updatedAt: number): SiteCard {
+  const pal = PALETTES.find((x) => x.id === site.theme.palette) ?? PALETTES[0]
+  const accent = isHex(site.theme.accent) ? site.theme.accent : pal.accent
+  const hero = heroOf(site)
+  return {
+    slug,
+    name: oneLine(site.name || slug, 80),
+    eyebrow: oneLine(hero?.props.eyebrow ?? "", 60),
+    heading: oneLine(hero?.props.heading || site.name || slug, 120),
+    blurb: siteDescription(site),
+    bg: pal.bg,
+    surface: pal.surface,
+    text: pal.text,
+    muted: pal.muted,
+    accent,
+    onAccent: contrastText(accent),
+    font: site.theme.font,
+    radius: (CORNERS.find((c) => c.id === site.theme.corners) ?? CORNERS[0]).radius,
+    button: oneLine(hero?.props.buttonText ?? "", 30),
+    sections: site.blocks.length,
+    updatedAt,
+  }
 }
 
 // ── Renderer ─────────────────────────────────────────────────
@@ -915,14 +982,17 @@ export type RenderOptions = {
   activeId?: string | null
   /** Set when serving a published site: adds a "Report" link to the footer. */
   reportHref?: string
+  /** Absolute URL of the published page, for canonical + social tags. */
+  canonical?: string
+  noindex?: boolean
 }
 
 /** The <head> contents. Kept separate so the live preview can skip reloading fonts on every keystroke. */
-export function renderHead(site: Site): string {
+export function renderHead(site: Site, seo?: Pick<RenderOptions, "canonical" | "noindex">): string {
   const font = FONTS.find((x) => x.id === site.theme.font) ?? FONTS[0]
   return `<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${escapeHtml(site.name || "My website")}</title>
+  <title>${escapeHtml(site.name || "My website")}</title>${seo ? seoTags(site, seo) : ""}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${font.query}&display=swap">
@@ -973,6 +1043,28 @@ export function renderBody(site: Site, opts: RenderOptions = {}): string {
   </footer>`
 }
 
+/** Search + link-preview tags. Skipped in the live preview so typing doesn't rewrite <head>. */
+function seoTags(site: Site, seo: Pick<RenderOptions, "canonical" | "noindex">): string {
+  const pal = PALETTES.find((x) => x.id === site.theme.palette) ?? PALETTES[0]
+  const title = escapeHtml(site.name || "My website")
+  const desc = escapeHtml(siteDescription(site))
+  const image = safeImageSrc(heroOf(site)?.props.image ?? "")
+  const og = image.startsWith("https://") ? image : ""
+  const tags = [
+    `<meta name="description" content="${desc}">`,
+    `<meta name="theme-color" content="${pal.bg}">`,
+    seo.noindex ? `<meta name="robots" content="noindex">` : "",
+    seo.canonical ? `<link rel="canonical" href="${escapeHtml(seo.canonical)}">` : "",
+    `<meta property="og:type" content="website">`,
+    `<meta property="og:title" content="${title}">`,
+    `<meta property="og:description" content="${desc}">`,
+    seo.canonical ? `<meta property="og:url" content="${escapeHtml(seo.canonical)}">` : "",
+    og ? `<meta property="og:image" content="${escapeHtml(og)}">` : "",
+    `<meta name="twitter:card" content="${og ? "summary_large_image" : "summary"}">`,
+  ]
+  return "\n  " + tags.filter(Boolean).join("\n  ")
+}
+
 /** Editor-only styles injected into the preview frame (never exported). */
 export const PREVIEW_CSS = `
 [data-block-id] { position: relative; cursor: pointer; }
@@ -981,11 +1073,11 @@ export const PREVIEW_CSS = `
 `
 
 /** The complete, standalone index.html a student downloads (or that /s/[slug] serves). */
-export function renderSite(site: Site, opts: Pick<RenderOptions, "reportHref"> = {}): string {
+export function renderSite(site: Site, opts: Pick<RenderOptions, "reportHref" | "canonical" | "noindex"> = {}): string {
   return `<!doctype html>
 <html lang="en">
 <head>
-  ${renderHead(site)}
+  ${renderHead(site, opts)}
 </head>
 <body>
   ${renderBody(site, opts)}
