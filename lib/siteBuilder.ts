@@ -777,46 +777,66 @@ export function sectionIds(site: Site): Map<string, string> {
   return ids
 }
 
-function button(text: string, link: string, variant: "solid" | "ghost" = "solid"): string {
+/**
+ * Rendering context for one block. In the editor preview, text gets
+ * contenteditable hooks (data-edit="p:<prop>" or "i:<row>:<field>") so it can
+ * be typed into on the canvas; exported HTML never carries any of this.
+ */
+type Ctx = { preview: boolean }
+
+function editAttr(ctx: Ctx, path: string, multiline = false): string {
+  if (!ctx.preview) return ""
+  return ` data-edit="${path}"${multiline ? " data-multi" : ""} contenteditable="plaintext-only" spellcheck="true"`
+}
+
+/** Paragraph text. In the preview it's wrapped so the whole field is one editable area. */
+function richText(ctx: Ctx, text: string, path: string, cls = ""): string {
+  const body = paragraphs(text, cls)
+  if (!ctx.preview) return body
+  return body ? `<div${editAttr(ctx, path, true)}>${body}</div>` : ""
+}
+
+function button(ctx: Ctx, text: string, link: string, path: string): string {
   if (!text.trim()) return ""
-  return `<a class="btn${variant === "ghost" ? " btn-ghost" : ""}" href="${escapeHtml(safeHref(link))}">${escapeHtml(text)}</a>`
+  return `<a class="btn" href="${escapeHtml(safeHref(link))}"${editAttr(ctx, path)}>${escapeHtml(text)}</a>`
 }
 
-function heading(text: string, tag = "h2"): string {
-  return text.trim() ? `<${tag}>${escapeHtml(text)}</${tag}>` : ""
+function heading(ctx: Ctx, text: string, path: string, tag = "h2"): string {
+  return text.trim() ? `<${tag}${editAttr(ctx, path)}>${escapeHtml(text)}</${tag}>` : ""
 }
 
-function renderBlock(b: Block): string {
+function renderBlock(b: Block, ctx: Ctx): string {
   const p = (k: string) => b.props[k] ?? ""
+  const e = (path: string) => editAttr(ctx, path)
   switch (b.type) {
     case "hero": {
       const img = safeImageSrc(p("image"))
       return `<div class="wrap hero${img ? " hero-split" : ""}">
       <div class="hero-copy">
-        ${p("eyebrow").trim() ? `<p class="eyebrow">${escapeHtml(p("eyebrow"))}</p>` : ""}
-        ${heading(p("heading"), "h1")}
-        ${paragraphs(p("body"), "lead")}
-        ${button(p("buttonText"), p("buttonLink"))}
+        ${p("eyebrow").trim() ? `<p class="eyebrow"${e("p:eyebrow")}>${escapeHtml(p("eyebrow"))}</p>` : ""}
+        ${heading(ctx, p("heading"), "p:heading", "h1")}
+        ${richText(ctx, p("body"), "p:body", "lead")}
+        ${button(ctx, p("buttonText"), p("buttonLink"), "p:buttonText")}
       </div>
       ${img ? `<img class="hero-img" src="${escapeHtml(img)}" alt="">` : ""}
     </div>`
     }
     case "text":
       return `<div class="wrap narrow">
-      ${heading(p("heading"))}
-      ${paragraphs(p("body"))}
+      ${heading(ctx, p("heading"), "p:heading")}
+      ${richText(ctx, p("body"), "p:body")}
     </div>`
     case "cards":
       return `<div class="wrap">
-      ${heading(p("heading"))}
-      ${paragraphs(p("body"), "intro")}
+      ${heading(ctx, p("heading"), "p:heading")}
+      ${richText(ctx, p("body"), "p:body", "intro")}
       <div class="grid">
         ${b.items
           .map(
-            (i) => `<article class="card">
-          ${(i.tag ?? "").trim() ? `<span class="tag">${escapeHtml(i.tag)}</span>` : ""}
-          ${heading(i.title ?? "", "h3")}
-          ${paragraphs(i.body ?? "")}
+            (i, j) => `<article class="card">
+          ${(i.tag ?? "").trim() ? `<span class="tag"${e(`i:${j}:tag`)}>${escapeHtml(i.tag)}</span>` : ""}
+          ${heading(ctx, i.title ?? "", `i:${j}:title`, "h3")}
+          ${richText(ctx, i.body ?? "", `i:${j}:body`)}
         </article>`,
           )
           .join("\n        ")}
@@ -824,51 +844,62 @@ function renderBlock(b: Block): string {
     </div>`
     case "stats":
       return `<div class="wrap">
-      ${heading(p("heading"))}
+      ${heading(ctx, p("heading"), "p:heading")}
       <div class="stats">
         ${b.items
           .map(
-            (i) => `<div class="stat"><strong>${escapeHtml(i.value ?? "")}</strong><span>${escapeHtml(i.label ?? "")}</span></div>`,
+            (i, j) =>
+              `<div class="stat"><strong${e(`i:${j}:value`)}>${escapeHtml(i.value ?? "")}</strong><span${e(`i:${j}:label`)}>${escapeHtml(i.label ?? "")}</span></div>`,
           )
           .join("\n        ")}
       </div>
     </div>`
     case "details":
       return `<div class="wrap narrow">
-      ${heading(p("heading"))}
+      ${heading(ctx, p("heading"), "p:heading")}
       <dl class="rows">
         ${b.items
-          .map((i) => `<div><dt>${escapeHtml(i.label ?? "")}</dt><dd>${escapeHtml(i.value ?? "")}</dd></div>`)
+          .map(
+            (i, j) =>
+              `<div><dt${e(`i:${j}:label`)}>${escapeHtml(i.label ?? "")}</dt><dd${e(`i:${j}:value`)}>${escapeHtml(i.value ?? "")}</dd></div>`,
+          )
           .join("\n        ")}
       </dl>
     </div>`
     case "gallery":
       return `<div class="wrap">
-      ${heading(p("heading"))}
+      ${heading(ctx, p("heading"), "p:heading")}
       <div class="gallery">
         ${b.items
-          .map((i) => {
+          .map((i, j) => {
             const src = safeImageSrc(i.image ?? "")
             const cap = (i.caption ?? "").trim()
-            return `<figure>${src ? `<img src="${escapeHtml(src)}" alt="${escapeHtml(cap)}">` : `<div class="ph">Add a photo</div>`}${cap ? `<figcaption>${escapeHtml(cap)}</figcaption>` : ""}</figure>`
+            // Empty photo slots are an editor hint only; visitors never see them.
+            if (!src && !ctx.preview) return ""
+            const pic = src ? `<img src="${escapeHtml(src)}" alt="${escapeHtml(cap)}">` : `<div class="ph">Add a photo</div>`
+            return `<figure>${pic}${cap ? `<figcaption${e(`i:${j}:caption`)}>${escapeHtml(cap)}</figcaption>` : ""}</figure>`
           })
+          .filter(Boolean)
           .join("\n        ")}
       </div>
     </div>`
     case "quote":
       return `<div class="wrap narrow">
       <blockquote>
-        ${paragraphs(p("quote"))}
-        ${p("author").trim() ? `<cite>${escapeHtml(p("author"))}</cite>` : ""}
+        ${richText(ctx, p("quote"), "p:quote")}
+        ${p("author").trim() ? `<cite${e("p:author")}>${escapeHtml(p("author"))}</cite>` : ""}
       </blockquote>
     </div>`
     case "faq":
       return `<div class="wrap narrow">
-      ${heading(p("heading"))}
+      ${heading(ctx, p("heading"), "p:heading")}
       <div class="faq">
         ${b.items
           .map(
-            (i) => `<details><summary>${escapeHtml(i.question ?? "")}</summary>${paragraphs(i.answer ?? "")}</details>`,
+            (i, j) =>
+              `<details${ctx.preview ? " open" : ""}><summary>${
+                ctx.preview ? `<span${e(`i:${j}:question`)}>${escapeHtml(i.question ?? "")}</span>` : escapeHtml(i.question ?? "")
+              }</summary>${richText(ctx, i.answer ?? "", `i:${j}:answer`)}</details>`,
           )
           .join("\n        ")}
       </div>
@@ -883,10 +914,10 @@ function renderBlock(b: Block): string {
         address && `<span>${escapeHtml(address)}</span>`,
       ].filter(Boolean)
       return `<div class="wrap narrow center">
-      ${heading(p("heading"))}
-      ${paragraphs(p("body"), "lead")}
+      ${heading(ctx, p("heading"), "p:heading")}
+      ${richText(ctx, p("body"), "p:body", "lead")}
       ${lines.length ? `<p class="contact-lines">${lines.join("")}</p>` : ""}
-      ${button(p("buttonText"), p("buttonLink"))}
+      ${button(ctx, p("buttonText"), p("buttonLink"), "p:buttonText")}
     </div>`
     }
   }
@@ -1017,14 +1048,25 @@ export function renderBody(site: Site, opts: RenderOptions = {}): string {
   </header>`
     : ""
 
+  const ctx: Ctx = { preview: !!opts.preview }
   const sections = site.blocks
-    .map((b) => {
-      const hook = opts.preview ? ` data-block-id="${escapeHtml(b.id)}"${opts.activeId === b.id ? ` data-active` : ""}` : ""
-      return `<section id="${ids.get(b.id)}"${hook}>
-    ${renderBlock(b)}
+    .map((b, i) => {
+      if (!opts.preview) {
+        return `<section id="${ids.get(b.id)}">
+    ${renderBlock(b, ctx)}
   </section>`
+      }
+      const id = escapeHtml(b.id)
+      return `<section id="${ids.get(b.id)}" data-block-id="${id}"${opts.activeId === b.id ? " data-active" : ""}>
+    ${sectionTools(BLOCKS[b.type].label, i, site.blocks.length)}
+    ${renderBlock(b, ctx)}
+  </section>
+  ${insertBar(b.id)}`
     })
     .join("\n\n  ")
+    || (opts.preview
+      ? `<section class="__empty" data-insert-after=""><div class="wrap narrow center"><h2>Your page is empty.</h2><p class="lead">Add a section to get started.</p><button type="button" class="btn" data-act="insert">Add a section</button></div></section>`
+      : "")
 
   const year = new Date().getFullYear()
   return `${nav}
@@ -1065,11 +1107,60 @@ function seoTags(site: Site, seo: Pick<RenderOptions, "canonical" | "noindex">):
   return "\n  " + tags.filter(Boolean).join("\n  ")
 }
 
-/** Editor-only styles injected into the preview frame (never exported). */
+// ── Editor-only canvas chrome (never exported) ──────────────
+
+const svg = (d: string) =>
+  `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`
+
+function sectionTools(label: string, index: number, count: number): string {
+  const btn = (act: string, title: string, d: string, disabled = false) =>
+    `<button type="button" data-act="${act}" title="${title}" aria-label="${title}"${disabled ? " disabled" : ""}>${svg(d)}</button>`
+  return `<div class="__tools" contenteditable="false">
+      <span class="__label">${escapeHtml(label)}</span>
+      ${btn("up", "Move up", "M18 15l-6-6-6 6", index === 0)}
+      ${btn("down", "Move down", "M6 9l6 6 6-6", index === count - 1)}
+      ${btn("dup", "Duplicate", "M8 8h12v12H8zM4 16V4h12")}
+      ${btn("del", "Delete section", "M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14")}
+    </div>`
+}
+
+function insertBar(afterId: string): string {
+  return `<div class="__insert" data-insert-after="${escapeHtml(afterId)}" contenteditable="false"><button type="button" data-act="insert">${svg("M12 5v14M5 12h14")}<span>Add section</span></button></div>`
+}
+
+/** Styles for the canvas chrome above: section outlines, toolbars, insert bars, editable text. */
 export const PREVIEW_CSS = `
-[data-block-id] { position: relative; cursor: pointer; }
-[data-block-id]:hover { outline: 2px dashed color-mix(in srgb, var(--accent) 60%, transparent); outline-offset: -6px; }
-[data-block-id][data-active] { outline: 2px solid var(--accent); outline-offset: -6px; }
+[data-block-id] { position: relative; }
+[data-block-id]::after { content: ""; position: absolute; inset: 4px; border-radius: 6px; pointer-events: none; transition: box-shadow .15s ease; }
+[data-block-id]:hover::after { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 45%, transparent); }
+[data-block-id][data-active]::after { box-shadow: inset 0 0 0 2px var(--accent); }
+
+.__tools { position: absolute; top: 14px; right: 14px; z-index: 30; display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 12px;
+  background: rgba(17,17,18,.92); color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,.25); backdrop-filter: blur(8px);
+  font: 500 11px/1 system-ui, -apple-system, sans-serif; opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity .15s ease, transform .15s ease; }
+[data-block-id]:hover > .__tools, [data-block-id][data-active] > .__tools { opacity: 1; transform: none; pointer-events: auto; }
+.__label { padding: 0 8px 0 6px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.__tools button { all: unset; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; cursor: pointer; color: rgba(255,255,255,.75); }
+.__tools button:hover { background: rgba(255,255,255,.12); color: #fff; }
+.__tools button[data-act="del"]:hover { background: rgba(239,68,68,.2); color: #fca5a5; }
+.__tools button:disabled { opacity: .3; pointer-events: none; }
+
+.__insert { position: relative; height: 0; z-index: 25; }
+.__insert::before { content: ""; position: absolute; left: 0; right: 0; top: -16px; height: 32px; }
+.__insert::after { content: ""; position: absolute; left: 24px; right: 24px; top: -1px; border-top: 2px solid var(--accent); opacity: 0; transition: opacity .15s ease; }
+.__insert button { all: unset; position: absolute; left: 50%; top: 0; z-index: 1; transform: translate(-50%, -50%) scale(.9); display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px 7px 10px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font: 600 12px/1 system-ui, -apple-system, sans-serif;
+  box-shadow: 0 6px 18px rgba(0,0,0,.2); cursor: pointer; opacity: 0; transition: opacity .15s ease, transform .15s ease; }
+.__insert:hover::after, .__insert:hover button { opacity: 1; }
+.__insert:hover button { transform: translate(-50%, -50%) scale(1); }
+.__empty { min-height: 60vh; display: grid; place-items: center; }
+
+[data-edit] { cursor: text; border-radius: 4px; outline: none; transition: box-shadow .12s ease, background-color .12s ease; }
+[data-edit]:hover { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent); }
+[data-edit]:focus { box-shadow: 0 0 0 2px var(--accent); background: color-mix(in srgb, var(--accent) 6%, transparent); }
+[data-edit]:empty::before { content: "Type something…"; opacity: .35; }
+a.btn[data-edit]:hover, a.btn[data-edit]:focus { transform: none; filter: none; }
+summary [data-edit] { display: inline-block; }
 `
 
 /** The complete, standalone index.html a student downloads (or that /s/[slug] serves). */
