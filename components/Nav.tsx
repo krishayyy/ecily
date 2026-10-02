@@ -7,6 +7,7 @@ import { SOCIAL } from "@/lib/program"
 
 const links = [
   { label: "Hackathons", href: "/hackathons" },
+  { label: "Website Maker", href: "/build" },
   { label: "National Board", href: "/team" },
 ]
 
