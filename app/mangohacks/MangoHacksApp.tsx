@@ -9,6 +9,7 @@ import { Sponsors } from "./components/Sponsors"
 import { Faq } from "./components/Faq"
 import { BigCta } from "./components/BigCta"
 import { Footer } from "./components/Footer"
+import { Companion } from "./components/Companion"
 
 export default function MangoHacksApp() {
   return (
@@ -26,6 +27,7 @@ export default function MangoHacksApp() {
         <BigCta />
       </main>
       <Footer />
+      <Companion />
     </>
   )
 }

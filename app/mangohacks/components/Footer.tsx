@@ -1,3 +1,4 @@
+import { EnvelopeSimple } from "@phosphor-icons/react/dist/ssr"
 import { APPLY_URL, CONTACT_EMAIL } from "../config"
 
 const LINKS = [
@@ -11,27 +12,32 @@ const LINKS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 px-6 py-12">
-      <div className="mx-auto grid max-w-6xl items-center gap-8 text-center md:grid-cols-3 md:text-left">
+    <footer className="border-t border-white/10 py-12">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 text-center md:flex-row md:items-start md:justify-between md:text-left">
         <div>
-          <div className="flex items-center justify-center gap-2 font-display text-lg font-semibold text-cream md:justify-start">
+          <div className="flex items-center justify-center gap-2 font-display text-lg font-bold tracking-tight text-cream md:justify-start">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/mangohacks/images/felt/mango-body.webp" alt="" width={27} height={31} />
+            <img src="/mangohacks/images/felt/mango-body.webp" alt="" width={22} height={26} />
             Mango Hacks
           </div>
           <p className="mt-2 text-sm text-white/60">Dec 5, 2026 at Zoho Corporation, Pleasanton, CA</p>
         </div>
-        <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-white/70">
+        <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/70 md:pt-1">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="hover:text-white">{l.label}</a>
+            <a key={l.href} href={l.href} className="transition-colors hover:text-mango">{l.label}</a>
           ))}
-          <a href={APPLY_URL} target="_blank" rel="noopener noreferrer" className="hover:text-white">Apply</a>
+          <a href={APPLY_URL} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-mango">Apply</a>
         </nav>
-        <div className="text-sm md:text-right">
-          <a href={`mailto:${CONTACT_EMAIL}`} className="text-white/70 hover:text-white">{CONTACT_EMAIL}</a>
+        <div className="text-sm md:pt-1 md:text-right">
+          <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 text-white/70 transition-colors hover:text-mango">
+            <EnvelopeSimple weight="duotone" className="h-4 w-4" aria-hidden />
+            {CONTACT_EMAIL}
+          </a>
           <p className="mt-2 text-white/60">
             Run by{" "}
-            <a href="https://ecily.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">Ecily</a>
+            <a href="https://ecily.org" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-mango">Ecily</a>
+            {" "}and{" "}
+            <a href="https://mangoembedded.com" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-mango">MangoEmbedded</a>
           </p>
         </div>
       </div>

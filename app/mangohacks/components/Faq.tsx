@@ -1,4 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { CONTACT_EMAIL } from "../config"
+import { Heading, Section } from "./shared"
 
 const FAQ = [
   { q: "What is a hackathon?", a: "A day where you build something from scratch with a small team, then show it off. There is no exam, no grade, and nothing to lose. Most people come in with no idea what they are making and leave with a thing that works." },
@@ -9,31 +11,31 @@ const FAQ = [
   { q: "How do I sponsor Mango Hacks?", a: "Email us a line about who you are and what you want out of it. We reply with a recommended tier and a short call, then it is an invoice and a logo file. Contributions run through our 501(c)(3) fiscal sponsorship, so they are tax-deductible in the US." },
 ]
 
-function Column({ items, prefix }: { items: typeof FAQ; prefix: string }) {
-  return (
-    <Accordion type="single" collapsible className="w-full">
-      {items.map((f, i) => (
-        <AccordionItem value={`${prefix}-${i}`} key={f.q}>
-          <AccordionTrigger>{f.q}</AccordionTrigger>
-          <AccordionContent>{f.a}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  )
-}
-
 export function Faq() {
   return (
-    <section id="faq" className="scroll-mt-20 py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <h2 className="font-display text-4xl font-semibold text-cream md:text-5xl">
-          Frequently asked.
-        </h2>
-        <div className="mt-10 grid gap-x-12 md:grid-cols-2">
-          <Column items={FAQ.slice(0, 3)} prefix="a" />
-          <Column items={FAQ.slice(3)} prefix="b" />
-        </div>
+    <Section id="faq" inner="grid gap-14 md:grid-cols-[1fr_1.4fr] md:gap-16">
+      <div className="md:sticky md:top-28 md:self-start">
+        <Heading
+          title="Questions"
+          lede={
+            <>
+              Anything else, email{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="text-mango underline-offset-4 hover:underline">
+                {CONTACT_EMAIL}
+              </a>
+              .
+            </>
+          }
+        />
       </div>
-    </section>
+      <Accordion type="single" collapsible className="w-full border-t border-white/10">
+        {FAQ.map((f, i) => (
+          <AccordionItem value={`q-${i}`} key={f.q}>
+            <AccordionTrigger>{f.q}</AccordionTrigger>
+            <AccordionContent>{f.a}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </Section>
   )
 }

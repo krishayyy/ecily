@@ -1,12 +1,13 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Clock, Gift, Trophy, UsersThree } from "@phosphor-icons/react"
 
 const STATS = [
-  { value: 250, suffix: "", label: "hackers" },
-  { value: 12.5, suffix: "", label: "hours" },
-  { value: 5, suffix: "", label: "tracks" },
-  { value: 100, suffix: "%", label: "free" },
+  { Icon: UsersThree, value: 250, suffix: "", label: "hackers" },
+  { Icon: Clock, value: 12.5, suffix: "", label: "hours" },
+  { Icon: Trophy, value: 5, suffix: "", label: "tracks" },
+  { Icon: Gift, value: 100, suffix: "%", label: "free" },
 ]
 
 function Count({ to, run }: { to: number; run: boolean }) {
@@ -45,15 +46,23 @@ export function Stats() {
   }, [])
 
   return (
-    <section className="bg-night-2 text-cream">
-      <div ref={ref} className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-5 py-16 text-center md:grid-cols-4">
-        {STATS.map((s) => (
-          <div key={s.label}>
-            <div className="font-display text-5xl text-mango">
-              <Count to={s.value} run={seen} />
-              {s.suffix}
+    <section className="mx-auto max-w-6xl px-6">
+      <div
+        ref={ref}
+        className="grid grid-cols-2 divide-cream/10 rounded-3xl bg-night-2 md:grid-cols-4 md:divide-x"
+      >
+        {STATS.map(({ Icon, value, suffix, label }) => (
+          <div key={label} className="group flex flex-col items-center px-4 py-10 text-center">
+            <Icon
+              weight="duotone"
+              className="h-7 w-7 text-mango/80 group-hover:animate-wiggle motion-reduce:group-hover:animate-none"
+              aria-hidden
+            />
+            <div className="mt-3 font-display text-5xl font-bold tracking-tight text-cream tabular-nums [font-stretch:90%]">
+              <Count to={value} run={seen} />
+              {suffix}
             </div>
-            <div className="mt-2 text-cream/80">{s.label}</div>
+            <div className="mt-1 text-sm uppercase tracking-[0.14em] text-cream/60">{label}</div>
           </div>
         ))}
       </div>

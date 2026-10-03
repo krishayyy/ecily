@@ -1,37 +1,57 @@
+"use client"
+
+import { motion, useReducedMotion } from "framer-motion"
+import { ArrowRight } from "@phosphor-icons/react"
 import { Button } from "@/components/ui/button"
 import { APPLY_URL } from "../config"
 
 export function BigCta() {
+  const reduce = useReducedMotion()
   return (
-    <section id="apply" className="scroll-mt-20 px-6 py-24">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 rounded-3xl bg-night-2 p-8 md:grid-cols-[1fr_auto] md:p-14">
-        <div>
-          <h2 className="font-display text-4xl font-semibold text-cream md:text-6xl">
+    <section id="apply" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-20 md:pb-28">
+      <div className="relative grid items-end overflow-hidden rounded-[2rem] bg-mango text-night md:grid-cols-[1.4fr_1fr]">
+        <div className="p-8 md:p-14">
+          <p className="font-hand text-2xl">see you there?</p>
+          <h2 className="mt-1 font-display text-5xl font-bold leading-[0.95] tracking-[-0.03em] [font-stretch:88%] md:text-7xl">
             Come build something.
           </h2>
-          <p className="mt-4 max-w-xl text-white/70">
-            December 5, 2026 at Zoho Corporation in Pleasanton.
+          <p className="mt-5 max-w-md text-lg text-night/75">
+            Saturday, December 5 at Zoho in Pleasanton. Applications are open now.
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <p className="text-white/70">Hackers, applications are open.</p>
-            <Button asChild size="lg">
-              <a href={APPLY_URL} target="_blank" rel="noopener noreferrer">Apply to hack</a>
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <Button asChild size="lg" className="group bg-night text-cream hover:bg-night/90">
+              <a href={APPLY_URL} target="_blank" rel="noopener noreferrer">
+                Apply to hack
+                <ArrowRight
+                  weight="bold"
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden
+                />
+              </a>
             </Button>
-          </div>
-          <div className="mt-4 flex flex-wrap items-center gap-4">
-            <p className="text-white/70">Sponsors, shirt and food orders lock eight weeks out.</p>
-            <Button asChild size="lg" variant="outline">
-              <a href="#sponsor">Sponsor Mango Hacks</a>
-            </Button>
+            <a
+              href="#sponsor"
+              className="font-display font-semibold underline decoration-night/30 underline-offset-[6px] hover:decoration-night"
+            >
+              Sponsor Mango Hacks
+            </a>
           </div>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/mangohacks/images/felt/mango-cheer.webp"
-          alt=""
-          className="mx-auto h-56 w-auto md:h-72"
-          loading="lazy"
-        />
+        <motion.div
+          className="flex justify-center px-8 md:justify-end md:pr-14"
+          initial={reduce ? false : { y: 120, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ type: "spring", stiffness: 120, damping: 14 }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/mangohacks/images/felt/mango-cheer.webp"
+            alt=""
+            loading="lazy"
+            className="h-56 w-auto translate-y-3 md:h-80"
+          />
+        </motion.div>
       </div>
     </section>
   )

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Menu, X } from "lucide-react"
+import { List, X } from "@phosphor-icons/react"
 import { Button } from "@/components/ui/button"
 import { APPLY_URL } from "../config"
 
@@ -32,19 +32,20 @@ export function Nav() {
         solid ? "bg-night/95 backdrop-blur-md" : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 text-cream">
-        <a href="#top" className="font-display text-xl">
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 text-cream">
+        <a href="#top" className="flex items-center gap-2 font-display text-xl font-bold tracking-tight [font-stretch:90%]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/mangohacks/images/felt/mango-body.webp" alt="" width={22} height={26} />
           Mango Hacks
         </a>
         <div className="hidden items-center gap-7 md:flex">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="text-sm hover:text-mango">
+            <a key={l.href} href={l.href} className="text-sm text-cream/80 transition-colors hover:text-mango">
               {l.label}
             </a>
           ))}
-          <span className="rounded-full border border-cream/30 px-3 py-1 text-xs">Dec 5</span>
-          <Button asChild size="sm" className="bg-mango text-night hover:bg-mango/90">
-            <a href={APPLY_URL}>Apply</a>
+          <Button asChild size="sm">
+            <a href={APPLY_URL} target="_blank" rel="noopener noreferrer">Apply</a>
           </Button>
         </div>
         <button
@@ -54,20 +55,19 @@ export function Nav() {
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
         >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {open ? <X className="h-6 w-6" /> : <List className="h-6 w-6" />}
         </button>
       </nav>
       {open && (
-        <div className="flex flex-col gap-4 px-5 pb-6 text-cream md:hidden">
+        <div className="flex flex-col gap-4 px-6 pb-6 text-cream md:hidden">
           {LINKS.map((l) => (
             <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="py-1 text-lg">
               {l.label}
             </a>
           ))}
           <div className="flex items-center gap-3">
-            <span className="rounded-full border border-cream/30 px-3 py-1 text-xs">Dec 5</span>
-            <Button asChild size="sm" className="bg-mango text-night hover:bg-mango/90">
-              <a href={APPLY_URL}>Apply</a>
+            <Button asChild size="sm">
+              <a href={APPLY_URL} target="_blank" rel="noopener noreferrer">Apply</a>
             </Button>
           </div>
         </div>
