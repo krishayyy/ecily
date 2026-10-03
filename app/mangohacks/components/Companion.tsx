@@ -5,14 +5,14 @@ import { AnimatePresence, animate, motion, useMotionValue, useScroll, useSpring,
 import { MangoSprite, type MangoAction } from "./MangoSprite"
 import { useReducedMotionSafe } from "./shared"
 
-type Pose = Extract<MangoAction, "idle" | "wave" | "laptop">
+type Pose = Extract<MangoAction, "idle" | "laptop">
 const BEATS: Record<string, { pose: Pose; lines: string[] }> = {
-  about: { pose: "wave", lines: ["never coded? perfect.", "you don't need a team either", "beginners are the whole point"] },
+  about: { pose: "idle", lines: ["never coded? perfect.", "you don't need a team either", "beginners are the whole point"] },
   venue: { pose: "idle", lines: ["real office chairs!!", "the good wifi, too", "zoho has snacks. probably."] },
   tracks: { pose: "laptop", lines: ["pick one. or don't.", "best first hack is my fave", "hardware counts too!"] },
   schedule: { pose: "laptop", lines: ["lunch is at 12:30 btw", "3pm is when I get stuck", "demos are my favorite part"] },
-  sponsor: { pose: "wave", lines: ["psst, sponsors get a table", "your logo on my shirt?", "zoho is hosting us!"] },
-  organizers: { pose: "wave", lines: ["meet the people behind it!", "say hi at the event", "they made me :)"] },
+  sponsor: { pose: "idle", lines: ["psst, sponsors get a table", "your logo on my shirt?", "zoho is hosting us!"] },
+  organizers: { pose: "idle", lines: ["meet the people behind it!", "say hi at the event", "they made me :)"] },
   faq: { pose: "idle", lines: ["ask away", "it's free. really.", "click a question!"] },
 }
 const ORDER = Object.keys(BEATS)
@@ -67,13 +67,10 @@ export function Companion() {
     return lines[i % lines.length]
   }, [])
 
-  // Speak on every arrival in a section (cycling through its lines), and wave hello.
+  // Speak on every arrival in a section (cycling through its lines).
   useEffect(() => {
     if (!section || !BEATS[section]) { setLine(null); return }
-    const timer = setTimeout(() => {
-      say(nextLine(section))
-      if (BEATS[section].pose !== "laptop") setOneShot("wave")
-    }, 500)
+    const timer = setTimeout(() => say(nextLine(section)), 500)
     return () => clearTimeout(timer)
   }, [section, say, nextLine])
 
