@@ -46,7 +46,7 @@ export function Stats() {
   }, [])
 
   return (
-    <section className="mx-auto max-w-6xl px-6">
+    <section className="mx-auto max-w-6xl px-6 pt-10 md:pt-14">
       <div
         ref={ref}
         className="grid grid-cols-2 divide-cream/10 rounded-3xl bg-night-2 md:grid-cols-4 md:divide-x"
