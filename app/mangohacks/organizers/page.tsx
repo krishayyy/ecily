@@ -10,6 +10,6 @@ export default function OrganizersPage() {
       <Link href="/mangohacks" className="inline-flex items-center gap-2 font-display font-semibold text-cream/80 hover:text-mango"><ArrowLeft weight="bold" /> Mango Hacks</Link>
     </div>
     <Organizers />
-    <p className="mx-auto max-w-6xl px-6 pb-16 text-sm text-cream/50">Organizer responsibilities and profile links will be updated as they are confirmed.</p>
+    <p className="mx-auto max-w-6xl px-6 pb-16 text-sm text-cream/50">Additional responsibilities and profile links will be updated as they are confirmed.</p>
   </main>
 }

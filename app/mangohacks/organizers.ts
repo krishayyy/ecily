@@ -24,5 +24,16 @@ export const organizers: Organizer[] = [
     bio: "Helping bring Mango Hacks together. Specific responsibilities coming soon.",
     // instagram: "https://www.instagram.com/...",
   },
-  // Add the other two organizers here after their names and image files are available.
+  {
+    name: "Darren Chan",
+    photo: "/mangohacks/organizers/darren.png",
+    focus: "Planning · Finance",
+    bio: "Plans the event, manages finances, and leads sponsor outreach.",
+  },
+  {
+    name: "Reid Mariotti",
+    photo: "/mangohacks/organizers/reid.png",
+    focus: "Web · Community",
+    bio: "Builds the website, manages Luma and Discord, and supports sponsor outreach and the community.",
+  },
 ]

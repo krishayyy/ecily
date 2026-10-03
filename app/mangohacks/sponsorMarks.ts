@@ -3,7 +3,7 @@
 export type SponsorMark = { name: string; href?: string; image?: string; wordmark?: string }
 export const sponsorMarks: SponsorMark[] = [
   { name: "Google", image: "/mangohacks/sponsors/google.svg" },
-  { name: "Exea Labs", wordmark: "/E/" },
-  { name: "MangoEmbedded", image: "/mangohacks/sponsors/mangoembedded.png" },
-  { name: "Ecily", wordmark: "e" },
+  { name: "Exea Labs", image: "/mangohacks/sponsors/exea-mono.png" },
+  { name: "MangoEmbedded", image: "/mangohacks/sponsors/mangoembedded-mono.png" },
+  { name: "Ecily", image: "/mangohacks/sponsors/ecily-mono.png" },
 ]
