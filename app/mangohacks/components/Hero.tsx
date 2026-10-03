@@ -32,7 +32,7 @@ export function Hero() {
 
   return (
     <section id="top" className="relative -mt-16 overflow-hidden pt-16 text-cream">
-      <div className="mx-auto grid min-h-[100svh] max-w-6xl items-center gap-12 px-6 pb-20 pt-10 md:grid-cols-[1.05fr_1fr] md:gap-8">
+      <div className="mx-auto grid min-h-[calc(100svh-7rem)] max-w-6xl items-center gap-12 px-6 pb-20 pt-10 md:min-h-[calc(100svh-9rem)] md:grid-cols-[1.05fr_1fr] md:gap-8">
         <div className="relative z-10 text-center md:text-left">
           <motion.p {...up(0)} className="font-hand text-2xl text-mango">
             a one-day hackathon
@@ -59,13 +59,13 @@ export function Hero() {
             ))}
           </motion.ul>
 
-          <motion.div {...up(0.28)} className="mt-10 flex items-center justify-center gap-6 md:justify-start">
-            <Button asChild size="lg" className="group">
+          <motion.div {...up(0.28)} className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-7 md:justify-start">
+            <Button asChild size="lg" className="cta-shine group h-14 w-full max-w-xs px-10 text-lg sm:w-auto">
               <a href={APPLY_URL} target="_blank" rel="noopener noreferrer">
                 Apply now
                 <ArrowRight
                   weight="bold"
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden
                 />
               </a>
