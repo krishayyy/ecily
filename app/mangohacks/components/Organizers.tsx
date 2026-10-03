@@ -11,7 +11,7 @@ export function Organizers() {
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {organizers.map((person, i) => (
           <Reveal key={person.name} delay={i * 0.07} className="flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-night">
-            <div className="aspect-[4/4.5] overflow-hidden bg-night-3">
+            <div className="aspect-[4/3.4] overflow-hidden bg-night-3 sm:aspect-[4/4.5]">
               <img src={person.photo} alt={person.name} className="h-full w-full object-cover object-top transition-transform duration-500 hover:scale-105" />
             </div>
             <div className="flex flex-1 flex-col p-5">

@@ -9,7 +9,7 @@ const ITEMS = [
 
 export function About() {
   return (
-    <Section id="about" inner="grid items-center gap-16 md:grid-cols-2">
+    <Section id="about" inner="grid items-center gap-10 md:grid-cols-2 md:gap-16">
       <div>
         <Reveal>
           <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-[-0.02em] text-cream [font-stretch:92%] md:text-[3.5rem]">
@@ -41,7 +41,7 @@ export function About() {
           src="/mangohacks/images/felt/mango-laptop.webp"
           alt="Mango mascot working on a laptop"
           loading="lazy"
-          className="w-64 animate-bob motion-reduce:animate-none md:w-80"
+          className="w-52 animate-bob motion-reduce:animate-none sm:w-64 md:w-80"
         />
       </Reveal>
     </Section>

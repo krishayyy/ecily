@@ -52,7 +52,7 @@ export function Stats() {
         className="grid grid-cols-2 divide-cream/10 rounded-3xl bg-night-2 md:grid-cols-4 md:divide-x"
       >
         {STATS.map(({ Icon, value, suffix, label }) => (
-          <div key={label} className="group flex flex-col items-center px-4 py-10 text-center">
+          <div key={label} className="group flex flex-col items-center px-4 py-7 text-center md:py-10">
             <Icon
               weight="duotone"
               className="h-7 w-7 text-mango/80 group-hover:animate-wiggle motion-reduce:group-hover:animate-none"

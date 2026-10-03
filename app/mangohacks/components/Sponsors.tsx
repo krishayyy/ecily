@@ -37,7 +37,7 @@ export function Sponsors() {
               </IconBadge>
               {top && (
                 <span className="rounded-full bg-night px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-cream">
-                  Title
+                  Title sponsor
                 </span>
               )}
             </div>
@@ -51,7 +51,7 @@ export function Sponsors() {
                 </li>
               ))}
             </ul>
-            <Button asChild variant={top ? "default" : "outline"} className="mt-8 w-full">
+            <Button asChild variant={top ? "default" : "outline"} className={cn("mt-8 w-full", top && "cta-shine")}>
               <a href={sponsorMailto(name)}>Choose {name}</a>
             </Button>
           </Reveal>

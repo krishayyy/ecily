@@ -27,6 +27,38 @@ body {
   }
 }
 
+/* Primary CTA: a soft light sweep every few seconds, plus a small lift on hover. */
+.cta-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s;
+}
+.cta-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, var(--shine, 0.45)) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: cta-shine 4.5s ease-in-out 1.2s infinite;
+  pointer-events: none;
+}
+.cta-shine:hover {
+  transform: translateY(-2px);
+}
+.cta-shine:active {
+  transform: translateY(0) scale(0.98);
+}
+@keyframes cta-shine {
+  0% { transform: translateX(-120%); }
+  30%, 100% { transform: translateX(120%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-shine, .cta-shine:hover { transition: none; transform: none; }
+  .cta-shine::after { animation: none; display: none; }
+}
+
 /* Particle float animation */
 @keyframes float {
   0%, 100% {

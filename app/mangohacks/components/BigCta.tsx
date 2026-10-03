@@ -18,12 +18,12 @@ export function BigCta() {
             Saturday, December 5 at Zoho in Pleasanton. Applications are open now.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
-            <Button asChild size="lg" className="group bg-night text-cream hover:bg-night/90">
+            <Button asChild size="lg" className="cta-shine group h-14 px-10 text-lg bg-night text-cream [--shine:0.18] hover:bg-night/90">
               <a href={APPLY_URL} target="_blank" rel="noopener noreferrer">
                 Apply to hack
                 <ArrowRight
                   weight="bold"
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden
                 />
               </a>

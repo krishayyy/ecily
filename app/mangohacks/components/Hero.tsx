@@ -59,13 +59,13 @@ export function Hero() {
             ))}
           </motion.ul>
 
-          <motion.div {...up(0.28)} className="mt-10 flex items-center justify-center gap-6 md:justify-start">
-            <Button asChild size="lg" className="group">
+          <motion.div {...up(0.28)} className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-7 md:justify-start">
+            <Button asChild size="lg" className="cta-shine group h-14 w-full max-w-xs px-10 text-lg sm:w-auto">
               <a href={APPLY_URL} target="_blank" rel="noopener noreferrer">
                 Apply now
                 <ArrowRight
                   weight="bold"
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden
                 />
               </a>
