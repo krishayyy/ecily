@@ -7,7 +7,7 @@ const LINKS = [
   { href: "#schedule", label: "Schedule" },
   { href: "#venue", label: "Venue" },
   { href: "#sponsor", label: "Sponsors" },
-  { href: "#organizers", label: "Organizers" },
+  { href: "/mangohacks/organizers", label: "Organizers" },
   { href: "#faq", label: "FAQ" },
 ]
 
