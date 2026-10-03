@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { ArrowRight, CalendarBlank, MapPin, Ticket } from "@phosphor-icons/react"
 import { Button } from "@/components/ui/button"
 import { APPLY_URL, daysUntilEvent } from "../config"
+import { useReducedMotionSafe } from "./shared"
 
 const FACTS = [
   { Icon: CalendarBlank, label: "Sat, Dec 5, 2026" },
@@ -17,20 +18,17 @@ const ease = [0.22, 1, 0.36, 1] as const
 export function Hero() {
   const [days, setDays] = useState<number | null>(null)
   useEffect(() => setDays(daysUntilEvent()), [])
-  const reduce = useReducedMotion()
+  const reduce = useReducedMotionSafe()
 
   const { scrollY } = useScroll()
   const treeY = useTransform(scrollY, [0, 600], [0, reduce ? 0 : 60])
   const mangoY = useTransform(scrollY, [0, 600], [0, reduce ? 0 : 140])
 
-  const up = (delay: number) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.7, delay, ease },
-        }
+  const up = (delay: number) => ({
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease },
+  })
 
   return (
     <section id="top" className="relative -mt-16 overflow-hidden pt-16 text-cream">
@@ -83,7 +81,7 @@ export function Hero() {
 
         {/* Scene: tree, mascot, and a countdown sign hanging off the branch */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, scale: 0.94 }}
+          initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.1, ease }}
           className="relative mx-auto aspect-[771/706] w-full max-w-[34rem]"
@@ -97,7 +95,7 @@ export function Hero() {
 
           {/* Sign: rope tops tie onto the branch, swings from there */}
           <motion.div style={{ y: treeY }} className="absolute left-[60%] top-[47%] w-[38%]">
-            <div className="origin-[60%_0%] animate-swing motion-reduce:animate-none">
+            <div className="origin-[60%_0%] animate-swing [container-type:inline-size] motion-reduce:animate-none">
               <img src="/mangohacks/images/felt/sign.webp" alt="" className="w-full" />
               {/* Overlay sized to the light wood panel (measured from the image) */}
               <div
@@ -105,10 +103,10 @@ export function Hero() {
                 style={{ left: "14.5%", right: "7.4%", top: "35.6%", bottom: "17%" }}
                 aria-label={days === null ? undefined : `${days} days left`}
               >
-                <span className="font-display text-[clamp(1.75rem,4vw,2.75rem)] font-bold leading-none tracking-tight tabular-nums">
+                <span className="font-display text-[19cqw] font-bold leading-none tracking-tight tabular-nums">
                   {days ?? "\u00a0"}
                 </span>
-                <span className="mt-0.5 font-hand text-base leading-none sm:text-lg">days left</span>
+                <span className="mt-[1.5cqw] font-hand text-[8.5cqw] leading-none">days left</span>
               </div>
             </div>
           </motion.div>

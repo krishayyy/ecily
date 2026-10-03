@@ -5,12 +5,12 @@ import {
   AnimatePresence,
   motion,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
   useVelocity,
 } from "framer-motion"
+import { useReducedMotionSafe } from "./shared"
 
 type Pose = "body" | "wave" | "laptop" | "cheer"
 
@@ -38,7 +38,7 @@ const SRC: Record<Pose, string> = {
  *  speed, glances toward the cursor, and hops when poked. It hides over the hero
  *  and the final CTA, which already have their own mascot. */
 export function Companion() {
-  const reduce = useReducedMotion()
+  const reduce = useReducedMotionSafe()
   const [section, setSection] = useState<string | null>(null)
   const [line, setLine] = useState<string | null>(null)
   const [hop, setHop] = useState(0)
@@ -118,7 +118,7 @@ export function Companion() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 26 }}
-            className="relative mb-2 mr-4 max-w-[12rem] origin-bottom-right rounded-2xl rounded-br-sm bg-cream px-3.5 py-2 font-hand text-lg leading-tight text-night shadow-lg shadow-black/20"
+            className="relative mb-1.5 mr-3 max-w-[9.5rem] origin-bottom-right rounded-2xl rounded-br-sm bg-cream px-3 py-1.5 font-hand text-base leading-tight text-night shadow-lg shadow-black/20 md:mb-2 md:mr-4 md:max-w-[12rem] md:px-3.5 md:py-2 md:text-lg"
           >
             {line}
           </motion.div>
@@ -135,7 +135,7 @@ export function Companion() {
             animate={reduce ? { opacity: 1 } : { y: 0 }}
             exit={reduce ? { opacity: 0 } : { y: 160 }}
             transition={{ type: "spring", stiffness: 220, damping: 20 }}
-            className="pointer-events-auto relative h-24 w-20 cursor-pointer md:h-32 md:w-28"
+            className="pointer-events-auto relative h-16 w-14 cursor-pointer md:h-32 md:w-28"
           >
             <motion.div
               key={hop}

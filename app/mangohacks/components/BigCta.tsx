@@ -1,12 +1,11 @@
 "use client"
 
-import { motion, useReducedMotion } from "framer-motion"
+import { motion } from "framer-motion"
 import { ArrowRight } from "@phosphor-icons/react"
 import { Button } from "@/components/ui/button"
 import { APPLY_URL } from "../config"
 
 export function BigCta() {
-  const reduce = useReducedMotion()
   return (
     <section id="apply" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-20 md:pb-28">
       <div className="relative grid items-end overflow-hidden rounded-[2rem] bg-mango text-night md:grid-cols-[1.4fr_1fr]">
@@ -39,7 +38,7 @@ export function BigCta() {
         </div>
         <motion.div
           className="flex justify-center px-8 md:justify-end md:pr-14"
-          initial={reduce ? false : { y: 120, opacity: 0 }}
+          initial={{ y: 120, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ type: "spring", stiffness: 120, damping: 14 }}

@@ -1,7 +1,22 @@
 "use client"
 
-import { motion, useReducedMotion } from "framer-motion"
+import { useEffect, useState } from "react"
+import { MotionConfig, motion, useReducedMotion } from "framer-motion"
 import { cn } from "@/lib/utils"
+
+/** Framer skips transform animations for users who prefer reduced motion. */
+export function MotionRoot({ children }: { children: React.ReactNode }) {
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>
+}
+
+/** Reduced-motion flag that is always false on the server and first client
+ *  render, so markup hydrates identically, then updates after mount. */
+export function useReducedMotionSafe() {
+  const pref = useReducedMotion()
+  const [reduce, setReduce] = useState(false)
+  useEffect(() => setReduce(!!pref), [pref])
+  return reduce
+}
 
 /** One container, one vertical rhythm, used by every section. */
 export function Section({
@@ -54,12 +69,11 @@ export function Reveal({
   delay?: number
   as?: "div" | "li"
 }) {
-  const reduce = useReducedMotion()
   const Comp = as === "li" ? motion.li : motion.div
   return (
     <Comp
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}

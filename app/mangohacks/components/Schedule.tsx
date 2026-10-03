@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion"
+import { motion, useMotionValueEvent, useScroll } from "framer-motion"
 import {
   ChalkboardTeacher,
   Coffee,
@@ -13,7 +13,7 @@ import {
   Trophy,
 } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
-import { Heading, Section } from "./shared"
+import { Heading, Section, useReducedMotionSafe } from "./shared"
 
 const SCHEDULE = [
   { Icon: Coffee, t: "8:00 AM", h: "Doors and breakfast", p: "Check in, grab food, find people to build with." },
@@ -29,7 +29,7 @@ const SCHEDULE = [
 export function Schedule() {
   const listRef = useRef<HTMLOListElement>(null)
   const [reached, setReached] = useState(-1)
-  const reduce = useReducedMotion()
+  const reduce = useReducedMotionSafe()
   const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 55%", "end 55%"] })
 
   // An item lights up once the drawing line reaches it, and stays lit.

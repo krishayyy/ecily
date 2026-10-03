@@ -10,10 +10,11 @@ import { Faq } from "./components/Faq"
 import { BigCta } from "./components/BigCta"
 import { Footer } from "./components/Footer"
 import { Companion } from "./components/Companion"
+import { MotionRoot } from "./components/shared"
 
 export default function MangoHacksApp() {
   return (
-    <>
+    <MotionRoot>
       <Nav />
       <main>
         <Hero />
@@ -28,6 +29,6 @@ export default function MangoHacksApp() {
       </main>
       <Footer />
       <Companion />
-    </>
+    </MotionRoot>
   )
 }
