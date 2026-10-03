@@ -10,6 +10,7 @@ const LINKS = [
   { href: "#tracks", label: "Tracks" },
   { href: "#schedule", label: "Schedule" },
   { href: "#sponsor", label: "Sponsors" },
+  { href: "#organizers", label: "Organizers" },
   { href: "#faq", label: "FAQ" },
 ]
 
@@ -35,7 +36,7 @@ export function Nav() {
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 text-cream">
         <a href="#top" className="flex items-center gap-2 font-display text-xl font-bold tracking-tight [font-stretch:90%]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/mangohacks/images/felt/mango-body.webp" alt="" width={22} height={26} />
+          <img src="/mangohacks/images/sprite/mango-idle.webp" alt="" width={21} height={28} />
           Mango Hacks
         </a>
         <div className="hidden items-center gap-7 md:flex">

@@ -94,8 +94,8 @@ export function Hero() {
           />
 
           {/* Sign: rope tops tie onto the branch, swings from there */}
-          <motion.div style={{ y: treeY }} className="absolute left-[60%] top-[47%] w-[38%]">
-            <div className="origin-[60%_0%] animate-swing [container-type:inline-size] motion-reduce:animate-none">
+          <motion.div style={{ y: treeY }} className="absolute left-[60%] top-[54.5%] w-[38%]">
+            <div className="origin-[52%_0%] animate-swing [container-type:inline-size] motion-reduce:animate-none">
               <img src="/mangohacks/images/felt/sign.webp" alt="" className="w-full" />
               {/* Overlay sized to the light wood panel (measured from the image) */}
               <div
@@ -110,6 +110,14 @@ export function Hero() {
               </div>
             </div>
           </motion.div>
+
+          {/* Branch drawn again on top so the ropes loop over it instead of ending in mid-air */}
+          <motion.img
+            style={{ y: treeY }}
+            src="/mangohacks/images/felt/branch.webp"
+            alt=""
+            className="pointer-events-none absolute left-[68.74%] top-[51.27%] w-[31.26%]"
+          />
 
           <motion.div style={{ y: mangoY }} className="absolute -bottom-[4%] left-[2%] w-[30%]">
             <img

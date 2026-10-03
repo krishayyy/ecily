@@ -11,6 +11,8 @@ import { BigCta } from "./components/BigCta"
 import { Footer } from "./components/Footer"
 import { Companion } from "./components/Companion"
 import { MotionRoot } from "./components/shared"
+import { SponsorStrip } from "./components/SponsorStrip"
+import { Organizers } from "./components/Organizers"
 
 export default function MangoHacksApp() {
   return (
@@ -18,12 +20,14 @@ export default function MangoHacksApp() {
       <Nav />
       <main>
         <Hero />
+        <SponsorStrip />
         <Stats />
         <About />
         <Venue />
         <Tracks />
         <Schedule />
         <Sponsors />
+        <Organizers />
         <Faq />
         <BigCta />
       </main>

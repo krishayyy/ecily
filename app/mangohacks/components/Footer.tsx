@@ -7,6 +7,7 @@ const LINKS = [
   { href: "#schedule", label: "Schedule" },
   { href: "#venue", label: "Venue" },
   { href: "#sponsor", label: "Sponsors" },
+  { href: "#organizers", label: "Organizers" },
   { href: "#faq", label: "FAQ" },
 ]
 
@@ -17,7 +18,7 @@ export function Footer() {
         <div>
           <div className="flex items-center justify-center gap-2 font-display text-lg font-bold tracking-tight text-cream md:justify-start">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/mangohacks/images/felt/mango-body.webp" alt="" width={22} height={26} />
+            <img src="/mangohacks/images/sprite/mango-idle.webp" alt="" width={21} height={28} />
             Mango Hacks
           </div>
           <p className="mt-2 text-sm text-white/60">Dec 5, 2026 at Zoho Corporation, Pleasanton, CA</p>
