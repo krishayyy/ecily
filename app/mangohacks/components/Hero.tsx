@@ -1,69 +1,46 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { useParallax } from "../hooks/useParallax"
+import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
 import { APPLY_URL, daysUntilEvent } from "../config"
 
-/** The hero is built from separate cut-outs rather than one flat scene, so
- *  each layer can move on its own: the sky drifts slowest, the tree and the
- *  mango sit at different parallax depths, and the mango's raised forearm is
- *  its own layer pivoting from the shoulder. */
 export function Hero() {
-  const heroRef = useRef<HTMLElement>(null)
-  useParallax(heroRef)
-  // Recomputed hourly so a tab left open overnight doesn't sit on a stale count.
-  const [days, setDays] = useState(daysUntilEvent)
-  useEffect(() => {
-    const id = setInterval(() => setDays(daysUntilEvent()), 3_600_000)
-    return () => clearInterval(id)
-  }, [])
+  const [days, setDays] = useState<number | null>(null)
+  useEffect(() => setDays(daysUntilEvent()), [])
+
   return (
-    <header className="hero" id="top" ref={heroRef}>
-      <h1 className="sr-only">Mango Hacks</h1>
-
-      <div className="sky" />
-
-      <div className="felt-stage">
-        <div className="tree-wrap">
-          <img className="tree" src="/mangohacks/images/felt/tree.webp" alt="" />
-          <div className="sign-hang">
-            <img className="sign" src="/mangohacks/images/felt/sign.webp"
-              alt="A wooden signboard hanging from the mango tree" />
-            {/* The board carries the countdown rather than the date. The date
-                is a static fact and the Venue section right after the hero
-                covers it in full; a number that drops every day gives people
-                a reason to come back to the page. */}
-            <div className="sign-copy">
-              <div className="sign-count">{days}</div>
-              <div className="sign-until">{days === 1 ? "day left" : "days left"}</div>
+    <section id="top" className="relative -mt-16 overflow-hidden bg-night pt-16 text-cream">
+      <div className="mx-auto grid min-h-[100svh] max-w-6xl items-center gap-8 px-5 py-24 md:grid-cols-2">
+        <div className="relative z-10 text-center md:text-left">
+          <h1 className="font-display text-5xl sm:text-7xl">Mango Hacks</h1>
+          <p className="mt-4 text-lg text-cream/80">
+            Dec 5, 2026 at Zoho, Pleasanton. Free for high schoolers.
+          </p>
+          <div className="mt-8 flex items-center justify-center gap-6 md:justify-start">
+            <Button asChild size="lg" className="bg-mango text-night hover:bg-mango/90">
+              <a href={APPLY_URL}>Apply</a>
+            </Button>
+            <a href="#sponsor" className="underline underline-offset-4 hover:text-mango">
+              Sponsor
+            </a>
+          </div>
+        </div>
+        <div className="relative mx-auto w-full max-w-md">
+          <img src="/mangohacks/images/felt/tree.webp" alt="" className="w-full" />
+          <img
+            src="/mangohacks/images/felt/mango-wave.webp"
+            alt="Mango mascot waving"
+            className="absolute bottom-0 left-0 w-2/5 origin-bottom animate-sway motion-reduce:animate-none"
+          />
+          <div className="absolute -bottom-4 right-0 w-2/5 animate-bob motion-reduce:animate-none">
+            <img src="/mangohacks/images/felt/sign.webp" alt="" className="w-full" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center pb-[18%] text-night">
+              <span className="font-display text-3xl leading-none sm:text-4xl">{days ?? ""}</span>
+              <span className="font-hand text-sm">days left</span>
             </div>
           </div>
         </div>
-
-        <div className="mango-layer">
-          {/* body and forearm are two crops of one photograph; the arm's box
-              starts at 315/395 across and 140/625 down the body image, and it
-              pivots about its own lower-left corner, which is the shoulder.
-              Both sit inside .mango-bob so they rise and fall together. */}
-          <div className="mango-bob">
-            <img className="mango-body" src="/mangohacks/images/felt/mango-body.webp"
-              alt="A felt mango character waving" />
-            <img className="mango-arm" src="/mangohacks/images/felt/mango-arm.webp" alt="" />
-          </div>
-        </div>
       </div>
-
-      <div className="hero-bottom">
-        <p className="sell">A one-day hackathon for high-school builders. Twelve and a half hours,
-          one room, and something real at the end of it.</p>
-        <p className="hand" style={{ transform: "rotate(-1.2deg)" }}>free food, free entry, zero experience required.</p>
-        <div className="hero-cta">
-          <a className="btn btn-felt" href={APPLY_URL} target="_blank" rel="noopener noreferrer">
-            Apply to hack →
-          </a>
-          <a className="btn btn-felt btn-quiet" href="#sponsor">Sponsor us</a>
-        </div>
-      </div>
-    </header>
+    </section>
   )
 }

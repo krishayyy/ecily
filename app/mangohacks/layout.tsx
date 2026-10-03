@@ -1,19 +1,17 @@
-import "./mangohacks.css"
+import { Fredoka, Gaegu, Inter } from "next/font/google"
 
-/** Own font stack, loaded only for this route: the main site's Inter/DM Mono/
- *  Fraunces trio doesn't cover the felt-and-embroidery voice this page needs
- *  (Fredoka for display, Baloo 2 for the signboard, Gaegu for the handwritten
- *  lines), so it pulls its own set instead of stretching the shared one. */
+const fredoka = Fredoka({ subsets: ["latin"], variable: "--font-fredoka", display: "swap" })
+const gaegu = Gaegu({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-gaegu", display: "swap" })
+const inter = Inter({ subsets: ["latin"], variable: "--font-mh-inter", display: "swap" })
+
+/** The route owns its own background so the root layout's near-black body
+ *  colour never shows through. */
 export default function MangoHacksLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@400;500;600;700&family=Gaegu:wght@400;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
+    <div
+      className={`${fredoka.variable} ${gaegu.variable} ${inter.variable} min-h-screen bg-night font-[family-name:var(--font-mh-inter)] text-white/90 antialiased`}
+    >
       {children}
-    </>
+    </div>
   )
 }
