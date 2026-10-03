@@ -1,13 +1,8 @@
 import { InstagramLogo, LinkedinLogo } from "@phosphor-icons/react/dist/ssr"
 import { organizers } from "../organizers"
-import { Heading, Reveal, Section } from "./shared"
+import { Heading, MaskIcon, Reveal, Section } from "./shared"
 
 const linkClass = "text-cream/70 transition-colors hover:text-mango"
-
-// Renders a mono PNG as a mask so it inherits the current text color (and hover color).
-function MaskIcon({ src }: { src: string }) {
-  return <span aria-hidden className="block h-[22px] w-[22px] bg-current" style={{ maskImage: `url("${src}")`, WebkitMaskImage: `url("${src}")`, maskSize: "contain", WebkitMaskSize: "contain", maskRepeat: "no-repeat", WebkitMaskRepeat: "no-repeat", maskPosition: "center", WebkitMaskPosition: "center" }} />
-}
 
 export function Organizers() {
   return (

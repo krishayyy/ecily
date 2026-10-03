@@ -1,5 +1,6 @@
 import { EnvelopeSimple } from "@phosphor-icons/react/dist/ssr"
 import { APPLY_URL, CONTACT_EMAIL } from "../config"
+import { MaskIcon } from "./shared"
 
 const LINKS = [
   { href: "#about", label: "About" },
@@ -34,12 +35,12 @@ export function Footer() {
             <EnvelopeSimple weight="duotone" className="h-4 w-4" aria-hidden />
             {CONTACT_EMAIL}
           </a>
-          <p className="text-white/60">
-            Run by{" "}
-            <a href="/" className="underline underline-offset-2 hover:text-mango">Ecily</a>
-            {" "}and{" "}
-            <a href="https://mangoembedded.com/?=mangohacksorg" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-mango">MangoEmbedded</a>
-          </p>
+          <div className="flex items-center justify-center gap-3 text-white/60 md:justify-end">
+            <span>Run by</span>
+            <a href="/" aria-label="Ecily" title="Ecily" className="text-cream/80 transition-colors hover:text-mango"><MaskIcon src="/mangohacks/sponsors/ecily-mono.png" /></a>
+            <span>and</span>
+            <a href="https://mangoembedded.com/?=mangohacksorg" target="_blank" rel="noopener noreferrer" aria-label="MangoEmbedded" title="MangoEmbedded" className="text-cream/80 transition-colors hover:text-mango"><MaskIcon src="/mangohacks/sponsors/mangoembedded-mono.png" /></a>
+          </div>
         </div>
       </div>
     </footer>

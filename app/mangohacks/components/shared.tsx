@@ -18,6 +18,12 @@ export function useReducedMotionSafe() {
   return reduce
 }
 
+/** Renders a single-color PNG as a CSS mask so it takes the current text color (and hover color). */
+export function MaskIcon({ src, size = 22 }: { src: string; size?: number }) {
+  const mask = { maskImage: `url("${src}")`, maskSize: "contain", maskRepeat: "no-repeat", maskPosition: "center" }
+  return <span aria-hidden className="block shrink-0 bg-current" style={{ width: size, height: size, ...mask, WebkitMaskImage: mask.maskImage, WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
+}
+
 /** One container, one vertical rhythm, used by every section. */
 export function Section({
   id,
