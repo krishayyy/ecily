@@ -25,5 +25,5 @@ export function MangoSprite({ action, className = "" }: { action: MangoAction; c
     const id = window.setInterval(() => setFrame(f => (f + 1) % frames), 1000 / fps)
     return () => clearInterval(id)
   }, [action, reduce, frames, fps])
-  return <span className={`block overflow-hidden ${className}`} style={{ aspectRatio: "112 / 140", backgroundImage: "url('/mangohacks/images/sprite/mango-atlas.webp')", backgroundSize: "1200% 700%", backgroundPosition: `${frame * 100 / 11}% ${row * 100 / 6}%` }} />
+  return <span data-action={action} className={`block overflow-hidden ${className}`} style={{ aspectRatio: "112 / 140", backgroundImage: "url('/mangohacks/images/sprite/mango-atlas.webp')", backgroundSize: "1200% 700%", backgroundPosition: `${frame * 100 / 11}% ${row * 100 / 6}%` }} />
 }

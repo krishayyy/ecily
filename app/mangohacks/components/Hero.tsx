@@ -32,7 +32,7 @@ export function Hero() {
 
   return (
     <section id="top" className="relative -mt-16 overflow-hidden pt-16 text-cream">
-      <div className="mx-auto grid min-h-[100svh] max-w-6xl items-center gap-12 px-6 pb-20 pt-10 md:grid-cols-[1.05fr_1fr] md:gap-8">
+      <div className="mx-auto grid min-h-[calc(100svh-7rem)] max-w-6xl items-center gap-12 px-6 pb-20 pt-10 md:min-h-[calc(100svh-9rem)] md:grid-cols-[1.05fr_1fr] md:gap-8">
         <div className="relative z-10 text-center md:text-left">
           <motion.p {...up(0)} className="font-hand text-2xl text-mango">
             a one-day hackathon

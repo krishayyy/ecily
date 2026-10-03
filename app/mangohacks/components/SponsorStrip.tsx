@@ -2,9 +2,9 @@ import { sponsorMarks, type SponsorMark } from "../sponsorMarks"
 
 function Mark({ item }: { item: SponsorMark }) {
   const content = <span className="flex min-w-[11rem] items-center justify-center gap-3 px-7 text-cream/75 transition-colors hover:text-cream">
-    {item.image ? <img src={item.image} alt="" className="h-9 w-10 object-contain opacity-80" /> :
+    {item.image ? <img src={item.image} alt={item.wide ? item.name : ""} className={`${item.wide ? "h-9 w-auto" : "h-9 w-10"} object-contain opacity-80`} /> :
       <span className={`font-display text-4xl font-bold leading-none ${item.name === "Ecily" ? "font-serif italic" : ""}`}>{item.wordmark}</span>}
-    <span className="font-display text-sm font-semibold tracking-wide">{item.name}</span>
+    {!item.wide && <span className="font-display text-sm font-semibold tracking-wide">{item.name}</span>}
   </span>
   return item.href ? <a href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.name}>{content}</a> : content
 }
