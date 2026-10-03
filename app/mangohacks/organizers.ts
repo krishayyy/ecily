@@ -13,15 +13,15 @@ export const organizers: Organizer[] = [
   {
     name: "Krishay Suresh",
     photo: "/mangohacks/organizers/krishay.jpg",
-    focus: "Event planning",
-    bio: "Working on the event experience and bringing the hackathon together.",
+    focus: "Organizer",
+    bio: "Helping bring Mango Hacks together. Specific responsibilities coming soon.",
     // linkedin: "https://www.linkedin.com/in/...",
   },
   {
     name: "Kush Theethira",
     photo: "/mangohacks/organizers/kush.webp",
-    focus: "Community",
-    bio: "Helping participants find their people and make the most of the day.",
+    focus: "Organizer",
+    bio: "Helping bring Mango Hacks together. Specific responsibilities coming soon.",
     // instagram: "https://www.instagram.com/...",
   },
   // Add the other two organizers here after their names and image files are available.
