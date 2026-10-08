@@ -9,8 +9,8 @@ type Pose = Extract<MangoAction, "idle" | "laptop">
 const BEATS: Record<string, { pose: Pose; lines: string[] }> = {
   about: { pose: "idle", lines: ["never coded? perfect.", "you don't need a team either", "beginners are the whole point"] },
   venue: { pose: "idle", lines: ["real office chairs!!", "the good wifi, too", "zoho has snacks. probably."] },
-  tracks: { pose: "laptop", lines: ["pick one. or don't.", "best first hack is my fave", "hardware counts too!"] },
-  schedule: { pose: "laptop", lines: ["lunch is at 12:30 btw", "3pm is when I get stuck", "demos are my favorite part"] },
+  tracks: { pose: "laptop", lines: ["pick one. or don't.", "best first hack is my fave", "first hack counts most!"] },
+  schedule: { pose: "laptop", lines: ["dinner is at 6, snacks always", "3pm is when I get stuck", "demos are my favorite part"] },
   sponsor: { pose: "idle", lines: ["psst, sponsors get a table", "your logo on my shirt?", "zoho is hosting us!"] },
   organizers: { pose: "idle", lines: ["meet the people behind it!", "say hi at the event", "they made me :)"] },
   faq: { pose: "idle", lines: ["ask away", "it's free. really.", "click a question!"] },

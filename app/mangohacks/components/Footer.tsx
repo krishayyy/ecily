@@ -6,6 +6,7 @@ const LINKS = [
   { href: "#about", label: "About" },
   { href: "#tracks", label: "Tracks" },
   { href: "#schedule", label: "Schedule" },
+  { href: "#food", label: "Food" },
   { href: "#venue", label: "Venue" },
   { href: "#sponsor", label: "Sponsors" },
   { href: "/mangohacks/organizers", label: "Organizers" },
