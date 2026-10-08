@@ -768,7 +768,7 @@ export function sectionIds(site: Site): Map<string, string> {
   const used = new Set<string>()
   const ids = new Map<string, string>()
   for (const b of site.blocks) {
-    let base = b.type === "hero" ? "top" : b.type === "contact" ? "contact" : slug(b.props.heading || "") || b.type
+    const base = b.type === "hero" ? "top" : b.type === "contact" ? "contact" : slug(b.props.heading || "") || b.type
     let id = base
     for (let n = 2; used.has(id); n++) id = `${base}-${n}`
     used.add(id)

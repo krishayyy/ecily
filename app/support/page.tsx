@@ -40,7 +40,7 @@ export default function SupportPage() {
         happened. Screenshots help a lot.
       </LegalCard>
       <LegalCard title="How do I reset my streak or progress?">
-        Progress and streaks aren't user-resettable in-app today. Email support and we can help
+        Progress and streaks aren&apos;t user-resettable in-app today. Email support and we can help
         manually.
       </LegalCard>
 

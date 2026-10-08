@@ -16,6 +16,14 @@ const MANGOEMBEDDED = { name: "MangoEmbedded", href: "https://mangoembedded.com/
 
 export const organizers: Organizer[] = [
   {
+    name: "Reid Mariotti",
+    photo: "/mangohacks/organizers/reid.png",
+    focus: "Web · Community",
+    bio: "Designed the current site, builds the website, manages Luma and Discord, and supports sponsor outreach and the community.",
+    linkedin: "https://www.linkedin.com/in/reidmariotti/",
+    affiliation: MANGOEMBEDDED,
+  },
+  {
     name: "Krishay Suresh",
     photo: "/mangohacks/organizers/krishay.jpg",
     focus: "Website · Planning",
@@ -36,13 +44,5 @@ export const organizers: Organizer[] = [
     photo: "/mangohacks/organizers/darren-chen.png",
     focus: "Planning · Finance",
     bio: "Plans the event, manages finances, and leads sponsor outreach.",
-  },
-  {
-    name: "Reid Mariotti",
-    photo: "/mangohacks/organizers/reid.png",
-    focus: "Web · Community",
-    bio: "Builds the website, manages Luma and Discord, and supports sponsor outreach and the community.",
-    linkedin: "https://www.linkedin.com/in/reidmariotti/",
-    affiliation: MANGOEMBEDDED,
   },
 ]

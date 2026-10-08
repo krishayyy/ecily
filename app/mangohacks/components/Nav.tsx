@@ -7,6 +7,7 @@ import { APPLY_URL } from "../config"
 
 const LINKS = [
   { href: "#about", label: "About" },
+  { href: "#food", label: "Food" },
   { href: "#tracks", label: "Tracks" },
   { href: "#schedule", label: "Schedule" },
   { href: "#sponsor", label: "Sponsors" },

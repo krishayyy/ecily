@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils"
 import { Heading, Section, useReducedMotionSafe } from "./shared"
 
 const SCHEDULE = [
-  { Icon: Coffee, t: "8:00 AM", h: "Doors and breakfast", p: "Check in, grab food, find people to build with." },
+  { Icon: Coffee, t: "8:00 AM", h: "Doors open", p: "Check in, grab a seat, find people to build with." },
   { Icon: Microphone, t: "9:00 AM", h: "Opening ceremony", p: "Rules, prizes, and the ten minutes that make everyone want to start." },
   { Icon: ChalkboardTeacher, t: "10:00 AM", h: "Beginner workshops", p: "Start-from-zero sessions plus workshops run by our sponsors." },
   { Icon: Pizza, t: "12:30 PM", h: "Lunch", p: "Food, and the first wall almost everybody hits." },
