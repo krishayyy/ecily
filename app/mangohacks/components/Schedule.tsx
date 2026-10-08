@@ -16,10 +16,10 @@ import { cn } from "@/lib/utils"
 import { Heading, Section, useReducedMotionSafe } from "./shared"
 
 const SCHEDULE = [
-  { Icon: Coffee, t: "8:00 AM", h: "Doors and breakfast", p: "Check in, grab food, find people to build with." },
+  { Icon: Coffee, t: "8:00 AM", h: "Doors open", p: "Check in, grab a seat, find people to build with." },
   { Icon: Microphone, t: "9:00 AM", h: "Opening ceremony", p: "Rules, prizes, and the ten minutes that make everyone want to start." },
   { Icon: ChalkboardTeacher, t: "10:00 AM", h: "Beginner workshops", p: "Start-from-zero sessions plus workshops run by our sponsors." },
-  { Icon: Pizza, t: "12:30 PM", h: "Keep building", p: "No lunch break. Snacks are out, and this is the first wall almost everybody hits." },
+  { Icon: Pizza, t: "12:30 PM", h: "Lunch", p: "Food, and the first wall almost everybody hits." },
   { Icon: Lifebuoy, t: "3:00 PM", h: "Mentor sweep", p: "Engineers walk the floor, unstick projects, and answer the dumb questions for free." },
   { Icon: Confetti, t: "6:00 PM", h: "Dinner and submissions", p: "Last push, then everything gets locked." },
   { Icon: Presentation, t: "7:00 PM", h: "Demos", p: "Every team presents to real judges." },

@@ -7,9 +7,9 @@ import { APPLY_URL } from "../config"
 
 const LINKS = [
   { href: "#about", label: "About" },
+  { href: "#food", label: "Food" },
   { href: "#tracks", label: "Tracks" },
   { href: "#schedule", label: "Schedule" },
-  { href: "#food", label: "Food" },
   { href: "#sponsor", label: "Sponsors" },
   { href: "/mangohacks/organizers", label: "Organizers" },
   { href: "#faq", label: "FAQ" },

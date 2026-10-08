@@ -1,8 +1,9 @@
 import { Coffee, ForkKnife, Pizza } from "@phosphor-icons/react/dist/ssr"
-import { Heading, IconBadge, Reveal, Section } from "./shared"
+import { Food3D } from "./Food3D"
+import { IconBadge, Reveal, Section } from "./shared"
 
 const MEALS = [
-  { Icon: Coffee, h: "Breakfast", p: "Doors open at 8:00 AM." },
+  { Icon: Coffee, h: "Lunch", p: "12:30 PM, the first wall most people hit." },
   { Icon: ForkKnife, h: "Dinner", p: "6:00 PM, right before submissions lock." },
   { Icon: Pizza, h: "Snacks", p: "All day, so nobody builds hungry." },
 ]
@@ -10,10 +11,7 @@ const MEALS = [
 export function Food() {
   return (
     <Section id="food">
-      <Heading
-        title="Food"
-        lede="Free for everyone. Breakfast, dinner, and snacks. There is no lunch, so eat up in the morning."
-      />
+      <Food3D />
       <Reveal className="mt-12 rounded-3xl bg-mango p-8 text-night md:p-12">
         <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-night/70">On the menu</p>
         <h3 className="mt-3 font-display text-5xl font-bold leading-[0.95] tracking-[-0.02em] [font-stretch:92%] md:text-7xl">

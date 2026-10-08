@@ -25,9 +25,9 @@ export default function MangoHacksApp() {
         <Stats />
         <About />
         <Venue />
+        <Food />
         <Tracks />
         <Schedule />
-        <Food />
         <Sponsors />
         <Organizers />
         <Faq />

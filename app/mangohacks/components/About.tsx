@@ -3,7 +3,7 @@ import { IconBadge, Reveal, Section } from "./shared"
 
 const ITEMS = [
   { Icon: Plant, h: "Built for first-timers", p: "Workshops start from zero and mentors stay on the floor all day." },
-  { Icon: ForkKnife, h: "Everything is covered", p: "Breakfast, dinner, snacks, and stickers. Free." },
+  { Icon: ForkKnife, h: "Everything is covered", p: "Lunch, dinner, snacks, and stickers. Free." },
   { Icon: UsersThree, h: "Judged by builders", p: "Working engineers and founders give feedback and judge demos." },
 ]
 
