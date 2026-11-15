@@ -72,9 +72,9 @@ export function Stats() {
             aria-hidden
           />
           <div className="mt-3 font-display text-3xl font-bold tracking-tight text-cream tabular-nums [font-stretch:90%] md:text-4xl">
-            <span className="mr-1.5 align-middle text-base font-semibold text-cream/70">Up to</span>$254,000
+            $254,000
           </div>
-          <div className="mt-1 text-sm uppercase tracking-[0.14em] text-cream/60">in prizes &amp; perks</div>
+          <div className="mt-1 text-sm uppercase tracking-[0.14em] text-cream/60">in available prizes &amp; perks</div>
         </div>
       </div>
     </section>
