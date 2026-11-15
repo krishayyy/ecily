@@ -10,6 +10,16 @@ const STATS = [
   { Icon: Gift, value: 100, suffix: "%", label: "free" },
 ]
 
+import { useEffect, useRef, useState } from "react"
+import { Clock, CurrencyDollar, Gift, Trophy, UsersThree } from "@phosphor-icons/react"
+
+const STATS = [
+  { Icon: UsersThree, value: 250, suffix: "", label: "hackers" },
+  { Icon: Clock, value: 12.5, suffix: "", label: "hours" },
+  { Icon: Trophy, value: 5, suffix: "", label: "tracks" },
+  { Icon: Gift, value: 100, suffix: "%", label: "free" },
+]
+
 function Count({ to, run }: { to: number; run: boolean }) {
   const [n, setN] = useState(0)
   useEffect(() => {
@@ -49,7 +59,7 @@ export function Stats() {
     <section className="mx-auto max-w-6xl px-6 pt-10 md:pt-14">
       <div
         ref={ref}
-        className="grid grid-cols-2 divide-cream/10 rounded-3xl bg-night-2 md:grid-cols-4 md:divide-x"
+        className="grid grid-cols-2 divide-cream/10 rounded-3xl bg-night-2 md:grid-cols-4 md:divide-x lg:grid-cols-5"
       >
         {STATS.map(({ Icon, value, suffix, label }) => (
           <div key={label} className="group flex flex-col items-center px-4 py-7 text-center md:py-10">
@@ -65,6 +75,17 @@ export function Stats() {
             <div className="mt-1 text-sm uppercase tracking-[0.14em] text-cream/60">{label}</div>
           </div>
         ))}
+        <div className="group col-span-2 flex flex-col items-center border-t border-cream/10 px-4 py-7 text-center md:col-span-4 md:py-10 lg:col-span-1 lg:border-t-0">
+          <CurrencyDollar
+            weight="duotone"
+            className="h-7 w-7 text-mango/80 group-hover:animate-wiggle motion-reduce:group-hover:animate-none"
+            aria-hidden
+          />
+          <div className="mt-3 font-display text-3xl font-bold tracking-tight text-cream tabular-nums [font-stretch:90%] md:text-4xl">
+            <span className="mr-1.5 align-middle text-base font-semibold text-cream/70">Up to</span>$254,000
+          </div>
+          <div className="mt-1 text-sm uppercase tracking-[0.14em] text-cream/60">in prizes &amp; perks</div>
+        </div>
       </div>
     </section>
   )
