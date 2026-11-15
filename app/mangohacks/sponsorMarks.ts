@@ -8,6 +8,7 @@ export const sponsorMarks: SponsorMark[] = [
   { name: "ElevenLabs", href: "https://elevenlabs.io", image: "/mangohacks/sponsors/elevenlabs.svg", wide: true },
   { name: ".XYZ", href: "https://gen.xyz", image: "/mangohacks/sponsors/xyz.svg", wide: true },
   { name: "Adaption", href: "https://adaptionlabs.ai", image: "/mangohacks/sponsors/adaption.svg", tag: "in-kind AI partner" },
+  { name: "DeepSpace", href: "https://deep.space", image: "/mangohacks/sponsors/deepspace.svg" },
   { name: "Exea Labs", image: "/mangohacks/sponsors/exea-mono.png" },
   { name: "MangoEmbedded", image: "/mangohacks/sponsors/mangoembedded-mono.png" },
   { name: "Ecily", image: "/mangohacks/sponsors/ecily-mono.png" },

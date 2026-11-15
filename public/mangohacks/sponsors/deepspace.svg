@@ -1,0 +1,34 @@
+<svg width="2934" height="2934" viewBox="0 0 2934 2934" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<linearGradient id="paint0_linear_225_122" x1="369.679" y1="1488.74" x2="1823.76" y2="1488.74" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E28700"/>
+<stop offset="0.331731" stop-color="#F645E6"/>
+<stop offset="0.9375" stop-color="#1B37F7"/>
+</linearGradient>
+<linearGradient id="paint1_linear_225_122" x1="2550.8" y1="1488.75" x2="1096.72" y2="1488.75" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E28700"/>
+<stop offset="0.331731" stop-color="#F645E6"/>
+<stop offset="0.9375" stop-color="#1B37F7"/>
+</linearGradient>
+<linearGradient id="star_gradient" x1="1467" y1="0" x2="1467" y2="2934" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#E0F2FE"/>
+<stop offset="0.2" stop-color="#7DD3FC"/>
+<stop offset="0.4" stop-color="#38BDF8"/>
+<stop offset="0.6" stop-color="#818CF8"/>
+<stop offset="0.8" stop-color="#A78BFA"/>
+<stop offset="1" stop-color="#C4B5FD"/>
+</linearGradient>
+<clipPath id="star_clip">
+<circle cx="1467" cy="1467" r="220"/>
+<path d="M1382.33 1020.73C1363.01 1244.23 1352.46 1334.16 1294.06 1334.55H1639.9C1581.5 1334.16 1568.68 1244.23 1549.35 1020.73L1466.38 10.2266L1382.33 1020.73Z"/>
+<path d="M1382.33 1020.73C1363.01 1244.23 1352.46 1334.16 1294.06 1334.55H1639.9C1581.5 1334.16 1568.68 1244.23 1549.35 1020.73L1466.38 10.2266L1382.33 1020.73Z" transform="translate(2003.93 -536.951) rotate(60)"/>
+<path d="M1382.33 1020.73C1363.01 1244.23 1352.46 1334.16 1294.06 1334.55H1639.9C1581.5 1334.16 1568.68 1244.23 1549.35 1020.73L1466.38 10.2266L1382.33 1020.73Z" transform="translate(3470.91 930.027) rotate(120)"/>
+<path d="M1382.33 1020.73C1363.01 1244.23 1352.46 1334.16 1294.06 1334.55H1639.9C1581.5 1334.16 1568.68 1244.23 1549.35 1020.73L1466.38 10.2266L1382.33 1020.73Z" transform="translate(2933.96 2933.96) rotate(-180)"/>
+<path d="M1382.33 1020.73C1363.01 1244.23 1352.46 1334.16 1294.06 1334.55H1639.9C1581.5 1334.16 1568.68 1244.23 1549.35 1020.73L1466.38 10.2266L1382.33 1020.73Z" transform="translate(930.027 3470.91) rotate(-120)"/>
+<path d="M1382.33 1020.73C1363.01 1244.23 1352.46 1334.16 1294.06 1334.55H1639.9C1581.5 1334.16 1568.68 1244.23 1549.35 1020.73L1466.38 10.2266L1382.33 1020.73Z" transform="translate(-536.951 2003.93) rotate(-60)"/>
+</clipPath>
+</defs>
+<path d="M369.679 1488.74L1460.24 1545.38L1460.24 1432.09L369.679 1488.74Z" fill="#F7F1DE"/>
+<path d="M2550.8 1488.75L1460.24 1432.11L1460.24 1545.39L2550.8 1488.75Z" fill="#F7F1DE"/>
+<rect x="0" y="0" width="2934" height="2934" fill="#F7F1DE" clip-path="url(#star_clip)"/>
+</svg>
