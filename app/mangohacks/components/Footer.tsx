@@ -23,7 +23,7 @@ export function Footer() {
             <img src="/mangohacks/images/sprite/mango-idle.webp" alt="" width={21} height={28} />
             Mango Hacks
           </div>
-          <p className="text-sm leading-relaxed text-white/60">Dec 5, 2026 at Zoho Corporation,<br className="hidden md:inline" /> Pleasanton, CA</p>
+          <p className="text-sm leading-relaxed text-white/60">Dec 5, 2026 · Bay Area</p>
         </div>
         <nav aria-label="Footer" className="mx-auto grid max-w-xs grid-cols-2 gap-x-10 gap-y-3 text-sm text-white/70 sm:max-w-none sm:grid-cols-4 md:pt-1">
           {LINKS.map((l) => (
