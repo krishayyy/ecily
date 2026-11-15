@@ -9,7 +9,7 @@ import { useReducedMotionSafe } from "./shared"
 
 const FACTS = [
   { Icon: CalendarBlank, label: "Sat, Dec 5, 2026" },
-  { Icon: MapPin, label: "Zoho, Pleasanton" },
+  { Icon: MapPin, label: "Bay Area" },
   { Icon: Ticket, label: "Free for high schoolers" },
 ]
 
