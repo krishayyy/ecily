@@ -70,10 +70,10 @@ export function Stats() {
             className="h-7 w-7 text-mango/80 group-hover:animate-wiggle motion-reduce:group-hover:animate-none"
             aria-hidden
           />
-          <div className="mt-3 font-display text-3xl font-bold tracking-tight text-cream tabular-nums [font-stretch:90%] md:text-4xl">
-            $264,000
+          <div className="mt-3 font-display text-3xl font-bold tracking-tight text-cream [font-stretch:90%] md:text-4xl">
+            Details to follow
           </div>
-          <div className="mt-1 text-sm uppercase tracking-[0.14em] text-cream/60">in available prizes &amp; perks</div>
+          <div className="mt-1 text-sm uppercase tracking-[0.14em] text-cream/60">prizes &amp; perks</div>
         </div>
       </div>
     </section>
