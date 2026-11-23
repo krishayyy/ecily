@@ -5,8 +5,8 @@ import { sponsorMailto } from "../config"
 import { Heading, IconBadge, Reveal, Section } from "./shared"
 
 const TIERS = [
-  { Icon: Plant, name: "Seedling", price: "$500", perks: ["Logo on the site", "Stickers in every bag", "Named at opening", "Send engineers as mentors"] },
-  { Icon: Leaf, name: "Branch", price: "$1,000", perks: ["Everything in Seedling", "Logo on the event shirts", "Dedicated table on site", "Host a 30-minute workshop"] },
+  { Icon: Plant, name: "Seedling", price: "$500", perks: ["Logo on the site", "Named at opening", "Send engineers as mentors"] },
+  { Icon: Leaf, name: "Branch", price: "$1,000", perks: ["Everything in Seedling", "Host a 30-minute workshop"] },
   { Icon: Tree, name: "Tree", price: "$2,500", perks: ["Everything in Branch", "Seat on the judging panel", "Sponsor a named award", "Resumes from opted-in hackers"] },
   { Icon: TreeEvergreen, name: "Orchard", price: "$3,500", perks: ["Everything in Tree", "Your own project track", "10-minute keynote slot", "First pick of mentor sessions"], top: true },
 ]
@@ -16,7 +16,7 @@ export function Sponsors() {
     <Section id="sponsor">
       <Heading
         title="Put your name on a room full of builders."
-        lede="Two hundred and fifty students spend twelve and a half hours with your tools, your engineers, and your logo. Every tier is negotiable."
+        lede="Two hundred students (planned) spend a full day building with your tools, your engineers, and your logo. Every tier is negotiable."
         className="max-w-3xl"
       />
 
