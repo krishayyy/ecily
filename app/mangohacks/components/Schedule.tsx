@@ -4,11 +4,9 @@ import { useRef, useState } from "react"
 import { motion, useMotionValueEvent, useScroll } from "framer-motion"
 import {
   ChalkboardTeacher,
-  Coffee,
   Confetti,
   Lifebuoy,
   Microphone,
-  Pizza,
   Presentation,
   Trophy,
 } from "@phosphor-icons/react"
@@ -16,14 +14,12 @@ import { cn } from "@/lib/utils"
 import { Heading, Section, useReducedMotionSafe } from "./shared"
 
 const SCHEDULE = [
-  { Icon: Coffee, t: "8:00 AM", h: "Doors open", p: "Check in, grab a seat, find people to build with." },
-  { Icon: Microphone, t: "9:00 AM", h: "Opening ceremony", p: "Rules, prizes, and the ten minutes that make everyone want to start." },
-  { Icon: ChalkboardTeacher, t: "10:00 AM", h: "Beginner workshops", p: "Start-from-zero sessions plus workshops run by our sponsors." },
-  { Icon: Pizza, t: "12:30 PM", h: "Lunch", p: "Food, and the first wall almost everybody hits." },
-  { Icon: Lifebuoy, t: "3:00 PM", h: "Mentor sweep", p: "Engineers walk the floor, unstick projects, and answer the dumb questions for free." },
-  { Icon: Confetti, t: "6:00 PM", h: "Dinner and submissions", p: "Last push, then everything gets locked." },
-  { Icon: Presentation, t: "7:00 PM", h: "Demos", p: "Every team presents to real judges." },
-  { Icon: Trophy, t: "8:30 PM", h: "Awards and closing", p: "Trophies, photos, and the group chat that outlasts the day." },
+  { Icon: Microphone, t: "Morning", h: "Opening ceremony", p: "Rules, prizes, and the ten minutes that make everyone want to start." },
+  { Icon: ChalkboardTeacher, t: "Morning", h: "Beginner workshops", p: "Start-from-zero sessions plus workshops run by our sponsors." },
+  { Icon: Lifebuoy, t: "Midday", h: "Mentor check-ins", p: "Engineers drop in, unstick projects, and answer the dumb questions for free." },
+  { Icon: Confetti, t: "Afternoon", h: "Submissions close", p: "Last push, then everything gets locked." },
+  { Icon: Presentation, t: "Evening", h: "Demos", p: "Every team presents to real judges." },
+  { Icon: Trophy, t: "Evening", h: "Awards and closing", p: "Trophies and the group chat that outlasts the day." },
 ]
 
 export function Schedule() {
@@ -40,7 +36,7 @@ export function Schedule() {
   return (
     <Section id="schedule" inner="grid gap-14 md:grid-cols-[1fr_1.4fr] md:gap-16">
       <div className="md:sticky md:top-28 md:self-start">
-        <Heading title="The day" lede="Twelve and a half hours, start to finish. Doors open at eight." />
+        <Heading title="The day" lede="One Saturday, online. Exact hours and the joining link go out to registered hackers before the day." />
       </div>
 
       <ol ref={listRef} className="relative">

@@ -16,8 +16,8 @@ export const hackathons: Hackathon[] = [
   {
     name: "Mango Hacks",
     tagline: "A beginner-friendly hackathon for high schoolers in the Bay Area.",
-    date: "December 5, 2026",
-    location: "Pleasanton, California",
+    date: "January 23, 2027",
+    location: "Online",
     status: "Upcoming",
     url: "https://mangohacks.ecily.org",
     image: "/mangohacks/images/felt-scene.webp",

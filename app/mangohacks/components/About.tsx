@@ -1,9 +1,9 @@
-import { ForkKnife, Plant, UsersThree } from "@phosphor-icons/react/dist/ssr"
+import { Gift, Plant, UsersThree } from "@phosphor-icons/react/dist/ssr"
 import { IconBadge, Reveal, Section } from "./shared"
 
 const ITEMS = [
-  { Icon: Plant, h: "Built for first-timers", p: "Workshops start from zero and mentors stay on the floor all day." },
-  { Icon: ForkKnife, h: "Everything is covered", p: "Lunch, dinner, snacks, and stickers. Free." },
+  { Icon: Plant, h: "Built for first-timers", p: "Workshops start from zero and mentors are there all day." },
+  { Icon: Gift, h: "It costs nothing", p: "Entry, workshops, mentors, prizes, and stickers. All free." },
   { Icon: UsersThree, h: "Judged by builders", p: "Working engineers and founders give feedback and judge demos." },
 ]
 

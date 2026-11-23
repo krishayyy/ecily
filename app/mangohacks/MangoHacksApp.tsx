@@ -4,7 +4,6 @@ import { Stats } from "./components/Stats"
 import { About } from "./components/About"
 import { Venue } from "./components/Venue"
 import { Tracks } from "./components/Tracks"
-import { Food } from "./components/Food"
 import { Schedule } from "./components/Schedule"
 import { Sponsors } from "./components/Sponsors"
 import { Faq } from "./components/Faq"
@@ -25,7 +24,6 @@ export default function MangoHacksApp() {
         <Stats />
         <About />
         <Venue />
-        <Food />
         <Tracks />
         <Schedule />
         <Sponsors />

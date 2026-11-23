@@ -15,7 +15,7 @@ export function BigCta() {
             Come build something.
           </h2>
           <p className="mt-5 max-w-md text-lg text-night/75">
-            Saturday, December 5 in the Bay Area. Applications are open now.
+            Saturday, January 23, 2027, online. Applications are open now.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
             <Button asChild size="lg" className="cta-shine group h-14 px-10 text-lg bg-night text-cream [--shine:0.18] hover:bg-night/90">

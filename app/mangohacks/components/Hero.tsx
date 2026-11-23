@@ -8,8 +8,8 @@ import { APPLY_URL, daysUntilEvent } from "../config"
 import { useReducedMotionSafe } from "./shared"
 
 const FACTS = [
-  { Icon: CalendarBlank, label: "Sat, Dec 5, 2026" },
-  { Icon: MapPin, label: "Bay Area" },
+  { Icon: CalendarBlank, label: "Sat, Jan 23, 2027" },
+  { Icon: MapPin, label: "Online" },
   { Icon: Ticket, label: "Free for high schoolers" },
 ]
 

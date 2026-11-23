@@ -6,7 +6,7 @@ export function Venue() {
     <Section id="venue" inner="grid items-center gap-10 md:grid-cols-2 md:gap-16">
       <Reveal className="md:order-2">
         <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-[-0.02em] text-cream [font-stretch:92%] md:text-[3.5rem]">
-          Bay Area
+          Online
         </h2>
         <dl className="mt-10 space-y-6">
           <div className="group flex items-start gap-4">
@@ -15,7 +15,7 @@ export function Venue() {
             </IconBadge>
             <div>
               <dt className="font-display text-lg font-semibold text-cream">When</dt>
-              <dd className="mt-0.5 text-cream/70">Saturday, December 5, 2026, 8:00 AM to 8:30 PM</dd>
+              <dd className="mt-0.5 text-cream/70">Saturday, January 23, 2027. Hours and joining details to be announced.</dd>
             </div>
           </div>
         </dl>
