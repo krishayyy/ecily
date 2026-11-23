@@ -11,7 +11,6 @@ const BEATS: Record<string, { pose: Pose; lines: string[] }> = {
   venue: { pose: "idle", lines: ["your own chair!!", "your own wifi, your own snacks", "pajamas allowed"] },
   tracks: { pose: "laptop", lines: ["pick one. or don't.", "best first hack is my fave", "first hack counts most!"] },
   schedule: { pose: "laptop", lines: ["demos are my favorite part", "3pm is when I get stuck", "team forming is chaos. good chaos"] },
-  sponsor: { pose: "idle", lines: ["every hack needs backers", "your logo right here?", "say hi to 250 hackers"] },
   organizers: { pose: "idle", lines: ["meet the people behind it!", "say hi at the event", "they made me :)"] },
   faq: { pose: "idle", lines: ["ask away", "it's free. really.", "click a question!"] },
 }

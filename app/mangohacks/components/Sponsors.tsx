@@ -65,8 +65,8 @@ export function Sponsors() {
         <div>
           <h3 className="font-display text-lg font-semibold text-cream">In-kind counts too</h3>
           <p className="mt-1 text-cream/70">
-            API credits, hardware, food, prizes, printing, and services all count toward a tier at fair value. If none
-            of the four fit, tell us what you need and we will build the package around it.
+            API credits, prizes, and services all count toward a tier at fair value. If none of the
+            four fit, tell us what you need and we will build the package around it.
           </p>
         </div>
       </Reveal>
