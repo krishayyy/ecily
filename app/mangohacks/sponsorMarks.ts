@@ -5,7 +5,6 @@ export type SponsorMark = { name: string; href?: string; image?: string; wordmar
 export const sponsorMarks: SponsorMark[] = [
   { name: "Zoho", image: "/mangohacks/sponsors/zoho-mono.png", wide: true },
   { name: "Google", image: "/mangohacks/sponsors/google.svg" },
-  { name: "ElevenLabs", href: "https://elevenlabs.io", image: "/mangohacks/sponsors/elevenlabs.svg", wide: true },
   { name: ".XYZ", href: "https://gen.xyz", image: "/mangohacks/sponsors/xyz.svg", wide: true },
   { name: "Adaption", href: "https://adaptionlabs.ai", image: "/mangohacks/sponsors/adaption.svg", tag: "in-kind AI partner" },
   { name: "DeepSpace", href: "https://deep.space", image: "/mangohacks/sponsors/deepspace.svg" },
