@@ -73,10 +73,10 @@ export function Stats() {
           <div className="mt-3 font-display text-3xl font-bold tracking-tight text-cream [font-stretch:90%] md:text-4xl">
             Up to $251K
           </div>
-          <div className="mt-1 text-sm uppercase tracking-[0.14em] text-cream/60">potential sponsor support*</div>
+          <div className="mt-1 text-sm uppercase tracking-[0.14em] text-cream/60">potential platform credits*</div>
         </div>
       </div>
-      <p className="mx-auto mt-4 max-w-3xl text-center text-xs leading-relaxed text-cream/50">
+      <p className="mx-auto mt-5 max-w-3xl text-center text-sm leading-relaxed text-cream/75">
         *Up to $251,000 in Adaption platform credits if 200 attendees redeem our referral link,
         including a $1,000 prize. Credits, not cash, and not guaranteed until redeemed.
         Separately, participants can claim 200 free first-year .XYZ domains.
