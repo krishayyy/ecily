@@ -15,7 +15,7 @@ export function Venue() {
             </IconBadge>
             <div>
               <dt className="font-display text-lg font-semibold text-cream">When</dt>
-              <dd className="mt-0.5 text-cream/70">Saturday, January 23, 2027. Hours and joining details to be announced.</dd>
+              <dd className="mt-0.5 text-cream/70">Saturday, January 23, 2027, 8:00 AM to 8:30 PM Pacific. Joining details to be announced.</dd>
             </div>
           </div>
         </dl>
